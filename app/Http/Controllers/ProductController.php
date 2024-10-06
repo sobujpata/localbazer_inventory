@@ -110,7 +110,7 @@ class ProductController extends Controller
             return Product::where('id',$product_id)->where('user_id',$user_id)->update([
                 'name'=>$request->input('name'),
                 'buy_price'=>$request->input('buy_price'),
-                'wholesale_price'=>$request->input('wholesale_price'),
+                'wholesale_price'=>$request->input('wholesale_price'),~
                 'buy_qty'=>$request->input('buy_qty'),
                 'category_id'=>$request->input('category_id'),
             ]);

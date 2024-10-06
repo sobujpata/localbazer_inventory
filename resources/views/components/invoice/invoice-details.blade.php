@@ -28,8 +28,10 @@
                                 <table class="table w-100" id="invoiceTable">
                                     <thead class="w-100">
                                     <tr class="text-xs text-bold">
+                                        <td>Ser No</td>
                                         <td>Name</td>
                                         <td>Qty</td>
+                                        <td>Price per</td>
                                         <td>Total</td>
                                     </tr>
                                     </thead>
@@ -42,10 +44,10 @@
                         <hr class="mx-0 my-2 p-0 bg-secondary"/>
                         <div class="row">
                             <div class="col-12">
-                                <p class="text-bold text-xs my-1 text-dark"> TOTAL: <i class="bi bi-currency-dollar"></i> <span id="total"></span></p>
-                                <p class="text-bold text-xs my-2 text-dark"> PAYABLE: <i class="bi bi-currency-dollar"></i>  <span id="payable"></span></p>
-                                <p class="text-bold text-xs my-1 text-dark"> VAT(5%): <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
-                                <p class="text-bold text-xs my-1 text-dark"> Discount: <i class="bi bi-currency-dollar"></i>  <span id="discount"></span></p>
+                                <p class="text-bold text-xs my-1 text-dark"> TOTAL:</i> <span id="total"></span> Tk</p>
+                                <p class="text-bold text-xs my-2 text-dark"> PAYABLE:</i>  <span id="payable"></span> Tk</p>
+                                <p class="text-bold text-xs my-1 text-dark"> VAT(5%):</i>  <span id="vat"></span> Tk</p>
+                                <p class="text-bold text-xs my-1 text-dark"> Discount:</i>  <span id="discount"></span> Tk</p>
                             </div>
 
                         </div>
@@ -84,8 +86,10 @@
 
         res.data['product'].forEach(function (item,index) {
             let row=`<tr class="text-xs">
+                        <td>${index+1}</td>
                         <td>${item['product']['name']}</td>
                         <td>${item['qty']}</td>
+                        <td>${item['product']['wholesale_price']}</td>
                         <td>${item['sale_price']}</td>
                      </tr>`
             invoiceList.append(row)

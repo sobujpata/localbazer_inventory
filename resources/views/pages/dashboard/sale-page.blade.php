@@ -8,6 +8,7 @@
                         <div class="col-8">
                             <span class="text-bold text-dark">BILLED TO </span>
                             <p class="text-xs mx-0 my-1">Name:  <span id="CName"></span> </p>
+                            <p class="text-xs mx-0 my-1">Name:  <span id="CMobile"></span> </p>
                             <p class="text-xs mx-0 my-1">Email:  <span id="CEmail"></span></p>
                             <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p>
                         </div>
@@ -38,12 +39,12 @@
                     <hr class="mx-0 my-2 p-0 bg-secondary"/>
                     <div class="row">
                        <div class="col-12">
-                           <p class="text-bold text-xs my-1 text-dark"> TOTAL: <i class="bi bi-currency-dollar"></i> <span id="total"></span></p>
-                           <p class="text-bold text-xs my-2 text-dark"> PAYABLE: <i class="bi bi-currency-dollar"></i>  <span id="payable"></span></p>
-                           <p class="text-bold text-xs my-1 text-dark"> VAT(5%): <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
-                           <p class="text-bold text-xs my-1 text-dark"> Discount: <i class="bi bi-currency-dollar"></i>  <span id="discount"></span></p>
-                           <span class="text-xxs">Discount(%):</span>
-                           <input onkeydown="return false" value="0" min="0" type="number" step="0.25" onchange="DiscountChange()" class="form-control w-40 " id="discountP"/>
+                           <p class="text-bold text-xs my-1 text-dark"> TOTAL: </i> <span id="total"></span> Tk</p>
+                           <p class="text-bold text-xs my-2 text-dark"> PAYABLE: </i>  <span id="payable"></span> Tk</p>
+                           <p class="text-bold text-xs my-1 text-dark d-none"> VAT(0%): </i>  <span id="vat"></span> Tk</p>
+                           <p class="text-bold text-xs my-1 text-dark d-none"> Discount: </i>  <span id="discount"></span> Tk</p>
+                           <span class="text-xxs d-none">Discount(%):</span>
+                           <input onkeydown="return false" value="0" min="0" type="number" step="0.25" onchange="DiscountChange()" class="form-control d-none w-40 " id="discountP"/>
                            <p>
                               <button onclick="createInvoice()" class="btn  my-3 bg-gradient-primary w-40">Confirm</button>
                            </p>
@@ -62,6 +63,7 @@
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
                             <td>Product</td>
+                            <td>Sale</td>
                             <td>Pick</td>
                         </tr>
                         </thead>
@@ -77,7 +79,8 @@
                     <table class="table table-sm w-100" id="customerTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
-                            <td>Customer</td>
+                            <td>Customer Shop</td>
+                            <td>Mobile</td>
                             <td>Pick</td>
                         </tr>
                         </thead>
@@ -105,8 +108,8 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 p-1">
-                                    <label class="form-label">Product ID *</label>
-                                    <input type="text" class="form-control" id="PId">
+                                    {{-- <label class="form-label">Product ID *</label> --}}
+                                    <input type="text" class="form-control d-none" id="PId">
                                     <label class="form-label mt-2">Product Name *</label>
                                     <input type="text" class="form-control" id="PName">
                                     <label class="form-label mt-2">Product Price *</label>
@@ -188,12 +191,12 @@
             })
 
              if(discountPercentage===0){
-                 Vat= ((Total*5)/100).toFixed(2);
+                 Vat= ((Total*0)/100).toFixed(2);
              }
              else {
                  Discount=((Total*discountPercentage)/100).toFixed(2);
                  Total=(Total-((Total*discountPercentage)/100)).toFixed(2);
-                 Vat= ((Total*5)/100).toFixed(2);
+                 Vat= ((Total*0)/100).toFixed(2);
              }
 
              Payable=(parseFloat(Total)+parseFloat(Vat)).toFixed(2);
@@ -236,10 +239,10 @@
 
 
 
-        function addModal(id,name,price) {
+        function addModal(id,name,wholesale_price) {
             document.getElementById('PId').value=id
             document.getElementById('PName').value=name
-            document.getElementById('PPrice').value=price
+            document.getElementById('PPrice').value=wholesale_price
             $('#create-modal').modal('show')
         }
 
@@ -253,8 +256,9 @@
 
             res.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
-                        <td><i class="bi bi-person"></i> ${item['name']}</td>
-                        <td><a data-name="${item['name']}" data-email="${item['email']}" data-id="${item['id']}" class="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
+                        <td><i class="bi bi-person"></i> ${item['shop_name']}</td>
+                        <td><i class="bi bi-person"></i> ${item['mobile']}</td>
+                        <td><a data-shop_name="${item['shop_name']}" data-mobile="${item['mobile']}" data-email="${item['email']}" data-id="${item['id']}" class="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
                      </tr>`
                 customerList.append(row)
             })
@@ -262,11 +266,13 @@
 
             $('.addCustomer').on('click', async function () {
 
-                let CName= $(this).data('name');
+                let CName= $(this).data('shop_name');
+                let CMobile= $(this).data('mobile');
                 let CEmail= $(this).data('email');
                 let CId= $(this).data('id');
 
                 $("#CName").text(CName)
+                $("#CMobile").text(CMobile)
                 $("#CEmail").text(CEmail)
                 $("#CId").text(CId)
 
@@ -290,8 +296,9 @@
 
             res.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
-                        <td> <img class="w-10" src="${item['img_url']}"/> ${item['name']} ($ ${item['price']})</td>
-                        <td><a data-name="${item['name']}" data-price="${item['price']}" data-id="${item['id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
+                        <td> <img class="w-10" src="${item['img_url']}"/> ${item['name']} (${item['buy_price']})</td>
+                        <td>  (${item['wholesale_price']})</td>
+                        <td><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
                      </tr>`
                 productList.append(row)
             })
@@ -299,7 +306,7 @@
 
             $('.addProduct').on('click', async function () {
                 let PName= $(this).data('name');
-                let PPrice= $(this).data('price');
+                let PPrice = $(this).data('wholesale_price')
                 let PId= $(this).data('id');
                 addModal(PId,PName,PPrice)
             })
