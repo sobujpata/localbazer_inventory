@@ -7,51 +7,61 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div id="invoice" class="modal-body p-3">
-                    <div class="container-fluid">
-                        <br/>
-                        <div class="row">
-                            <div class="col-8">
-                                <span class="text-bold text-dark">BILLED TO </span>
-                                <p class="text-xs mx-0 my-1">Name:  <span id="CName"></span> </p>
-                                <p class="text-xs mx-0 my-1">Email:  <span id="CEmail"></span></p>
-                                <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p>
-                            </div>
-                            <div class="col-4">
-                                <img class="w-40" src="{{"images/logo.png"}}">
-                                <p class="text-bold mx-0 my-1 text-dark">Invoice  </p>
-                                <p class="text-xs mx-0 my-1">Date: {{ date('Y-m-d') }} </p>
-                            </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h3 class="text-center">মেসার্স  আর এস আই ট্রেডার্স</h3>
+                            <span class="text-center">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
+                                মোবাইল নং-০১৭৭১-৩৭৮২৫৮, ০১৭৩৯-৮৭১৭০৫, ০১৭৪৫-৭৬০২৬৫<br>
+                                ই-মেইল : localbazer24@gmail.com
+                            </span>
+                        </div>
+                        <div class="row px-2">
+                            <div class="col-12"><span class="fw-bolder">ক্রেতার বিবরণ :-</span></div>
+                            <div class="col-6">নাম : <span id="CName" class="fw-bold"></div>
+                            <div class="col-6">মোবাইল নং : <span id="CMobile" class="fw-bold"></div>
+                            <div class="col-6">ই-মেইল : <span id="CEmail" class="fw-bold"></span></div>
+                            <div class="col-6">ঠিকানা : <span id="CAddress" class="fw-bold"></span></div>
+                            <div class="col-6">ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold"></span></div>
+                            <div class="col-6">তারিখ : {{ date('Y-m-d') }}</div>
+                            <p class="text-xs mx-0 my-1 d-none">User ID:  <span id="CId"></span> </p>
                         </div>
                         <hr class="mx-0 my-2 p-0 bg-secondary"/>
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table w-100" id="invoiceTable">
-                                    <thead class="w-100">
-                                    <tr class="text-xs text-bold">
-                                        <td>Ser No</td>
-                                        <td>Name</td>
-                                        <td>Qty</td>
-                                        <td>Price per</td>
-                                        <td>Total</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody  class="w-100" id="invoiceList">
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <hr class="mx-0 my-2 p-0 bg-secondary"/>
-                        <div class="row">
-                            <div class="col-12">
-                                <p class="text-bold text-xs my-1 text-dark"> TOTAL:</i> <span id="total"></span> Tk</p>
-                                <p class="text-bold text-xs my-2 text-dark"> PAYABLE:</i>  <span id="payable"></span> Tk</p>
-                                <p class="text-bold text-xs my-1 text-dark"> VAT(5%):</i>  <span id="vat"></span> Tk</p>
-                                <p class="text-bold text-xs my-1 text-dark"> Discount:</i>  <span id="discount"></span> Tk</p>
-                            </div>
-
-                        </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table w-100" id="invoiceTable">
+                            <thead class="w-100">
+                            <tr class="text-xs text-bold">
+                                <td class="text-center">সিরিয়াল নং</td>
+                                <td>পণ্যের নাম</td>
+                                <td>পরিমান</td>
+                                <td>দর</td>
+                                <td>টাকা</td>
+                            </tr>
+                            </thead>
+                            <tbody  class="w-100" id="invoiceList">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr class="mx-0 my-2 p-0 bg-secondary"/>
+                <div class="row">
+                    <div class="col-11">
+                        <p class="text-bold text-xs my-1 text-dark text-end"> মোট টাকা : </i> <span id="total"></span>/= </p>
+                        <p class="text-bold text-xs my-2 text-dark d-none"> PAYABLE:</i>  <span id="payable"></span> Tk</p>
+                        <p class="text-bold text-xs my-1 text-dark d-none"> VAT(5%):</i>  <span id="vat"></span> Tk</p>
+                        <p class="text-bold text-xs my-1 text-dark d-none"> Discount:</i>  <span id="discount"></span> Tk</p>
+                    </div>
+
+                </div>
+                <hr class="mx-0 my-2 p-0 bg-secondary"/>
+                <div class="row footer">
+                    <div class="col-6 text-center">হিসাবরক্ষকের স্বাক্ষর</div>
+                    <div class="col-6 text-left">সরবারহকারীর স্বাক্ষর</div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn bg-gradient-primary" data-bs-dismiss="modal">Close</button>
@@ -60,7 +70,14 @@
         </div>
     </div>
 </div>
-
+<style>
+    .invoice {
+        height: 1748px;
+        width: 1240px;
+        /* Optional: to prevent overflow and make sure the content fits */
+        overflow: hidden;
+    }
+  </style>
 
 <script>
 
@@ -74,10 +91,13 @@
         document.getElementById('CName').innerText=res.data['customer']['name']
         document.getElementById('CId').innerText=res.data['customer']['user_id']
         document.getElementById('CEmail').innerText=res.data['customer']['email']
+        document.getElementById('CMobile').innerText=res.data['customer']['mobile']
+        document.getElementById('CAddress').innerText=res.data['customer']['address']
         document.getElementById('total').innerText=res.data['invoice']['total']
         document.getElementById('payable').innerText=res.data['invoice']['payable']
         document.getElementById('vat').innerText=res.data['invoice']['vat']
         document.getElementById('discount').innerText=res.data['invoice']['discount']
+        document.getElementById('InvoiceId').innerText=res.data['invoice']['id']
 
 
         let invoiceList=$('#invoiceList');
@@ -86,7 +106,7 @@
 
         res.data['product'].forEach(function (item,index) {
             let row=`<tr class="text-xs">
-                        <td>${index+1}</td>
+                        <td class="text-center">${index+1}</td>
                         <td>${item['product']['name']}</td>
                         <td>${item['qty']}</td>
                         <td>${item['product']['wholesale_price']}</td>

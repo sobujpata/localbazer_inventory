@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
-use App\Helper\JWTToken;
-use App\Mail\OTPMail;
-use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use App\Mail\OTPMail;
+use App\Helper\JWTToken;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -33,54 +34,70 @@ class UserController extends Controller
 
 
     function UserRegistration(Request $request){
+
+        // Validate input fields
+        $request->validate([
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'mobile' => 'required|string|max:15',
+            'password' => 'required|string|min:8',  // Ensure password is confirmed
+        ]);
+
         try {
+            // Create user and hash password
             User::create([
                 'firstName' => $request->input('firstName'),
                 'lastName' => $request->input('lastName'),
                 'email' => $request->input('email'),
                 'mobile' => $request->input('mobile'),
-                'password' => $request->input('password'),
+                'password' => bcrypt($request->input('password')),  // Hashing password
             ]);
+
             return response()->json([
                 'status' => 'success',
-                'message' => 'User Registration Successfully'
-            ],200);
+                'message' => 'User Registration Successful'
+            ], 200);
 
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'failed',
                 'message' => $e->getMessage()
-            ],200);
-
+            ], 500);  // Return 500 for server-side errors
         }
     }
 
 
 
 
+
     function UserLogin(Request $request){
-       $count=User::where('email','=',$request->input('email'))
-            ->where('password','=',$request->input('password'))
-            ->select('id')->first();
+        // Validate the request
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-       if($count!==null){
-           // User Login-> JWT Token Issue
-           $token=JWTToken::CreateToken($request->input('email'),$count->id);
-           return response()->json([
-               'status' => 'success',
-               'message' => 'User Login Successful',
-               'token'=>$token
-           ],200)->cookie('token',$token,time()+60*24*30);
-       }
-       else{
-           return response()->json([
-               'status' => 'failed',
-               'message' => 'unauthorized'
-           ],200);
+        // Find user by email
+        $user = User::where('email', $request->input('email'))->first();
 
-       }
-
+        // Check if user exists and password is correct
+        if ($user && Hash::check($request->input('password'), $user->password)) {
+            // User login successful, issue JWT token
+            $token = JWTToken::CreateToken($request->input('email'), $user->id);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User Login Successful',
+                'token' => $token
+            ], 200)->cookie('token', $token, 60*24*30);  // Set JWT token in cookie
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Unauthorized'
+            ], 401);  // Use 401 for unauthorized access
+        }
     }
+
 
 
     function UserLogout(){
