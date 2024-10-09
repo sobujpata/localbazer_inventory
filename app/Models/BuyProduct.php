@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class BuyProduct extends Model
 {
     protected $fillable = [
-        "type_of_product", "product_cost", "other_cost", "invoice_url"
+        "user_id","category_id", "product_cost", "other_cost", "invoice_url"
     ];
 }

@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('buy_products', function (Blueprint $table) {
             $table->id();
-            $table->string('type_of_product', 100)->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
+            
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnUpdate()->restrictOnDelete();
+
             $table->string('product_cost', 100)->nullable();
             $table->string('other_cost', 100)->nullable();
             $table->string('invoice_url', 200)->nullable();
+            
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

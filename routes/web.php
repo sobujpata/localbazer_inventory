@@ -94,4 +94,9 @@ Route::get("/sales-report/{FormDate}/{ToDate}",[ReportController::class,'SalesRe
 //buy product Route
 Route::get('/buy-product', [buyProductController::class, 'index']);
 
+//buy product API
+Route::get('/buying-details', [buyProductController::class, 'buyingDetails'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/buying-details-store', [buyProductController::class, 'store'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/buying-details-by-id', [buyProductController::class, 'show'])->middleware([TokenVerificationMiddleware::class]);
+
 

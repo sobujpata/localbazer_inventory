@@ -14,11 +14,11 @@
             <table class="table" id="tableData">
                 <thead>
                 <tr class="bg-light">
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Original Price</th>
-                    <th>Wholesale Price</th>
-                    <th>Quantity</th>
+                    <th>Ser No</th>
+                    <th>Products Category</th>
+                    <th>Product Cost</th>
+                    <th>Carring Cost</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -40,51 +40,12 @@ async function getList() {
 
 
     showLoader();
-    let res=await axios.get("/list-product");
+    let res=await axios.get("/buying-details");
     hideLoader();
+    console.log(res);
+    
 
-    let tableList=$("#tableList");
-    let tableData=$("#tableData");
-
-    tableData.DataTable().destroy();
-    tableList.empty();
-
-    res.data.forEach(function (item,index) {
-        let row=`<tr>
-                    <td><img class="w-15 h-auto" alt="" src="${item['img_url']}"></td>
-                    <td>${item['name']}</td>
-                    <td>${item['buy_price']}</td>
-                    <td>${item['wholesale_price']}</td>
-                    <td>${item['buy_qty']}</td>
-                    <td>
-                        <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
-                        <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
-                    </td>
-                 </tr>`
-        tableList.append(row)
-    })
-
-    $('.editBtn').on('click', async function () {
-           let id= $(this).data('id');
-           let filePath= $(this).data('path');
-           await FillUpUpdateForm(id,filePath)
-           $("#update-modal").modal('show');
-    })
-
-    $('.deleteBtn').on('click',function () {
-        let id= $(this).data('id');
-        let path= $(this).data('path');
-
-        $("#delete-modal").modal('show');
-        $("#deleteID").val(id);
-        $("#deleteFilePath").val(path)
-
-    })
-
-    new DataTable('#tableData',{
-        order:[[0,'desc']],
-        lengthMenu:[5,10,15,20,30]
-    });
+    
 
 }
 
