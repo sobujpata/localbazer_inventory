@@ -10,13 +10,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <h3 class="text-center">মেসার্স  আর এস আই ট্রেডার্স</h3>
-                            <span class="text-center">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
-                                মোবাইল নং-০১৭৭১-৩৭৮২৫৮, ০১৭৩৯-৮৭১৭০৫, ০১৭৪৫-৭৬০২৬৫<br>
-                                ই-মেইল : localbazer24@gmail.com
+                            <h5 class="text-center">মেসার্স  আর এস আই ট্রেডার্স</h5>
+                            <span class="text-center" style="font-size: 12px;">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
+                                মোবাইল নং-০১৭৪৫-৭৬০২৬৫, ০১৭৭১-৩৭৮২৫৮, ০১৭৩৯-৮৭১৭০৫
+                                {{-- ই-মেইল : localbazer24@gmail.com --}}
                             </span>
                         </div>
-                        <div class="row px-2">
+                        <div class="row" style="font-size: 10px;">
                             <div class="col-12"><span class="fw-bolder">ক্রেতার বিবরণ :-</span></div>
                             <div class="col-6">নাম : <span id="CName" class="fw-bold"></div>
                             <div class="col-6">মোবাইল নং : <span id="CMobile" class="fw-bold"></div>
