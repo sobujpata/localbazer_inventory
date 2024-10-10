@@ -89,7 +89,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'message' => 'User Login Successful',
                 'token' => $token
-            ], 200)->cookie('token', $token, 60*24*30);  // Set JWT token in cookie
+            ], 200)->cookie('token', $token, 60*60*60);  // Set JWT token in cookie
         } else {
             return response()->json([
                 'status' => 'failed',

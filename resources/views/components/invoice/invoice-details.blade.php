@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-12 text-center">
                             <h5 class="text-center">মেসার্স  আর এস আই ট্রেডার্স</h5>
-                            <span class="text-center" style="font-size: 12px;">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
+                            <span class="text-center fw-bold" style="font-size: 12px;">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
                                 মোবাইল নং-০১৭৪৫-৭৬০২৬৫, ০১৭৭১-৩৭৮২৫৮, ০১৭৩৯-৮৭১৭০৫
                                 {{-- ই-মেইল : localbazer24@gmail.com --}}
                             </span>
