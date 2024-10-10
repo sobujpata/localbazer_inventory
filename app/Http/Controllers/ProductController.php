@@ -52,7 +52,7 @@ class ProductController extends Controller
         $product_id=$request->input('id');
         $filePath=$request->input('file_path');
         File::delete($filePath);
-        return Product::where('id',$product_id)->where('user_id',$user_id)->delete();
+        return Product::where('id',$product_id)->delete();
 
     }
 
@@ -61,14 +61,14 @@ class ProductController extends Controller
     {
         $user_id=$request->header('id');
         $product_id=$request->input('id');
-        return Product::where('id',$product_id)->where('user_id',$user_id)->first();
+        return Product::where('id',$product_id)->first();
     }
 
 
     function ProductList(Request $request)
     {
         $user_id=$request->header('id');
-        return Product::where('user_id',$user_id)->get();
+        return Product::get();
     }
 
 
@@ -95,7 +95,7 @@ class ProductController extends Controller
 
             // Update Product
 
-            return Product::where('id',$product_id)->where('user_id',$user_id)->update([
+            return Product::where('id',$product_id)->update([
                 'name'=>$request->input('name'),
                 'buy_price'=>$request->input('buy_price'),
                 'wholesale_price'=>$request->input('wholesale_price'),
@@ -107,7 +107,7 @@ class ProductController extends Controller
         }
 
         else {
-            return Product::where('id',$product_id)->where('user_id',$user_id)->update([
+            return Product::where('id',$product_id)->update([
                 'name'=>$request->input('name'),
                 'buy_price'=>$request->input('buy_price'),
                 'wholesale_price'=>$request->input('wholesale_price'),~

@@ -14,7 +14,7 @@ class CategoryController extends Controller
 
     function CategoryList(Request $request){
         $user_id=$request->header('id');
-        return Category::where('user_id',$user_id)->get();
+        return Category::get();
     }
 
     function CategoryCreate(Request $request){
@@ -28,14 +28,14 @@ class CategoryController extends Controller
     function CategoryDelete(Request $request){
         $category_id=$request->input('id');
         $user_id=$request->header('id');
-        return Category::where('id',$category_id)->where('user_id',$user_id)->delete();
+        return Category::where('id',$category_id)->delete();
     }
 
 
     function CategoryByID(Request $request){
         $category_id=$request->input('id');
         $user_id=$request->header('id');
-        return Category::where('id',$category_id)->where('user_id',$user_id)->first();
+        return Category::where('id',$category_id)->first();
     }
 
 
@@ -43,7 +43,7 @@ class CategoryController extends Controller
     function CategoryUpdate(Request $request){
         $category_id=$request->input('id');
         $user_id=$request->header('id');
-        return Category::where('id',$category_id)->where('user_id',$user_id)->update([
+        return Category::where('id',$category_id)->update([
             'name'=>$request->input('name'),
         ]);
     }
