@@ -98,5 +98,7 @@ Route::get('/buy-product', [buyProductController::class, 'index']);
 Route::get('/buying-details', [buyProductController::class, 'buyingDetails'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/buying-details-store', [buyProductController::class, 'store'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/buying-details-by-id', [buyProductController::class, 'show'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/buying-details-update', [buyProductController::class, 'update'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/buying-details-delete', [buyProductController::class, 'destroy'])->middleware([TokenVerificationMiddleware::class]);
 
 

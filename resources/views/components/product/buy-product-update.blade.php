@@ -2,38 +2,32 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Buy Product</h5>
             </div>
             <div class="modal-body">
                 <form id="update-form">
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
-
-
                                 <label class="form-label">Category</label>
                                 <select type="text" class="form-control form-select" id="productCategoryUpdate">
                                     <option value="">Select Category</option>
                                 </select>
 
-                                <label class="form-label mt-2">Name</label>
-                                <input type="text" class="form-control" id="productNameUpdate">
+                                <label class="form-label mt-2">Product Cost</label>
+                                <input type="text" class="form-control" id="productCostUpdate">
 
-                                <label class="form-label mt-2">Price</label>
-                                <input type="text" class="form-control" id="productPriceUpdate">
+                                <label class="form-label mt-2">Carring Cost</label>
+                                <input type="text" class="form-control" id="carringCostUpdate">
 
-                                <label class="form-label mt-2">Unit</label>
-                                <input type="text" class="form-control" id="productUnitUpdate">
                                 <br/>
                                 <img class="w-15" id="oldImg" src="{{asset('images/default.jpg')}}"/>
                                 <br/>
-                                <label class="form-label mt-2">Image</label>
-                                <input oninput="oldImg.src=window.URL.createObjectURL(this.files[0])"  type="file" class="form-control" id="productImgUpdate">
+                                <label class="form-label mt-2">Invoice File Update</label>
+                                <input oninput="oldImg.src=window.URL.createObjectURL(this.files[0])"  type="file" class="form-control" id="InvoiceImgUpdate">
 
                                 <input type="text" class="d-none" id="updateID">
                                 <input type="text" class="d-none" id="filePath">
-
-
                             </div>
                         </div>
                     </div>
@@ -73,12 +67,12 @@
         showLoader();
         await UpdateFillCategoryDropDown();
 
-        let res=await axios.post("/product-by-id",{id:id})
+        let res=await axios.post("/buying-details-by-id",{id:id})
         hideLoader();
 
-        document.getElementById('productNameUpdate').value=res.data['name'];
-        document.getElementById('productPriceUpdate').value=res.data['price'];
-        document.getElementById('productUnitUpdate').value=res.data['unit'];
+        document.getElementById('productCostUpdate').value=res.data['product_cost'];
+        document.getElementById('carringCostUpdate').value=res.data['other_cost'];
+        document.getElementById('InvoiceImgUpdate').value=res.data['invoice_url'];
         document.getElementById('productCategoryUpdate').value=res.data['category_id'];
 
     }
@@ -87,38 +81,33 @@
 
     async function update() {
 
-        let productCategoryUpdate=document.getElementById('productCategoryUpdate').value;
-        let productNameUpdate = document.getElementById('productNameUpdate').value;
-        let productPriceUpdate = document.getElementById('productPriceUpdate').value;
+        let productCostUpdate=document.getElementById('productCostUpdate').value;
+        let carringCostUpdate = document.getElementById('carringCostUpdate').value;
+        let productCategoryUpdate = document.getElementById('productCategoryUpdate').value;
         let productUnitUpdate = document.getElementById('productUnitUpdate').value;
         let updateID=document.getElementById('updateID').value;
         let filePath=document.getElementById('filePath').value;
-        let productImgUpdate = document.getElementById('productImgUpdate').files[0];
+        let InvoiceImgUpdate = document.getElementById('InvoiceImgUpdate').files[0];
 
 
         if (productCategoryUpdate.length === 0) {
             errorToast("Product Category Required !")
         }
-        else if(productNameUpdate.length===0){
+        else if(productCostUpdate.length===0){
             errorToast("Product Name Required !")
         }
-        else if(productPriceUpdate.length===0){
+        else if(carringCostUpdate.length===0){
             errorToast("Product Price Required !")
         }
-        else if(productUnitUpdate.length===0){
-            errorToast("Product Unit Required !")
-        }
-
         else {
 
             document.getElementById('update-modal-close').click();
 
             let formData=new FormData();
-            formData.append('img',productImgUpdate)
+            formData.append('invoice_url',InvoiceImgUpdate)
             formData.append('id',updateID)
-            formData.append('name',productNameUpdate)
-            formData.append('price',productPriceUpdate)
-            formData.append('unit',productNameUpdate)
+            formData.append('product_cost',productCostUpdate)
+            formData.append('other_cost',carringCostUpdate)
             formData.append('category_id',productCategoryUpdate)
             formData.append('file_path',filePath)
 
@@ -129,7 +118,7 @@
             }
 
             showLoader();
-            let res = await axios.post("/update-product",formData,config)
+            let res = await axios.post("/buying-details-update",formData,config)
             hideLoader();
 
             if(res.status===200 && res.data===1){

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\BuyProduct;
 use Illuminate\Http\Request;
 use Symfony\Contracts\Service\Attribute\Required;
+use Illuminate\Support\Facades\File;
+
 
 class buyProductController extends Controller
 {
@@ -17,7 +19,7 @@ class buyProductController extends Controller
     }
 
     public function buyingDetails(){
-        $data = BuyProduct::get();
+        $data = BuyProduct::with('category')->get();
 
         return $data;
     }
@@ -36,7 +38,7 @@ class buyProductController extends Controller
     public function store(Request $request)
     {
         $user_id = $request->header('id');
-        
+
         // Prepare File Name & Path
         $img=$request->file('invoice_url');
 
@@ -57,7 +59,7 @@ class buyProductController extends Controller
             'product_cost'=>$request->input('product_cost'),
             'other_cost'=>$request->input('other_cost'),
             'invoice_url'=>$img_url,
-            
+
         ]);
     }
 
@@ -87,14 +89,54 @@ class buyProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        {
+            $user_id=$request->header('id');
+            $buy_id=$request->input('id');
+    
+            if ($request->hasFile('invoice_url')) {
+    
+                // Upload New File
+                $img=$request->file('invoice_url');
+                $t=time();
+                $file_name=$img->getClientOriginalName();
+                $img_name="{$user_id}-{$t}-{$file_name}";
+                $img_url="buyingInvoice/{$img_name}";
+                $img->move(public_path('buyingInvoice'),$img_name);
+    
+                // Delete Old File
+                $filePath=$request->input('file_path');
+                File::delete($filePath);
+    
+                // Update Product
+    
+                return BuyProduct::where('id',$buy_id)->update([
+                    'product_cost'=>$request->input('product_cost'),
+                    'other_cost'=>$request->input('other_cost'),
+                    'img_url'=>$img_url,
+                    'category_id'=>$request->input('category_id')
+                ]);
+    
+            }
+    
+            else {
+                return BuyProduct::where('id',$buy_id)->update([
+                    'product_cost'=>$request->input('product_cost'),
+                    'other_cost'=>$request->input('other_cost'),
+                    'category_id'=>$request->input('category_id'),
+                ]);
+            }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $user_id=$request->header('id');
+        $buy_id=$request->input('id');
+        $filePath=$request->input('file_path');
+        File::delete($filePath);
+        return BuyProduct::where('id',$buy_id)->delete();
     }
 }

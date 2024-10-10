@@ -15,24 +15,18 @@
                                     <option value="">Select Category</option>
                                 </select>
 
-                                <label class="form-label mt-2">Name</label>
-                                <input type="text" class="form-control" id="productName">
+                                <label class="form-label mt-2">Product Cost</label>
+                                <input type="text" class="form-control" id="productCost">
 
-                                <label class="form-label mt-2">Original Price</label>
-                                <input type="text" class="form-control" id="productOriginalPrice">
-
-                                <label class="form-label mt-2">Price</label>
-                                <input type="text" class="form-control" id="productPrice">
-
-                                <label class="form-label mt-2">Quantity</label>
-                                <input type="text" class="form-control" id="productUnit">
+                                <label class="form-label mt-2">Carring Cost</label>
+                                <input type="text" class="form-control" id="carringCost">
 
                                 <br/>
                                 <img class="w-15" id="newImg" src="{{asset('images/default.jpg')}}"/>
                                 <br/>
 
-                                <label class="form-label">Image</label>
-                                <input oninput="newImg.src=window.URL.createObjectURL(this.files[0])" type="file" class="form-control" id="productImg">
+                                <label class="form-label">Invoice File Upload</label>
+                                <input oninput="newImg.src=window.URL.createObjectURL(this.files[0])" type="file" class="form-control" id="InvoiceImg">
 
                             </div>
                         </div>
@@ -66,25 +60,20 @@
     async function Save() {
 
         let productCategory=document.getElementById('productCategory').value;
-        let productName = document.getElementById('productName').value;
-        let productOriginalPrice = document.getElementById('productOriginalPrice').value;
-        let productPrice = document.getElementById('productPrice').value;
-        let productUnit = document.getElementById('productUnit').value;
-        let productImg = document.getElementById('productImg').files[0];
+        let productCost = document.getElementById('productCost').value;
+        let carringCost = document.getElementById('carringCost').value;
+        let InvoiceImg = document.getElementById('InvoiceImg').files[0];
 
         if (productCategory.length === 0) {
             errorToast("Product Category Required !")
         }
-        else if(productName.length===0){
+        else if(productCost.length===0){
             errorToast("Product Name Required !")
         }
-        else if(productPrice.length===0){
+        else if(carringCost.length===0){
             errorToast("Product Price Required !")
         }
-        else if(productUnit.length===0){
-            errorToast("Product Unit Required !")
-        }
-        else if(!productImg){
+        else if(!InvoiceImg){
             errorToast("Product Image Required !")
         }
 
@@ -93,11 +82,9 @@
             document.getElementById('modal-close').click();
 
             let formData=new FormData();
-            formData.append('img',productImg)
-            formData.append('name',productName)
-            formData.append('buy_price',productOriginalPrice)
-            formData.append('wholesale_price',productPrice)
-            formData.append('buy_qty',productUnit)
+            formData.append('invoice_url',InvoiceImg)
+            formData.append('product_cost',productCost)
+            formData.append('other_cost',carringCost)
             formData.append('category_id',productCategory)
 
             const config = {
@@ -107,7 +94,7 @@
             }
 
             showLoader();
-            let res = await axios.post("/create-product",formData,config)
+            let res = await axios.post("/buying-details-store",formData,config)
             hideLoader();
 
             if(res.status===201){

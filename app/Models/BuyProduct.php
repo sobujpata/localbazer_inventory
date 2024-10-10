@@ -10,4 +10,8 @@ class BuyProduct extends Model
     protected $fillable = [
         "user_id","category_id", "product_cost", "other_cost", "invoice_url"
     ];
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
