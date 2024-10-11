@@ -42,13 +42,17 @@ async function getList() {
     showLoader();
     let res=await axios.get("buying-details");
     hideLoader();
+    console.log(res.data['role'] === 0 );
+
+    
+    
     let tableList=$("#tableList");
     let tableData=$("#tableData");
 
     tableData.DataTable().destroy();
     tableList.empty();
 
-    res.data.forEach(function (item,index) {
+    res.data.data.forEach(function (item,index) {
         const createdAt = new Date(item.created_at);
         // const formattedDate = createdAt.toISOString().split('T')[0]; // '2024-10-10'
         const formattedDate = createdAt.toLocaleString('en-GB', {
@@ -68,7 +72,12 @@ async function getList() {
                     <td>${item['other_cost']}</td>
                     <td>${formattedDate}</td>
                     <td>
-                        <button data-path="" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
+                        <button 
+                            data-path="" 
+                            data-id="${item['id']}" 
+                            class="btn editBtn btn-sm btn-outline-success ${res.data['role'] === 0 ? 'd-none' : ''}">
+                            Edit
+                        </button>
                         <button class="btn btn-sm btn-outline-primary"><a href="${item['invoice_url']}" target="_blank">View</a> </button>
                         <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
                     </td>

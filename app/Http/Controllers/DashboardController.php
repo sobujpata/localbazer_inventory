@@ -17,16 +17,18 @@ class DashboardController extends Controller
     function Summary(Request $request):array{
 
         $user_id=$request->header('id');
+        $user_role = $request->header('role');
 
-        $product= Product::where('user_id',$user_id)->count();
-        $Category= Category::where('user_id',$user_id)->count();
-        $Customer=Customer::where('user_id',$user_id)->count();
-        $Invoice= Invoice::where('user_id',$user_id)->count();
-        $total=  Invoice::where('user_id',$user_id)->sum('total');
-        $vat= Invoice::where('user_id',$user_id)->sum('vat');
-        $payable =Invoice::where('user_id',$user_id)->sum('payable');
+        $product= Product::count();
+        $Category= Category::count();
+        $Customer=Customer::count();
+        $Invoice= Invoice::count();
+        $total=  Invoice::sum('total');
+        $vat= Invoice::sum('vat');
+        $payable =Invoice::sum('payable');
 
         return[
+            'role'=>$user_role,
             'product'=> $product,
             'category'=> $Category,
             'customer'=> $Customer,

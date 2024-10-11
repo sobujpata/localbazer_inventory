@@ -18,10 +18,14 @@ class buyProductController extends Controller
         return view('pages.dashboard.buy-product-page');
     }
 
-    public function buyingDetails(){
+    public function buyingDetails(Request $request){
+        $user_role = $request->header('role');
         $data = BuyProduct::with('category')->get();
 
-        return $data;
+        return response()->json([
+            'role'=>$user_role,
+            'data'=>$data
+        ]);
     }
 
     /**

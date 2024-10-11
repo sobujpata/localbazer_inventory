@@ -2,8 +2,8 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 col-lg-4 p-2">
-                <div class="shadow-sm h-100 bg-white rounded-3 p-3">
+            <div class="col-md-4 col-lg-4 p-1">
+                <div class="shadow-sm h-100 bg-white rounded-3 p-1">
                     <div class="row">
                         <div class="col-8">
                             <span class="text-bold text-dark">BILLED TO </span>
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-lg-4 p-2">
+            <div class="col-md-4 col-lg-4 p-1">
                 <div class="shadow-sm h-100 bg-white rounded-3 p-3">
                     <table class="table  w-100" id="productTable">
                         <thead class="w-100">
@@ -74,13 +74,12 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-lg-4 p-2">
+            <div class="col-md-4 col-lg-4 p-1">
                 <div class="shadow-sm h-100 bg-white rounded-3 p-3">
                     <table class="table table-sm w-100" id="customerTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
-                            <td>Customer Shop</td>
-                            <td>Mobile</td>
+                            <td>Shop Name & <br>Mobile</td>
                             <td>Pick</td>
                         </tr>
                         </thead>
@@ -107,11 +106,11 @@
                     <form id="add-form">
                         <div class="container">
                             <div class="row">
-                                <div class="col-12 p-1">
+                                <div class="col-12">
                                     {{-- <label class="form-label">Product ID *</label> --}}
                                     <input type="text" class="form-control d-none" id="PId">
                                     <label class="form-label mt-2">Product Name *</label>
-                                    <input type="text" class="form-control" id="PName">
+                                    <input type="text" class="form-control" id="PName" readonly>
                                     <label class="form-label mt-2">Product Price *</label>
                                     <input type="text" class="form-control" id="PPrice">
                                     <label class="form-label mt-2">Product Qty *</label>
@@ -256,8 +255,7 @@
 
             res.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
-                        <td><i class="bi bi-person"></i> ${item['shop_name']}</td>
-                        <td><i class="bi bi-person"></i> ${item['mobile']}</td>
+                        <td><i class="bi bi-person"></i> ${item['shop_name']} <br> ${item['mobile']}</td>
                         <td><a data-shop_name="${item['shop_name']}" data-mobile="${item['mobile']}" data-email="${item['email']}" data-id="${item['id']}" class="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
                      </tr>`
                 customerList.append(row)
@@ -296,7 +294,7 @@
 
             res.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
-                        <td> <img class="w-10" src="${item['img_url']}"/> ${item['name']} (${item['buy_price']})</td>
+                        <td>${item['name']} <br> (${item['buy_price']})</td>
                         <td>  (${item['wholesale_price']})</td>
                         <td><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
                      </tr>`

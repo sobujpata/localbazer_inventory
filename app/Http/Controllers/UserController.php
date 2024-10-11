@@ -84,7 +84,7 @@ class UserController extends Controller
         // Check if user exists and password is correct
         if ($user && Hash::check($request->input('password'), $user->password)) {
             // User login successful, issue JWT token
-            $token = JWTToken::CreateToken($request->input('email'), $user->id);
+            $token = JWTToken::CreateToken($request->input('email'), $user->id, $user->role);
             return response()->json([
                 'status' => 'success',
                 'message' => 'User Login Successful',
