@@ -15,10 +15,10 @@ use App\Http\Middleware\TokenVerificationMiddleware;
 
 
 // Web API Routes
-Route::post('/user-registration',[UserController::class,'UserRegistration']);
 Route::post('/user-login',[UserController::class,'UserLogin']);
-Route::post('/send-otp',[UserController::class,'SendOTPCode']);
-Route::post('/verify-otp',[UserController::class,'VerifyOTP']);
+Route::post('/send-otp',[UserController::class,'SendOTPCode'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/verify-otp',[UserController::class,'VerifyOTP'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/user-registration',[UserController::class,'UserRegistration'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/reset-password',[UserController::class,'ResetPassword'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/user-profile',[UserController::class,'UserProfile'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/user-update',[UserController::class,'UpdateProfile'])->middleware([TokenVerificationMiddleware::class]);
@@ -32,9 +32,9 @@ Route::get('/logout',[UserController::class,'UserLogout']);
 // Page Routes
 Route::get('/',[HomeController::class,'HomePage']);
 Route::get('/userLogin',[UserController::class,'LoginPage']);
-Route::get('/userRegistration',[UserController::class,'RegistrationPage']);
-Route::get('/sendOtp',[UserController::class,'SendOtpPage']);
-Route::get('/verifyOtp',[UserController::class,'VerifyOTPPage']);
+Route::get('/userRegistration',[UserController::class,'RegistrationPage'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/sendOtp',[UserController::class,'SendOtpPage'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/verifyOtp',[UserController::class,'VerifyOTPPage'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/resetPassword',[UserController::class,'ResetPasswordPage'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/dashboard',[DashboardController::class,'DashboardPage'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/userProfile',[UserController::class,'ProfilePage'])->middleware([TokenVerificationMiddleware::class]);
@@ -92,7 +92,7 @@ Route::get("/summary",[DashboardController::class,'Summary'])->middleware([Token
 Route::get("/sales-report/{FormDate}/{ToDate}",[ReportController::class,'SalesReport'])->middleware([TokenVerificationMiddleware::class]);
 
 //buy product Route
-Route::get('/buy-product', [buyProductController::class, 'index']);
+Route::get('/buy-product', [buyProductController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);
 
 //buy product API
 Route::get('/buying-details', [buyProductController::class, 'buyingDetails'])->middleware([TokenVerificationMiddleware::class]);

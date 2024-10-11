@@ -10,14 +10,7 @@
                     <input id="password" placeholder="User Password" class="form-control" type="password"/>
                     <br/>
                     <button onclick="SubmitLogin()" class="btn w-100 bg-gradient-primary">Next</button>
-                    <hr/>
-                    <div class="float-end mt-3">
-                        <span>
-                            <a class="text-center ms-3 h6" href="{{url('/userRegistration')}}">Sign Up </a>
-                            <span class="ms-1">|</span>
-                            <a class="text-center ms-3 h6" href="{{url('/sendOtp')}}">Forget Password</a>
-                        </span>
-                    </div>
+
                 </div>
             </div>
         </div>
