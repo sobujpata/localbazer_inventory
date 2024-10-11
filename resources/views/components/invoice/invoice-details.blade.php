@@ -109,7 +109,7 @@
                         <td class="text-center">${index+1}</td>
                         <td>${item['product']['name']}</td>
                         <td>${item['qty']}</td>
-                        <td>${item['product']['wholesale_price']}</td>
+                        <td></td>
                         <td>${item['sale_price']}</td>
                      </tr>`
             invoiceList.append(row)

@@ -185,41 +185,73 @@ class UserController extends Controller
 
 
 
-    function UserProfile(Request $request){
 
-        $email=$request->header('email');
-        $user=User::where('email','=',$email)->first();
+function UserProfile(Request $request)
+{
+    $email = $request->header('email');
+    $user = User::where('email', '=', $email)->first();
+    
+    if (!$user) {
         return response()->json([
-            'status' => 'success',
-            'message' => 'Request Successful',
-            'data' => $user
-        ],200);
+            'status' => 'fail',
+            'message' => 'User not found',
+        ], 404);
     }
 
-    function UpdateProfile(Request $request){
-        try{
-            $email=$request->header('email');
-            $firstName=$request->input('firstName');
-            $lastName=$request->input('lastName');
-            $mobile=$request->input('mobile');
-            $password=$request->input('password');
-            User::where('email','=',$email)->update([
-                'firstName'=>$firstName,
-                'lastName'=>$lastName,
-                'mobile'=>$mobile,
-                'password'=>$password
-            ]);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Request Successful',
-            ],200);
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Request Successful',
+        'data' => $user
+    ], 200);
+}
 
-        }catch (Exception $exception){
+function UpdateProfile(Request $request)
+{
+    try {
+        $email = $request->header('email');
+        $firstName = $request->input('firstName');
+        $lastName = $request->input('lastName');
+        $mobile = $request->input('mobile');
+        $password = $request->input('password');
+
+        // Find user by email
+        $user = User::where('email', '=', $email)->first();
+        
+        if (!$user) {
             return response()->json([
                 'status' => 'fail',
-                'message' => 'Something Went Wrong',
-            ],200);
+                'message' => 'User not found',
+            ], 404);
         }
+
+        // Update user details and hash the password if provided
+        $updateData = [
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'mobile' => $mobile,
+        ];
+
+        if ($password) {
+            // Hash the password before storing
+            $updateData['password'] = Hash::make($password);
+        }
+
+        // Update user profile
+        $user->update($updateData);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Profile updated successfully',
+        ], 200);
+
+    } catch (Exception $exception) {
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'Something went wrong',
+            'error' => $exception->getMessage(),
+        ], 500);
     }
+}
+
 
 }

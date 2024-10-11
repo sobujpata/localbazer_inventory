@@ -67,8 +67,13 @@ class ProductController extends Controller
 
     function ProductList(Request $request)
     {
-        $user_id=$request->header('id');
-        return Product::get();
+        $user_role=$request->header('role');
+        $product = Product::get();
+
+        return response()->json([
+            'data' => $product,
+            'role' => $user_role,
+        ]);
     }
 
 

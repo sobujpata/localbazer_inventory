@@ -46,6 +46,7 @@
         showLoader();
         let res=await axios.get("/user-profile")
         hideLoader();
+        console.log(res);
         if(res.status===200 && res.data['status']==='success'){
             let data=res.data['data'];
             document.getElementById('email').value=data['email'];

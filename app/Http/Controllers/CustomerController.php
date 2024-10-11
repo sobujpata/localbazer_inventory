@@ -27,8 +27,13 @@ class CustomerController extends Controller
 
 
     function CustomerList(Request $request){
-        $user_id=$request->header('id');
-        return Customer::get();
+        $user_role=$request->header('role');
+        $customer = Customer::get();
+
+        return response()->json([
+            'data' => $customer,
+            'role' => $user_role
+        ]);
     }
 
 

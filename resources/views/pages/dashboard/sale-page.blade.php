@@ -2,8 +2,8 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 col-lg-4 p-1">
-                <div class="shadow-sm h-100 bg-white rounded-3 p-1">
+            <div class="col-md-4 col-lg-4 px-1 py-2">
+                <div class="shadow-sm h-100 bg-white rounded-3 px-1 py-3">
                     <div class="row">
                         <div class="col-8">
                             <span class="text-bold text-dark">BILLED TO </span>
@@ -13,7 +13,8 @@
                             <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p>
                         </div>
                         <div class="col-4">
-                            <img class="w-50" src="{{"images/logo.png"}}">
+                            {{-- <img class="w-50" src="{{"images/logo.png"}}"> --}}
+                            <span class="text-bold text-primary">M RSI Tredars </span>
                             <p class="text-bold mx-0 my-1 text-dark">Invoice  </p>
                             <p class="text-xs mx-0 my-1">Date: {{ date('Y-m-d') }} </p>
                         </div>
@@ -57,8 +58,8 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-lg-4 p-1">
-                <div class="shadow-sm h-100 bg-white rounded-3 p-3">
+            <div class="col-md-4 col-lg-4 px-1 py-2">
+                <div class="shadow-sm h-100 bg-white rounded-3 px-1 py-3">
                     <table class="table  w-100" id="productTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
@@ -74,8 +75,8 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-lg-4 p-1">
-                <div class="shadow-sm h-100 bg-white rounded-3 p-3">
+            <div class="col-md-4 col-lg-4 px-1 py-2">
+                <div class="shadow-sm h-100 bg-white rounded-3 px-1 py-3">
                     <table class="table table-sm w-100" id="customerTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
@@ -253,7 +254,7 @@
             customerTable.DataTable().destroy();
             customerList.empty();
 
-            res.data.forEach(function (item,index) {
+            res.data.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
                         <td><i class="bi bi-person"></i> ${item['shop_name']} <br> ${item['mobile']}</td>
                         <td><a data-shop_name="${item['shop_name']}" data-mobile="${item['mobile']}" data-email="${item['email']}" data-id="${item['id']}" class="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
@@ -292,7 +293,7 @@
             productTable.DataTable().destroy();
             productList.empty();
 
-            res.data.forEach(function (item,index) {
+            res.data.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
                         <td>${item['name']} <br> (${item['buy_price']})</td>
                         <td>  (${item['wholesale_price']})</td>

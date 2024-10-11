@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
     <div class="col-md-12 col-sm-12 col-lg-12">
-        <div class="card px-5 py-5">
+        <div class="card px-1 py-4">
             <div class="row justify-content-between ">
                 <div class="align-items-center col">
                     <h4>Buy Products</h4>
@@ -42,10 +42,11 @@ async function getList() {
     showLoader();
     let res=await axios.get("buying-details");
     hideLoader();
-    console.log(res.data['role'] === 0 );
 
-    
-    
+    console.log(res.data['role'] );
+
+
+
     let tableList=$("#tableList");
     let tableData=$("#tableData");
 
@@ -72,14 +73,14 @@ async function getList() {
                     <td>${item['other_cost']}</td>
                     <td>${formattedDate}</td>
                     <td>
-                        <button 
-                            data-path="" 
-                            data-id="${item['id']}" 
-                            class="btn editBtn btn-sm btn-outline-success ${res.data['role'] === 0 ? 'd-none' : ''}">
+                        <button
+                            data-path=""
+                            data-id="${item['id']}"
+                            class="btn editBtn btn-sm btn-outline-success ${res.data['role'] === '1'?'':'d-none'}">
                             Edit
                         </button>
                         <button class="btn btn-sm btn-outline-primary"><a href="${item['invoice_url']}" target="_blank">View</a> </button>
-                        <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
+                        <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger ${res.data['role'] === '1'?'':'d-none'}">Delete</button>
                     </td>
                  </tr>`
         tableList.append(row)

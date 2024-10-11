@@ -1,3 +1,4 @@
+
 <div class="modal animated zoomIn" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -56,7 +57,7 @@
 
     async function FillCategoryDropDown(){
         let res = await axios.get("/list-category")
-        res.data.forEach(function (item,i) {
+        res.data.data.forEach(function (item,i) {
             let option=`<option value="${item['id']}">${item['name']}</option>`
             $("#productCategory").append(option);
         })

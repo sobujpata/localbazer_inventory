@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
     <div class="col-md-12 col-sm-12 col-lg-12">
-        <div class="card px-1 py-1">
+        <div class="card px-1 py-4">
             <div class="row justify-content-between ">
                 <div class="align-items-center col">
                     <h5>Invoices</h5>
@@ -15,8 +15,7 @@
                 <thead>
                     <tr class="bg-light">
                         <th>No</th>
-                        <th>Name</th>
-                        <th>Phone</th>
+                        <th>Name & Phone</th>
                         <th>Total</th>
                         <th>Payable</th>
                         <th>Action</th>
@@ -49,16 +48,15 @@ async function getList() {
     tableData.DataTable().destroy();
     tableList.empty();
 
-    res.data.forEach(function (item,index) {
+    res.data.data.forEach(function (item,index) {
         let row=`<tr>
                     <td>${index+1}</td>
-                    <td>${item['customer']['name']}</td>
-                    <td>${item['customer']['mobile']}</td>
+                    <td>${item['customer']['name']} <br> ${item['customer']['mobile']}</td>
                     <td>${item['total']}</td>
                     <td>${item['payable']}</td>
                     <td>
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm fa-eye"></i></button>
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-trash-alt"></i></button>
+                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${res.data['role'] === '0'?'d-none':''}"><i class="fa text-sm  fa-trash-alt"></i></button>
                     </td>
                  </tr>`
         tableList.append(row)

@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
     <div class="col-md-12 col-sm-12 col-lg-12">
-        <div class="card px-5 py-5">
+        <div class="card px-1 py-4">
             <div class="row justify-content-between ">
                 <div class="align-items-center col">
                     <h4>Customer</h4>
@@ -15,11 +15,8 @@
                 <thead>
                 <tr class="bg-light">
                     <th>No</th>
-                    <th>Name</th>
-                    <th>Shop Name</th>
-                    <th>Address</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
+                    <th>Name & Shop</th>
+                    <th>Contacts</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -48,17 +45,14 @@ async function getList() {
     tableData.DataTable().destroy();
     tableList.empty();
 
-    res.data.forEach(function (item,index) {
+    res.data.data.forEach(function (item,index) {
         let row=`<tr>
                     <td>${index+1}</td>
-                    <td>${item['name']}</td>
-                    <td>${item['shop_name']}</td>
-                    <td>${item['address']}</td>
-                    <td>${item['mobile']}</td>
-                    <td>${item['email']}</td>
+                    <td>${item['name']} <br> ${item['shop_name']}</td>
+                    <td>${item['address']} <br> ${item['mobile']} <br> ${item['email']}</td>
                     <td>
                         <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
-                        <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
+                        <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger ${res.data['role'] === '1'?'':'d-none'}">Delete</button>
                     </td>
                  </tr>`
         tableList.append(row)

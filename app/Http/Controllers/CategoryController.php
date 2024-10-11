@@ -14,7 +14,13 @@ class CategoryController extends Controller
 
     function CategoryList(Request $request){
         $user_id=$request->header('id');
-        return Category::get();
+        $user_role = $request->header('role');
+        $category = Category::get();
+
+        return response()->json([
+            'data'=>$category,
+            'role'=>$user_role,
+        ]);
     }
 
     function CategoryCreate(Request $request){

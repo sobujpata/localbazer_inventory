@@ -72,8 +72,13 @@ class InvoiceController extends Controller
     }
 
     function invoiceSelect(Request $request){
-        $user_id=$request->header('id');
-        return Invoice::with('customer')->get();
+        $user_role=$request->header('role');
+        $invoice = Invoice::with('customer')->get();
+
+        return response()->json([
+            'data' => $invoice,
+            'role' => $user_role
+        ]);
     }
 
     function InvoiceDetails(Request $request){
