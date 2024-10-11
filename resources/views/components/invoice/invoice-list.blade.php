@@ -1,33 +1,33 @@
 <div class="container-fluid">
     <div class="row">
-    <div class="col-md-12 col-sm-12 col-lg-12">
-        <div class="card px-1 py-4">
-            <div class="row justify-content-between ">
-                <div class="align-items-center col">
-                    <h5>Invoices</h5>
+        <div class="col-md-12 col-sm-12 col-lg-12">
+            <div class="card px-1 py-4">
+                <div class="row justify-content-between ">
+                    <div class="align-items-center col">
+                        <h5>Invoices</h5>
+                    </div>
+                    <div class="align-items-center col">
+                        <a    href="{{url("/salePage")}}" class="float-end btn m-0 bg-gradient-primary">Create Sale</a>
+                    </div>
                 </div>
-                <div class="align-items-center col">
-                    <a    href="{{url("/salePage")}}" class="float-end btn m-0 bg-gradient-primary">Create Sale</a>
-                </div>
-            </div>
-            <hr class="bg-dark "/>
-            <table class="table table-responsive" id="tableData">
-                <thead>
-                    <tr class="bg-light">
-                        <th>No</th>
-                        <th>Name & Phone</th>
-                        <th>Total</th>
-                        <th>Payable</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="tableList">
+                <hr class="bg-dark "/>
+                <table class="table table-responsive" id="tableData">
+                    <thead>
+                        <tr class="bg-light">
+                            <th>No</th>
+                            <th>Name & Phone</th>
+                            <th>Total</th>
+                            <th>Payable</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableList">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <script>
@@ -56,6 +56,11 @@ async function getList() {
                     <td>${item['payable']}</td>
                     <td>
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm fa-eye"></i></button>
+                        <button class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0">
+                            <a href="/invoice-edit-page/${item['id']}">
+                                <i class="fa text-sm fa-pen"></i>
+                            </a>
+                        </button>
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${res.data['role'] === '0'?'d-none':''}"><i class="fa text-sm  fa-trash-alt"></i></button>
                     </td>
                  </tr>`
