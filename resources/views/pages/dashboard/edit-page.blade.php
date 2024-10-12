@@ -12,7 +12,7 @@
                             <button type="button" class="float-end btn m-0 bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
                                 + Add Product
                             </button>
-                              
+
                               <!-- Modal -->
                               <div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -27,19 +27,21 @@
                                         <input type="text" name="invoiceID" value="{{ $invoiceTotal->id }}">
                                         <div class="form-group">
                                             <label for="productName">Product Name</label>
-                                            <input type="text" name="productName" class="form-control" value="">
+                                            <select type="text" class="form-control form-select" id="productName" name="productName" required>
+                                                <option value="">Select Product</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="qty">Product Qty</label>
-                                            <input type="text" name="qty" class="form-control" value="">
+                                            <input type="text" name="qty" class="form-control" value="" id="qty" oninput="calculateTotalPrice()" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="productRate">Product Rate</label>
-                                            <input type="text" name="productRate" class="form-control" value="">
+                                            <input type="text" name="productRate" class="form-control" value="" id="productRate" oninput="calculateTotalPrice()" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="salePrice">Total price</label>
-                                            <input type="text" name="salePrice" class="form-control" value="">
+                                            <input type="text" name="salePrice" class="form-control" value="" id="salePrice" readonly>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -47,7 +49,7 @@
                                         </div>
                                       </form>
                                     </div>
-                                   
+
                                   </div>
                                 </div>
                               </div>
@@ -89,30 +91,27 @@
                         <div class="align-items-center col">
                         </div>
                     </div>
-                    <table class="table table-responsive" id="tableData">
-                        <thead>
-                            <tr class="bg-light">
-                                <th>No</th>
-                                <th>Products</th>
-                                <th>Qty</th>
-                                <th>Rate</th>
-                                <th>Amount</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableList">
-                            @foreach ($invoiceProduct as $product)
-                            <tr>
-                                <td>1</td>
-                                <td>{{ $product->product->name }}</td>
-                                <td>{{ $product->qty }}</td>
-                                <td>-</td>
-                                <td>{{ $product->sale_price }}</td>
-                                <td>
+                    <div class="row">
+                        @foreach ($invoiceProduct as $product)
+                        <div class="col-md-3">
+                            <div class="card justify-content-center">
+                                
+                                <div class="card-body">
+                                    <div class="card-image">
+                                        <img src="{{ asset($product->product->img_url) }}" alt="product image" style="width: 100%; height:110px;">
+                                    </div>
+                                    <p>
+                                        <strong>Product Name:</strong> {{ $product->product->name }} <br>
+                                        <strong>Product Quantity:</strong> {{ $product->qty }}<br>
+                                        <strong>Product Rate:</strong> {{ $product->rate }}<br>
+                                        <strong>Product Price:</strong> {{ $product->sale_price }}<br>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
                                     <button type="button" class="btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0" data-bs-toggle="modal" data-bs-target="#editProduct{{ $product->id }}">
                                         <i class="fa text-sm fa-pen"></i>
                                     </button>
-                                      
+
                                       <!-- Modal -->
                                       <div class="modal fade" id="editProduct{{ $product->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -148,15 +147,16 @@
                                                 </div>
                                               </form>
                                             </div>
-                                           
+
                                           </div>
                                         </div>
                                       </div>
 
-                                    <button type="button" class="deleteBtn btn btn-outline-danger text-sm px-3 py-1 btn-sm m-0" data-bs-toggle="modal" data-bs-target="#exampleModal{{$product->id}}">
+                                      {{-- delete button --}}
+                                      <button type="button" class="deleteBtn btn btn-outline-danger text-sm px-3 py-1 btn-sm m-0" data-bs-toggle="modal" data-bs-target="#exampleModal{{$product->id}}">
                                         <i class="fa text-sm  fa-trash-alt"></i>
                                     </button>
-                                      
+
                                       <!-- Modal -->
                                       <div class="modal fade" id="exampleModal{{$product->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -178,14 +178,31 @@
                                           </div>
                                         </div>
                                       </div>
-                                </td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
+                                    </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        FillCategoryDropDown();
+
+        async function FillCategoryDropDown(){
+            let res = await axios.get("/list-product")
+            res.data.data.forEach(function (item,i) {
+                let option=`<option value="${item['id']}">${item['name']}</option>`
+                $("#productName").append(option);
+            })
+        }
+        function calculateTotalPrice() {
+            let qty = parseFloat(document.getElementById("qty").value) || 0;
+            let productRate = parseFloat(document.getElementById("productRate").value) || 0;
+
+            let totalSalePrice = qty * productRate;
+            document.getElementById('salePrice').value = totalSalePrice.toFixed(2); // Set the value in the input field
+        }
+    </script>
 @endsection

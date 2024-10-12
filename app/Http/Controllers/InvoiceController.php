@@ -153,7 +153,7 @@ class InvoiceController extends Controller
         try {
         $invoice_id = $request->input('invoiceID');
         $product_id = $request->input('productID');
-        
+
         $quantity = $request->input('qty');
         $product_rate = $request->input('productRate');
 
@@ -181,7 +181,7 @@ class InvoiceController extends Controller
             'rate' =>$product_rate,
             'sale_price' =>$new_sale_price,
         ]);
-        
+
         DB::commit();
 
         return redirect()->back()->with('success', 'Invoice updated successfully.');
@@ -192,5 +192,53 @@ class InvoiceController extends Controller
             return 0;
         }
 
+    }
+
+    //edit create product
+    public function invoiceCreateProduct(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user_id = $request->header('id');
+            $invoice_id = $request->input('invoiceID');
+            $product_id = $request->input('productName');
+            $product_qty = $request->input('qty');
+            $product_rate = $request->input('productRate');
+
+            $total_sale_price = $product_qty * $product_rate;
+
+            $invoice = Invoice::where('id', $invoice_id)->first();
+            $total_price = $invoice->total;
+            $payable_price = $invoice->payable;
+            $new_total_price = $total_price + $total_sale_price;
+            $new_payable_price = $payable_price + $total_sale_price;
+
+            
+            //update two table
+            $invoice = Invoice::where('id', $invoice_id)->update([
+                'total' => $new_total_price,
+                'payable' => $new_payable_price,
+                ]);
+
+            
+            //invoiceProduct table update
+            $invoice_products = InvoiceProduct::create([
+                'user_id' =>$user_id,    
+                'invoice_id' => $invoice_id,
+                'product_id' => $product_id,
+                'qty' => $product_qty,
+                'rate' => $product_rate,
+                'sale_price' => $total_sale_price,
+                ]);
+
+            // dd($invoice_products);
+            DB::commit();
+            return redirect()->back()->with('success', 'Product added successfully.');
+        }
+        catch (Exception $e) {
+            DB::rollBack(); 
+            return 0;
+
+        }
     }
 }
