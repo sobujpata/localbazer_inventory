@@ -36,6 +36,7 @@ class ProductController extends Controller
         // Save To Database
         return Product::create([
             'name'=>$request->input('name'),
+            'eng_name'=>$request->input('eng_name'),
             'buy_price'=>$request->input('buy_price'),
             'buy_qty'=>$request->input('buy_qty'),
             'wholesale_price'=>$request->input('wholesale_price'),
@@ -78,47 +79,77 @@ class ProductController extends Controller
 
 
 
-
-    function UpdateProduct(Request $request)
+    public function UpdateProduct(Request $request)
     {
-        $user_id=$request->header('id');
-        $product_id=$request->input('id');
-
+        // Validate input data
+        $validatedData = $request->validate([
+            'id' => 'required|integer',
+            'name' => 'required|string|max:255',
+            'eng_name' => 'required|string|max:255',
+            'buy_price' => 'required|numeric',
+            'buy_qty' => 'required|integer',
+            'wholesale_price' => 'required|numeric',
+            'category_id' => 'required|integer',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensure image validation
+        ]);
+    
+        $user_id = $request->header('id');
+        $product_id = $request->input('id');
+    
         if ($request->hasFile('img')) {
-
-            // Upload New File
-            $img=$request->file('img');
-            $t=time();
-            $file_name=$img->getClientOriginalName();
-            $img_name="{$user_id}-{$t}-{$file_name}";
+            // Upload new file securely
+            $img = $request->file('img');
+            $t = time();
+            $file_name = $img->getClientOriginalName();
+            $img_name = "{$user_id}-{$t}-{$file_name}";
             $img_url="uploads/{$img_name}";
-            $img->move(public_path('uploads'),$img_name);
 
-            // Delete Old File
-            $filePath=$request->input('file_path');
-            File::delete($filePath);
 
-            // Update Product
-
-            return Product::where('id',$product_id)->update([
-                'name'=>$request->input('name'),
-                'buy_price'=>$request->input('buy_price'),
-                'wholesale_price'=>$request->input('wholesale_price'),
-                'buy_qty'=>$request->input('buy_qty'),
-                'img_url'=>$img_url,
-                'category_id'=>$request->input('category_id')
+        // Upload File
+        $img->move(public_path('uploads'),$img_name); // Store in public disk
+    
+            // Delete old file if it exists
+            $filePath = $request->input('file_path');
+            if (File::exists(public_path($filePath))) {
+                File::delete(public_path($filePath));
+            }
+    
+            // Update product with new image
+            $updated = Product::where('id', $product_id)->update([
+                'name' => $request->input('name'),
+                'eng_name' => $request->input('eng_name'),
+                'buy_price' => $request->input('buy_price'),
+                'buy_qty' => $request->input('buy_qty'),
+                'wholesale_price' => $request->input('wholesale_price'),
+                'img_url' => $img_url,
+                'category_id' => $request->input('category_id'),
             ]);
-
+    
+            if ($updated) {
+                return response()->json(['message' => 'Product updated with new image'], 200);
+            } else {
+                return response()->json(['message' => 'Failed to update product'], 500);
+            }
         }
-
-        else {
-            return Product::where('id',$product_id)->update([
-                'name'=>$request->input('name'),
-                'buy_price'=>$request->input('buy_price'),
-                'wholesale_price'=>$request->input('wholesale_price'),~
-                'buy_qty'=>$request->input('buy_qty'),
-                'category_id'=>$request->input('category_id'),
-            ]);
+    
+        // Update product without image
+        $updated = Product::where('id', $product_id)->update([
+            'name' => $request->input('name'),
+            'eng_name' => $request->input('eng_name'),
+            'buy_price' => $request->input('buy_price'),
+            'buy_qty' => $request->input('buy_qty'),
+            'wholesale_price' => $request->input('wholesale_price'),
+            'category_id' => $request->input('category_id'),
+        ]);
+    
+        if ($updated) {
+            return response()->json([
+                'status'=>'success',
+                'message' => 'Product updated successfully'
+            ], 200);
+        } else {
+            return response()->json(['message' => 'Failed to update product'], 500);
         }
     }
+    
 }

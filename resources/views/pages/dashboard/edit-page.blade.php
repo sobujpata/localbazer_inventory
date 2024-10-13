@@ -56,42 +56,15 @@
                         </div>
                     </div>
                     <hr class="bg-dark "/>
-                    <form action="">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-grou">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" class="form-control" value="{{ $customerDetails->name }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-grou">
-                                    <label for="mobile">Mobile</label>
-                                    <input type="text" name="mobile" class="form-control" value="{{ $customerDetails->mobile }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-grou">
-                                    <label for="total">Total</label>
-                                    <input type="text" name="total" class="form-control" value="{{ $invoiceTotal->total }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-grou">
-                                    <label for="payable">Payable</label>
-                                    <input type="text" name="payable" class="form-control" value="{{ $invoiceTotal->payable }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="row justify-content-between py-4">
-                        <div class="align-items-center col">
-                            <h5>Product Details</h5>
-                        </div>
-                        <div class="align-items-center col">
-                        </div>
+                    <div class="row px-2 py-2">
+                            <div class="col-md-3">Name : <strong>{{ $customerDetails->name }}</strong></div>
+                            <div class="col-md-3">Mobile : <strong>{{ $customerDetails->mobile }}</strong></div>
+                            <div class="col-md-3">Total : <strong>{{ $invoiceTotal->total }}</strong></div>
+                            <div class="col-md-3">Payable : <strong>{{ $invoiceTotal->payable }}</strong></div>
                     </div>
                     <div class="row">
+                       
+                        
                         @foreach ($invoiceProduct as $product)
                         <div class="col-md-3">
                             <div class="card justify-content-center">

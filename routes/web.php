@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\buyProductController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CustomerContactController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 
@@ -74,7 +75,7 @@ Route::post("/customer-by-id",[CustomerController::class,'CustomerByID'])->middl
 // Product API
 Route::post("/create-product",[ProductController::class,'CreateProduct'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/delete-product",[ProductController::class,'DeleteProduct'])->middleware([TokenVerificationMiddleware::class]);
-Route::post("/update-product",[ProductController::class,'UpdateProduct'])->middleware([TokenVerificationMiddleware::class]);
+Route::post( '/update-product', [ProductController::class, 'UpdateProduct'])->name('update-product')->middleware([TokenVerificationMiddleware::class]);
 Route::get("/list-product",[ProductController::class,'ProductList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/product-by-id",[ProductController::class,'ProductByID'])->middleware([TokenVerificationMiddleware::class]);
 
@@ -107,4 +108,9 @@ Route::post('/buying-details-by-id', [buyProductController::class, 'show'])->mid
 Route::post('/buying-details-update', [buyProductController::class, 'update'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/buying-details-delete', [buyProductController::class, 'destroy'])->middleware([TokenVerificationMiddleware::class]);
 
+
+//Collection Route
+Route::get('/collection-list', [CollectionController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/collections', [CollectionController::class, 'CollectionList'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/invoice-create-amount', [CollectionController::class, 'CollectionCreate'])->middleware([TokenVerificationMiddleware::class]);
 

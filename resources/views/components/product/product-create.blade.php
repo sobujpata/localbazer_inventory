@@ -1,6 +1,6 @@
 
 <div class="modal animated zoomIn" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
@@ -16,17 +16,20 @@
                                     <option value="">Select Category</option>
                                 </select>
 
-                                <label class="form-label mt-2">Name</label>
+                                <label class="form-label mt-2">Bangla Name</label>
                                 <input type="text" class="form-control" id="productName">
+
+                                <label class="form-label mt-2">English Name</label>
+                                <input type="text" class="form-control" id="productEngName">
 
                                 <label class="form-label mt-2">Original Price</label>
                                 <input type="text" class="form-control" id="productOriginalPrice">
 
-                                <label class="form-label mt-2">Price</label>
+                                <label class="form-label mt-2">Sale Price</label>
                                 <input type="text" class="form-control" id="productPrice">
 
                                 <label class="form-label mt-2">Quantity</label>
-                                <input type="text" class="form-control" id="productUnit">
+                                <input type="text" class="form-control" id="productQty">
 
                                 <br/>
                                 <img class="w-15" id="newImg" src="{{asset('images/default.jpg')}}"/>
@@ -68,9 +71,10 @@
 
         let productCategory=document.getElementById('productCategory').value;
         let productName = document.getElementById('productName').value;
+        let productEngName = document.getElementById('productEngName').value;
         let productOriginalPrice = document.getElementById('productOriginalPrice').value;
         let productPrice = document.getElementById('productPrice').value;
-        let productUnit = document.getElementById('productUnit').value;
+        let productQty = document.getElementById('productQty').value;
         let productImg = document.getElementById('productImg').files[0];
 
         if (productCategory.length === 0) {
@@ -79,10 +83,13 @@
         else if(productName.length===0){
             errorToast("Product Name Required !")
         }
+        else if(productEngName.length===0){
+            errorToast("Product English Name Required !")
+        }
         else if(productPrice.length===0){
             errorToast("Product Price Required !")
         }
-        else if(productUnit.length===0){
+        else if(productQty.length===0){
             errorToast("Product Unit Required !")
         }
         else if(!productImg){
@@ -96,9 +103,10 @@
             let formData=new FormData();
             formData.append('img',productImg)
             formData.append('name',productName)
+            formData.append('eng_name',productEngName)
             formData.append('buy_price',productOriginalPrice)
             formData.append('wholesale_price',productPrice)
-            formData.append('buy_qty',productUnit)
+            formData.append('buy_qty',productQty)
             formData.append('category_id',productCategory)
 
             const config = {

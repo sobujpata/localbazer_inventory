@@ -61,7 +61,7 @@ async function getList() {
                                 <i class="fa text-sm fa-pen"></i>
                             </a>
                         </button>
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${res.data['role'] === '0'?'d-none':''}"><i class="fa text-sm  fa-trash-alt"></i></button>
+                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${res.data.data['role'] === '1'?'':'d-none'}"><i class="fa text-sm  fa-trash-alt"></i></button>
                     </td>
                  </tr>`
         tableList.append(row)

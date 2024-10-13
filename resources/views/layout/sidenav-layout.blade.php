@@ -77,10 +77,6 @@
         <span class="side-bar-item-caption">Dashboard</span>
     </a>
 
-    <a href="{{url("/buy-product")}}" class="side-bar-item">
-        <i class="bi bi-people"></i>
-        <span class="side-bar-item-caption">Buy Product</span>
-    </a>
     <a href="{{url("/customerPage")}}" class="side-bar-item">
         <i class="bi bi-people"></i>
         <span class="side-bar-item-caption">Customer</span>
@@ -104,6 +100,14 @@
     <a href="{{url('/invoicePage')}}" class="side-bar-item">
         <i class="bi bi-receipt"></i>
         <span class="side-bar-item-caption">Invoice</span>
+    </a>
+    <a href="{{url("/buy-product")}}" class="side-bar-item">
+        <i class="bi bi-people"></i>
+        <span class="side-bar-item-caption">Buy Product</span>
+    </a>
+    <a href="{{url("/collection-list")}}" class="side-bar-item">
+        <i class="bi bi-people"></i>
+        <span class="side-bar-item-caption">Collection</span>
     </a>
 
     <a href="{{url('/reportPage')}}" class="side-bar-item">
