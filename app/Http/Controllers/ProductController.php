@@ -16,35 +16,53 @@ class ProductController extends Controller
     }
 
 
-    function CreateProduct(Request $request)
-    {
-        $user_id=$request->header('id');
+    public function CreateProduct(Request $request)
+{
+    $user_id = $request->header('id');
 
+    // Validation for product creation
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'eng_name' => 'required|string|max:255',
+        'buy_price' => 'required|numeric',
+        'buy_qty' => 'required|integer',
+        'wholesale_price' => 'required|numeric',
+        'category_id' => 'required|integer',
+        'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensures an image file is uploaded
+    ]);
+
+    try {
         // Prepare File Name & Path
-        $img=$request->file('img');
+        $img = $request->file('img');
+        $t = time();
+        $file_name = $img->getClientOriginalName();
+        $img_name = "{$user_id}-{$t}-{$file_name}";
+        $img_url = "uploads/{$img_name}";
 
-        $t=time();
-        $file_name=$img->getClientOriginalName();
-        $img_name="{$user_id}-{$t}-{$file_name}";
-        $img_url="uploads/{$img_name}";
+        // Upload File to the 'uploads' folder in public
+        $img->move(public_path('uploads'), $img_name);
 
-
-        // Upload File
-        $img->move(public_path('uploads'),$img_name);
-
-
-        // Save To Database
-        return Product::create([
-            'name'=>$request->input('name'),
-            'eng_name'=>$request->input('eng_name'),
-            'buy_price'=>$request->input('buy_price'),
-            'buy_qty'=>$request->input('buy_qty'),
-            'wholesale_price'=>$request->input('wholesale_price'),
-            'img_url'=>$img_url,
-            'category_id'=>$request->input('category_id'),
-            'user_id'=>$user_id
+        // Save the product to the database
+        $product = Product::create([
+            'user_id' => $user_id,
+            'name' => $request->input('name'),
+            'eng_name' => $request->input('eng_name'),
+            'buy_price' => $request->input('buy_price'),
+            'buy_qty' => $request->input('buy_qty'),
+            'wholesale_price' => $request->input('wholesale_price'),
+            'img_url' => $img_url,
+            'category_id' => $request->input('category_id'),
         ]);
+
+        // Return a success response
+        return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
+
+    } catch (\Exception $e) {
+        // Return error response in case of failure
+        return response()->json(['message' => 'Product creation failed', 'error' => $e->getMessage()], 500);
     }
+}
+
 
 
     function DeleteProduct(Request $request)

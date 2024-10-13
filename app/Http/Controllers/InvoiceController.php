@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -56,7 +57,14 @@ class InvoiceController extends Controller
                 'product_id' => $EachProduct['product_id'],
                 'qty' =>  $EachProduct['qty'],
                 'sale_price'=>  $EachProduct['sale_price'],
+                'rate' => $EachProduct['sale_price'] / $EachProduct['qty'],
             ]);
+            // Update the product quantity in the Product table
+            $product = Product::find($EachProduct['product_id']); // Find the product by its ID
+            if ($product) {
+                $product->buy_qty -= $EachProduct['qty']; // Decrease the quantity
+                $product->save(); // Save the changes
+            }
         }
 
        DB::commit();
