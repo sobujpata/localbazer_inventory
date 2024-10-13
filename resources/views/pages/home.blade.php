@@ -123,21 +123,21 @@
                 <div class="row justify-content-center ">
                     <div class="col-12 col-md-6 col-lg-3 p-3">
                         <div class="card px-0 text-center">
-                            <img class=" card-img-top mb-3 w-100" src="{{asset('/images/salim.jpg')}}" alt="">
+                            <img class=" card-img-top mb-3 w-100 h-100" src="{{asset('/images/salim.jpg')}}" alt="">
                             <h5>Md Salim Reza</h5>
                             <p class="text-muted mb-4">CO &amp; Founder</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3 p-3">
                         <div class="card px-0 text-center">
-                            <img class=" card-img-top mb-3 w-100" src="{{asset('/images/ibrahim.jpg')}}" alt="">
+                            <img class=" card-img-top mb-3 w-100 h-100" src="{{asset('/images/ibrahim.jpg')}}" alt="">
                             <h5>Md Ibrahim Hossain</h5>
                             <p class="text-muted mb-4">CO &amp; Founder</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-3 p-3">
                         <div class="card px-0 text-center">
-                            <img class=" card-img-top mb-3 w-100" src="{{asset('/images/rubel.jpg')}}" alt="">
+                            <img class=" card-img-top mb-3 w-100 h-100" src="{{asset('/images/rubel.jpg')}}" alt="">
                             <h5>Md Rubel Rana</h5>
                             <p class="text-muted mb-4">CO &amp; Founder</p>
                         </div>
@@ -164,8 +164,10 @@
                         <h4 class="fw-bold">Address</h4>
                         <p class="text-muted mb-5">Bannyakandi Baza, Ullapara, Sirajganj</p>
                         <h4 class="fw-bold">Contact Us</h4>
-                        <p class="text-muted mb-1">localbazer24@gmail.com</p>
-                        <p class="text-muted mb-0">+8801739871705</p>
+                        <p class="text-muted mb-1"><i class="fa fa-envelope"></i> localbazer24@gmail.com</p>
+                        <p class="text-muted mb-0"><i class="fa fa-phone"></i> +8801745760265</p>
+                        <p class="text-muted mb-0"><i class="fa fa-phone"></i> +8801739871705</p>
+                        <p class="text-muted mb-0"><i class="fa fa-phone"></i> +8801771378258</p>
                     </div>
                     <div class="col-12 col-lg-6 offset-lg-1">
                         <form action="" id="save-form">
