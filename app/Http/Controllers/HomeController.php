@@ -38,7 +38,7 @@ class HomeController extends Controller
         }
 
         // Get the filtered list of products and paginate the results
-        $products = $query->paginate(10);  // Paginate with 10 items per page
+        $products = $query->paginate(30);  // Paginate with 10 items per page
 
         // Get distinct categories, names, and English names for filter options
         $categorys = Category::select('id','name')->get();
