@@ -294,7 +294,7 @@
             productList.empty();
 
             res.data.data.forEach(function (item,index) {
-                let row=`<tr class="text-xs">
+                let row=`<tr style="${item['buy_qty'] === '0' ? 'background-color: red; color:white;' : ''}">
                         <td>${item['name']} <br> (${item['buy_price']})</td>
                         <td>  (${item['wholesale_price']})</td>
                         <td><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>

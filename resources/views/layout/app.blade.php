@@ -22,10 +22,11 @@
     <div class="indeterminate"></div>
 </div>
 </div>
-
+@include('layout.partials.nav-home')
 <div>
     @yield('content')
 </div>
+@include('layout.partials.footer')
 <script>
 
 </script>

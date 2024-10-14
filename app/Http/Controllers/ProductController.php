@@ -87,8 +87,7 @@ class ProductController extends Controller
     function ProductList(Request $request)
     {
         $user_role=$request->header('role');
-        $product = Product::get();
-
+        $product = Product::orderBy('buy_qty', 'asc')->get();
         return response()->json([
             'data' => $product,
             'role' => $user_role,
@@ -110,10 +109,10 @@ class ProductController extends Controller
             'category_id' => 'required|integer',
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensure image validation
         ]);
-    
+
         $user_id = $request->header('id');
         $product_id = $request->input('id');
-    
+
         if ($request->hasFile('img')) {
             // Upload new file securely
             $img = $request->file('img');
@@ -125,13 +124,13 @@ class ProductController extends Controller
 
         // Upload File
         $img->move(public_path('uploads'),$img_name); // Store in public disk
-    
+
             // Delete old file if it exists
             $filePath = $request->input('file_path');
             if (File::exists(public_path($filePath))) {
                 File::delete(public_path($filePath));
             }
-    
+
             // Update product with new image
             $updated = Product::where('id', $product_id)->update([
                 'name' => $request->input('name'),
@@ -142,14 +141,14 @@ class ProductController extends Controller
                 'img_url' => $img_url,
                 'category_id' => $request->input('category_id'),
             ]);
-    
+
             if ($updated) {
                 return response()->json(['message' => 'Product updated with new image'], 200);
             } else {
                 return response()->json(['message' => 'Failed to update product'], 500);
             }
         }
-    
+
         // Update product without image
         $updated = Product::where('id', $product_id)->update([
             'name' => $request->input('name'),
@@ -159,7 +158,7 @@ class ProductController extends Controller
             'wholesale_price' => $request->input('wholesale_price'),
             'category_id' => $request->input('category_id'),
         ]);
-    
+
         if ($updated) {
             return response()->json([
                 'status'=>'success',
@@ -169,5 +168,5 @@ class ProductController extends Controller
             return response()->json(['message' => 'Failed to update product'], 500);
         }
     }
-    
+
 }
