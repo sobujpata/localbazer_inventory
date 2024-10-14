@@ -48,11 +48,12 @@
                     </div>
                 </div>
                 @endforeach
-                <div class="pagination">
-                    {{ $products->links() }} <!-- Correct usage for pagination -->
-                </div>
+
             </div>
             @endif
+            <div class="pagination">
+                {{ $products->links() }} <!-- Correct usage for pagination -->
+            </div>
         </div>
     </div>
 @endsection
