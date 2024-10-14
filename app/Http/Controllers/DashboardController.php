@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Category;
+use App\Models\Collection;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -25,7 +26,7 @@ class DashboardController extends Controller
         $Invoice= Invoice::count();
         $total=  Invoice::sum('total');
         $vat= Invoice::sum('vat');
-        $payable =Invoice::sum('payable');
+        $collection =Collection::sum('amount');
 
         return[
             'role'=>$user_role,
@@ -34,8 +35,7 @@ class DashboardController extends Controller
             'customer'=> $Customer,
             'invoice'=> $Invoice,
             'total'=> round($total,2),
-            'vat'=> round($vat,2),
-            'payable'=> round($payable,2)
+            'collection'=> round($collection,2)
         ];
 
 
