@@ -48,7 +48,7 @@ async function getList() {
     tableList.empty();
 
     res.data.data.forEach(function (item,index) {
-        let row = `<tr style="${item['buy_qty'] === '0' ? 'background-color: red; color:white;' : ''}">
+        let row = `<tr style="${item['buy_qty'] <= '0' ? 'background-color: red; color:white;' : ''}">
                     <td><img style="width: 70px; height: 80px;" alt="" src="${item['img_url']}"></td>
                     <td>${item['name']} <br> ${item['eng_name']}</td>
                     <td>${item['buy_price']}</td>
