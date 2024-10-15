@@ -4,9 +4,9 @@
 <section class="pb-5" id="testmonials">
     <div class="container">
         <div class="row ">
-            <div class="col-12 col-lg-8 mx-auto text-center">
-                <span class="text-muted"><h3>Our partner</h3></span>
-                <p class="lead text-muted">At <a href="https://www.localbazer.com/iventory">Localbzara.com/Inventrory</a>, we are proud to collaborate with a network of trusted partners who share our vision for excellence in inventory management. Our partnerships allow us to deliver top-tier services, cutting-edge technology, and seamless integrations to meet the diverse needs of businesses around the globe.</p>
+            <div class="col-12 col-lg-8 mx-auto text-center pt-4">
+                <span class="text-muted"><h2>Our partner</h2></span>
+                <p class="lead text-muted" style="text-align: justify;">At <a href="https://www.localbazer.com/iventory">Localbzara.com/Inventrory</a>, we are proud to collaborate with a network of trusted partners who share our vision for excellence in inventory management. Our partnerships allow us to deliver top-tier services, cutting-edge technology, and seamless integrations to meet the diverse needs of businesses around the globe.</p>
             </div>
         </div>
         <br/>

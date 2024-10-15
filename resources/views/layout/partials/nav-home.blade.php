@@ -3,7 +3,7 @@
         <a class="navbar-brand" href="{{url('/')}}">
             <img class="img-fluid" src="{{asset('/images/logo.png')}}" alt="" width="96px">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header01" aria-controls="header01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler border bg-body" type="button" data-bs-toggle="collapse" data-bs-target="#header01" aria-controls="header01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="header01">

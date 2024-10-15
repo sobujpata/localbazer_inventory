@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row ">
             <div class="col-12 col-lg-8 mx-auto">
-                <span class="text-muted text-center"><h3>Our Service</h3></span>
-                <p class="lead text-muted">At <a href="https://www.localbazer.com/iventory">Localbzara.com/Inventrory</a>, we are proud to collaborate with a network of trusted partners who share our vision for excellence in inventory management. Our partnerships allow us to deliver top-tier services, cutting-edge technology, and seamless integrations to meet the diverse needs of businesses around the globe.</p>
+                <span class="text-muted text-center"><h2>Our Service</h2></span>
+                <p class="lead text-muted" style="text-align: justify;">At <a href="https://www.wholesale.localbazer.com">wholesale.Localbzara.com</a>, we are proud to collaborate with a network of trusted partners who share our vision for excellence in inventory management. Our partnerships allow us to deliver top-tier services, cutting-edge technology, and seamless integrations to meet the diverse needs of businesses around the globe.</p>
                  <h5>Why Choose Our Wholesale Service?</h5>
                  <ol>
                     <li>
