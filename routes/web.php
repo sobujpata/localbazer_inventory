@@ -121,4 +121,4 @@ Route::post('/invoice-create-amount', [CollectionController::class, 'CollectionC
 
 
 //invoice product Route
-Route::get('/search-invoice', [InvoiceProductController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/search-invoice', [InvoiceProductController::class, 'index'])->name('invoice.product.search')->middleware([TokenVerificationMiddleware::class]);
