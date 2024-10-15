@@ -99,7 +99,7 @@
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
                                     Tk <span id="total"></span>
                                 </h5>
-                                <p class="mb-0 text-sm">Total Sale</p>
+                                <p class="mb-0 text-sm">Total Order</p>
                             </div>
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
@@ -111,6 +111,146 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100 bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    $ <span id="totalLastMont"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Order Last Month</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    $ <span id="totalCurrentMonth"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Order Curren Month</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    $ <span id="totalLastWeek"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Order Last Week</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    $ <span id="totalCurrentWeek"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Order Curren Week</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    $ <span id="totalPreviosDay"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Order Previous Day</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    $ <span id="totalTodayDay"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Order Today</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
 
 
 
@@ -137,12 +277,21 @@
             </div>
         </div>
 
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Daily Order Chart</h5>
+            <canvas id="myChart" width="600" height="200"></canvas>
+        </div>
     </div>
 </div>
 
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 <script>
     getList();
     async function getList() {
@@ -153,8 +302,42 @@
         document.getElementById('customer').innerText=res.data['customer']
         document.getElementById('invoice').innerText=res.data['invoice']
         document.getElementById('total').innerText=res.data['total']
-        // document.getElementById('vat').innerText=res.data['vat']
         document.getElementById('collection').innerText=res.data['collection']
+        document.getElementById('totalLastMont').innerText=res.data['total_last_month_earn']
+        document.getElementById('totalCurrentMonth').innerText=res.data['total_current_month_earn']
+        document.getElementById('totalLastWeek').innerText=res.data['total_last_week_earn']
+        document.getElementById('totalCurrentWeek').innerText=res.data['total_current_week_earn']
+        document.getElementById('totalPreviosDay').innerText=res.data['total_previous_day_earn']
+        document.getElementById('totalTodayDay').innerText=res.data['total_today_earn']
+
+
+        let labels = res.data['labels'];
+        let data = res.data['data'];
+        console.log(labels);
+        let ctx = document.getElementById('myChart').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: 'bar', // You can use 'bar', 'line', 'pie', etc.
+            data: {
+                labels: labels, // Dates
+                datasets: [{
+                    label: 'Daily Totals',
+                    data: data,   // Total earnings per day
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(16, 230, 175)',
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        }
+                    }
+                }
+            }
+        });
 
         hideLoader();
     }

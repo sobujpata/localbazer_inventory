@@ -16,7 +16,7 @@
                             </div>
                         @endif
                         <div class="align-items-center col">
-                            <h5>Collection Amount</h5>
+                            <h5>Daily Collection Amount</h5>
                         </div>
                         
                         <div class="align-items-center col">
@@ -72,6 +72,7 @@
                                     <p class="card-text">
                                         Invoice : <strong>{{ $collection['invoice_id'] }}</strong>
                                         Amount : <strong>{{ $collection['amount'] }}</strong> 
+                                        Date : <strong>{{ $collection['created_at'] }}</strong> 
                                     </p>
     
                                     </a>

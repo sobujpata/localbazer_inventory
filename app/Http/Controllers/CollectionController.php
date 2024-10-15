@@ -21,6 +21,7 @@ class CollectionController extends Controller
                 'invoice_id' => $collection->invoice_id,
                 'customer_name' => $customer_name,
                 'invoice_url' => $collection->invoice_url,
+                'created_at' => $collection->created_at,
             ];
         });
 

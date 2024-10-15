@@ -107,7 +107,7 @@
     </a>
     <a href="{{url("/collection-list")}}" class="side-bar-item">
         <i class="bi bi-people"></i>
-        <span class="side-bar-item-caption">Collection</span>
+        <span class="side-bar-item-caption">Daily Collection</span>
     </a>
     <a href="{{url("/search-invoice")}}" class="side-bar-item">
         <i class="bi bi-people"></i>
