@@ -109,6 +109,10 @@
         <i class="bi bi-people"></i>
         <span class="side-bar-item-caption">Collection</span>
     </a>
+    <a href="{{url("/search-invoice")}}" class="side-bar-item">
+        <i class="bi bi-people"></i>
+        <span class="side-bar-item-caption">Invoice Product Search</span>
+    </a>
 
     <a href="{{url('/reportPage')}}" class="side-bar-item">
         <i class="bi bi-file-earmark-bar-graph"></i>

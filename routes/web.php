@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvoiceProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -114,3 +115,6 @@ Route::get('/collection-list', [CollectionController::class, 'index'])->middlewa
 Route::get('/collections', [CollectionController::class, 'CollectionList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/invoice-create-amount', [CollectionController::class, 'CollectionCreate'])->middleware([TokenVerificationMiddleware::class]);
 
+
+//invoice product Route
+Route::get('/search-invoice', [InvoiceProductController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);
