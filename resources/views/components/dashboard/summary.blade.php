@@ -317,6 +317,7 @@
         document.getElementById('totalPreviosDay').innerText=res.data['total_previous_day_earn']
         document.getElementById('totalTodayDay').innerText=res.data['total_today_earn']
 
+        hideLoader();
 
         let labels = res.data['labels'];
         let data = res.data['data'];
@@ -347,6 +348,5 @@
             }
         });
 
-        hideLoader();
     }
 </script>
