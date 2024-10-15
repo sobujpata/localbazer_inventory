@@ -1,4 +1,17 @@
-<div class="container">
+<style>
+    .bg-img {
+        background-image: url("{{ asset('images/login-img.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;   /* Full viewport height */
+        margin: 0; 
+    }
+    .card{
+        background-color: #bd9f9f87 !important;
+    }
+</style>
+<div class="container-flued bg-img">
     <div class="row justify-content-center">
         <div class="col-md-7 animated fadeIn col-lg-6 center-screen">
             <div class="card w-90  p-4">
