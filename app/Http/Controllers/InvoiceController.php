@@ -21,6 +21,9 @@ class InvoiceController extends Controller
     function SalePage():View{
         return view('pages.dashboard.sale-page');
     }
+    function invoicePageAfterPrint():View{
+        return view('pages.dashboard.invoice-page-after-print');
+    }
 
     function invoiceCreate(Request $request){
 
@@ -81,7 +84,16 @@ class InvoiceController extends Controller
 
     function invoiceSelect(Request $request){
         $user_role=$request->header('role');
-        $invoice = Invoice::with('customer')->get();
+        $invoice = Invoice::where('complete', '0')->with('customer')->get();
+
+        return response()->json([
+            'data' => $invoice,
+            'role' => $user_role
+        ]);
+    }
+    function invoicePrinted(Request $request){
+        $user_role=$request->header('role');
+        $invoice = Invoice::where('complete', '1')->with('customer')->get();
 
         return response()->json([
             'data' => $invoice,
@@ -114,6 +126,15 @@ class InvoiceController extends Controller
             DB::rollBack();
             return 0;
         }
+    }
+    function invoiceComplete(Request $request){
+        
+            $user_id=$request->header('id');
+            Invoice::where('id',$request->input('inv_id'))->update([
+                'complete' => 1
+            ]);
+            return 1;
+       
     }
 
     function invoiceEditPage(Request $request)

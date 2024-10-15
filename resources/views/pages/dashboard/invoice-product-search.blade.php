@@ -10,7 +10,7 @@
                             <form action="{{ route('invoice.product.search') }}" method="get">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="invoice" placeholder="Search Invoice No" value="{{ request('invoice') }}">
+                                        <input type="text" class="form-control" name="invoice" placeholder="Search by Invoice IDs (use space to separate)" value="{{ request('invoice') }}">
                                     </div>
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-primary">Search</button>

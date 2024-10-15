@@ -91,12 +91,15 @@ Route::post("/invoice-create",[InvoiceController::class,'invoiceCreate'])->middl
 Route::get("/invoice-select",[InvoiceController::class,'invoiceSelect'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/invoice-details",[InvoiceController::class,'InvoiceDetails'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/invoice-delete",[InvoiceController::class,'invoiceDelete'])->middleware([TokenVerificationMiddleware::class]);
+Route::post("/invoice-complete",[InvoiceController::class,'invoiceComplete'])->middleware([TokenVerificationMiddleware::class]);
+Route::get("/invoice-printed",[InvoiceController::class,'invoicePrinted'])->middleware([TokenVerificationMiddleware::class]);
 
 //Invoice details edit Route
 Route::get("/invoice-edit-page/{id}",[InvoiceController::class,'invoiceEditPage'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/invoice-delete-product",[InvoiceController::class,'invoiceDeleteProduct'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/invoice-update-product",[InvoiceController::class,'invoiceUpdateProduct'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/invoice-create-product",[InvoiceController::class,'invoiceCreateProduct'])->middleware([TokenVerificationMiddleware::class]);
+Route::get("/invoice-page-after-print",[InvoiceController::class,'invoicePageAfterPrint'])->middleware([TokenVerificationMiddleware::class]);
 
 
 // SUMMARY & Report

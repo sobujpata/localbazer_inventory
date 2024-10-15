@@ -39,7 +39,7 @@ async function getList() {
 
 
     showLoader();
-    let res=await axios.get("/invoice-select");
+    let res=await axios.get("/invoice-printed");
     hideLoader();
 
     let tableList=$("#tableList");
@@ -62,7 +62,6 @@ async function getList() {
                             </a>
                         </button>
                         
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="completeBtn btn btn-outline-primary text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-check"></i></button>
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${res.data.data['role'] === '1'?'':'d-none'}"><i class="fa text-sm  fa-trash-alt"></i></button>
                     </td>
                  </tr>`
