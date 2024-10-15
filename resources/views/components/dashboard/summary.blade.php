@@ -282,7 +282,7 @@
     <div class="row">
         <div class="col-md-12">
             <h5>Daily Order Chart</h5>
-            <canvas id="myChart" width="600" height="200"></canvas>
+            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
         </div>
     </div>
 </div>
@@ -315,6 +315,7 @@
         let data = res.data['data'];
         console.log(labels);
         let ctx = document.getElementById('myChart').getContext('2d');
+        var barColors = ["red", "green","blue","orange","brown"];
         let myChart = new Chart(ctx, {
             type: 'bar', // You can use 'bar', 'line', 'pie', etc.
             data: {
@@ -323,7 +324,7 @@
                     label: 'Daily Totals',
                     data: data,   // Total earnings per day
                     borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(16, 230, 175)',
+                    backgroundColor: barColors,
                     fill: true
                 }]
             },
