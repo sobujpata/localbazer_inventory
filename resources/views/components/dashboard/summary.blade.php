@@ -119,7 +119,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    $ <span id="totalLastMont"></span>
+                                    Tk <span id="totalLastMont"></span>
                                 </h5>
                                 <p class="mb-0 text-sm">Total Order Last Month</p>
                             </div>
@@ -143,7 +143,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    $ <span id="totalCurrentMonth"></span>
+                                    Tk <span id="totalCurrentMonth"></span>
                                 </h5>
                                 <p class="mb-0 text-sm">Total Order Curren Month</p>
                             </div>
@@ -167,7 +167,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    $ <span id="totalLastWeek"></span>
+                                    Tk <span id="totalLastWeek"></span>
                                 </h5>
                                 <p class="mb-0 text-sm">Total Order Last Week</p>
                             </div>
@@ -190,7 +190,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    $ <span id="totalCurrentWeek"></span>
+                                    Tk <span id="totalCurrentWeek"></span>
                                 </h5>
                                 <p class="mb-0 text-sm">Total Order Curren Week</p>
                             </div>
@@ -212,7 +212,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    $ <span id="totalPreviosDay"></span>
+                                    Tk <span id="totalPreviosDay"></span>
                                 </h5>
                                 <p class="mb-0 text-sm">Total Order Previous Day</p>
                             </div>
@@ -234,7 +234,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    $ <span id="totalTodayDay"></span>
+                                    Tk <span id="totalTodayDay"></span>
                                 </h5>
                                 <p class="mb-0 text-sm">Total Order Today</p>
                             </div>
@@ -281,8 +281,15 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h5>Daily Order Chart</h5>
-            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Daily Order Chart :</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart" style="width:100%;"></canvas>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
