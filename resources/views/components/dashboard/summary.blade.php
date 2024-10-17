@@ -526,7 +526,7 @@
         let dataCollection = res.data['data_collection'];
         // console.log(labels);
         let ctxCollection = document.getElementById('myChartCollection').getContext('2d');
-        var barColors = ["red", "green","blue","orange","brown"];
+        var barColors = ["blue", "brown","red","orange","green"];
         let myChartCollection = new Chart(ctxCollection, {
             type: 'bar', // You can use 'bar', 'line', 'pie', etc.
             data: {
