@@ -301,7 +301,7 @@
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
                                     Tk <span id="totalLastMontCollection"></span>
                                 </h5>
-                                <p class="mb-0 text-sm">Total Order Last Month</p>
+                                <p class="mb-0 text-sm">Total Collection Last Month</p>
                             </div>
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
@@ -325,7 +325,7 @@
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
                                     Tk <span id="totalCurrentMonthCollection"></span>
                                 </h5>
-                                <p class="mb-0 text-sm">Total Order Curren Month</p>
+                                <p class="mb-0 text-sm">Total Collection Curren Month</p>
                             </div>
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
@@ -349,7 +349,7 @@
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
                                     Tk <span id="totalLastWeekCollection"></span>
                                 </h5>
-                                <p class="mb-0 text-sm">Total Order Last Week</p>
+                                <p class="mb-0 text-sm">Total Collection Last Week</p>
                             </div>
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
@@ -372,7 +372,7 @@
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
                                     Tk <span id="totalCurrentWeekCollection"></span>
                                 </h5>
-                                <p class="mb-0 text-sm">Total Order Curren Week</p>
+                                <p class="mb-0 text-sm">Total Collection Curren Week</p>
                             </div>
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
@@ -394,7 +394,7 @@
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
                                     Tk <span id="totalPreviosDayCollection"></span>
                                 </h5>
-                                <p class="mb-0 text-sm">Total Order Previous Day</p>
+                                <p class="mb-0 text-sm">Total Collection Previous Day</p>
                             </div>
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
@@ -416,7 +416,7 @@
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
                                     Tk <span id="totalTodayDayCollection"></span>
                                 </h5>
-                                <p class="mb-0 text-sm">Total Order Today</p>
+                                <p class="mb-0 text-sm">Total Collection Today</p>
                             </div>
                         </div>
                         <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
