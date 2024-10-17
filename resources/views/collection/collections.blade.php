@@ -18,7 +18,7 @@
                         <div class="align-items-center col">
                             <h5>Daily Collection Amount</h5>
                         </div>
-                        
+
                         <div class="align-items-center col">
                             <button type="button" class="float-end btn m-0 bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
                                 + Add Invoice
@@ -35,7 +35,7 @@
                                     <div class="modal-body">
                                       <form action="{{ url('/invoice-create-amount') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
-                                        
+
                                         <div class="form-group">
                                             <label for="invoice_id">Inviuce No</label>
                                             <input type="number" name="invoice_id" class="form-control" value="" id="invoice_id" required>
@@ -63,18 +63,18 @@
                     <hr class="bg-dark "/>
                     <div class="row">
                         @foreach($collections as $index => $collection)
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-12 my-2">
                             <div class="card justify-content-center px-1 py-1">
                                 <div class="card-body">
                                     <a class="" href="{{ $collection['invoice_url'] }}" target="_blank">
-    
+
                                     <h5 class="card-title">{{ $collection['customer_name'] ?? 'Unknown' }}</h5>
                                     <p class="card-text">
                                         Invoice : <strong>{{ $collection['invoice_id'] }}</strong>
-                                        Amount : <strong>{{ $collection['amount'] }}</strong> 
-                                        Date : <strong>{{ $collection['created_at'] }}</strong> 
+                                        Amount : <strong>{{ $collection['amount'] }}</strong>
+                                        Date : <strong>{{ $collection['created_at'] }}</strong>
                                     </p>
-    
+
                                     </a>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                         @endforeach
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

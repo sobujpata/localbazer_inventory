@@ -35,10 +35,10 @@
             @else
             <div class="row">
                 @foreach ($products as $product)
-                <div class="col-md-3 col-lg-2 col-6">
+                <div class="col-md-3 col-lg-2 col-6 my-2">
                     <div class="card">
                         <div class="card-body">
-                            <img src="{{ $product->img_url }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="w-100" style="border-radius: 10px; height:140px;">
+                            <img src="{{ $product->img_url }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="w-100" style="border-radius: 10px; height:155px;">
                             <p>
                                 <span><strong>{{ $product->name }}</strong></span><br>
                                 <span><strong>{{ $product->eng_name }}</strong></span><br>

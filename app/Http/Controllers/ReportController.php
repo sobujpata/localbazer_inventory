@@ -18,15 +18,14 @@ class ReportController extends Controller
         $FormDate=date('Y-m-d',strtotime($request->FormDate));
         $ToDate=date('Y-m-d',strtotime($request->ToDate));
 
-        $total=Invoice::where('user_id',$user_id)->whereDate('created_at', '>=', $FormDate)->whereDate('created_at', '<=', $ToDate)->sum('total');
-        $vat=Invoice::where('user_id',$user_id)->whereDate('created_at', '>=', $FormDate)->whereDate('created_at', '<=', $ToDate)->sum('vat');
-        $payable=Invoice::where('user_id',$user_id)->whereDate('created_at', '>=', $FormDate)->whereDate('created_at', '<=', $ToDate)->sum('payable');
-        $discount=Invoice::where('user_id',$user_id)->whereDate('created_at', '>=', $FormDate)->whereDate('created_at', '<=', $ToDate)->sum('discount');
+        $total=Invoice::whereDate('created_at', '>=', $FormDate)->whereDate('created_at', '<=', $ToDate)->sum('total');
+        $vat=Invoice::whereDate('created_at', '>=', $FormDate)->whereDate('created_at', '<=', $ToDate)->sum('vat');
+        $payable=Invoice::whereDate('created_at', '>=', $FormDate)->whereDate('created_at', '<=', $ToDate)->sum('payable');
+        $discount=Invoice::whereDate('created_at', '>=', $FormDate)->whereDate('created_at', '<=', $ToDate)->sum('discount');
 
 
 
-        $list=Invoice::where('user_id',$user_id)
-            ->whereDate('created_at', '>=', $FormDate)
+        $list=Invoice::whereDate('created_at', '>=', $FormDate)
             ->whereDate('created_at', '<=', $ToDate)
             ->with('customer')->get();
 
@@ -43,7 +42,7 @@ class ReportController extends Controller
             'ToDate'=>$request->FormDate
         ];
 
-        
+
         $pdf = Pdf::loadView('report.SalesReport',$data);
 
 
