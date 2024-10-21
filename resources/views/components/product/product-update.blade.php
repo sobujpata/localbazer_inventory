@@ -35,7 +35,7 @@
                                 <label class="form-label mt-2">Image</label>
                                 {{-- <input name="invoice_url"  type="file" class="form-control" id="productImgUpdate"> --}}
                                 <input name="invoice_url" oninput="oldImg.src=window.URL.createObjectURL(this.files[0])"  type="file" class="form-control" id="productImgUpdate">
-                                
+
                                 <input name="id" type="text" class="" id="updateID">
                                 <input name="filePath" type="text" class="" id="filePath">
 
@@ -43,14 +43,13 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </form>
                 <div class="modal-footer">
                     <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                     <button onclick="update()" type="submit" id="update-btn" class="btn bg-gradient-success" >Update</button>
                 </div>
-                {{-- <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                <button onclick="update()" id="update-btn" class="btn bg-gradient-success" >Update</button> --}}
+                
             </div>
         </div>
     </div>
@@ -97,66 +96,66 @@
 
     async function update() {
 
-let productCategoryUpdate=document.getElementById('productCategoryUpdate').value;
-let productNameUpdate = document.getElementById('productNameUpdate').value;
-let productEngNameUpdate = document.getElementById('productEngNameUpdate').value;
-let productOriginalPriceUpdate = document.getElementById('productOriginalPriceUpdate').value;
-let productSalePriceUpdate = document.getElementById('productSalePriceUpdate').value;
-let productQtyUpdate = document.getElementById('productQtyUpdate').value;
+    let productCategoryUpdate=document.getElementById('productCategoryUpdate').value;
+    let productNameUpdate = document.getElementById('productNameUpdate').value;
+    let productEngNameUpdate = document.getElementById('productEngNameUpdate').value;
+    let productOriginalPriceUpdate = document.getElementById('productOriginalPriceUpdate').value;
+    let productSalePriceUpdate = document.getElementById('productSalePriceUpdate').value;
+    let productQtyUpdate = document.getElementById('productQtyUpdate').value;
 
-let updateID=document.getElementById('updateID').value;
-let filePath=document.getElementById('filePath').value;
-let productImgUpdate = document.getElementById('productImgUpdate').files[0];
+    let updateID=document.getElementById('updateID').value;
+    let filePath=document.getElementById('filePath').value;
+    let productImgUpdate = document.getElementById('productImgUpdate').files[0];
 
 
-if (productNameUpdate.length === 0) {
-        errorToast("Product Bangla Name Required!");
-    } else if (productEngNameUpdate.length === 0) {
-        errorToast("Product English Name Required!");
-    } else if (productOriginalPriceUpdate.length === 0) {
-        errorToast("Product Original Price Required!");
-    } else if (productQtyUpdate.length === 0) {
-        errorToast("Product Quantity Required!");
-    } else if (isNaN(productOriginalPriceUpdate)) {
-        errorToast("Original Price must be a number!");
-    } else if (isNaN(productQtyUpdate)) {
-        errorToast("Quantity must be a number!");
-    }
+    if (productNameUpdate.length === 0) {
+            errorToast("Product Bangla Name Required!");
+        } else if (productEngNameUpdate.length === 0) {
+            errorToast("Product English Name Required!");
+        } else if (productOriginalPriceUpdate.length === 0) {
+            errorToast("Product Original Price Required!");
+        } else if (productQtyUpdate.length === 0) {
+            errorToast("Product Quantity Required!");
+        } else if (isNaN(productOriginalPriceUpdate)) {
+            errorToast("Original Price must be a number!");
+        } else if (isNaN(productQtyUpdate)) {
+            errorToast("Quantity must be a number!");
+        }
 
-else {
+    else {
 
-    document.getElementById('update-modal-close').click();
-    let formData=new FormData();
-        formData.append('id', updateID);
-        formData.append('name', productNameUpdate);
-        formData.append('eng_name', productEngNameUpdate);
-        formData.append('buy_price', productOriginalPriceUpdate);
-        formData.append('wholesale_price', productSalePriceUpdate);
-        formData.append('buy_qty', productQtyUpdate);
-        formData.append('category_id', productCategoryUpdate);
-        formData.append('file_path', filePath);
-    
+        document.getElementById('update-modal-close').click();
+        let formData=new FormData();
+            formData.append('id', updateID);
+            formData.append('name', productNameUpdate);
+            formData.append('eng_name', productEngNameUpdate);
+            formData.append('buy_price', productOriginalPriceUpdate);
+            formData.append('wholesale_price', productSalePriceUpdate);
+            formData.append('buy_qty', productQtyUpdate);
+            formData.append('category_id', productCategoryUpdate);
+            formData.append('file_path', filePath);
 
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data'
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+
+        showLoader();
+        let res = await axios.post("/update-product",formData,config)
+        hideLoader();
+        console.log(res)
+
+        if(res.status===200){
+            successToast('Request completed');
+            document.getElementById("update-form").reset();
+            await getList();
+        }
+        else{
+            errorToast("Request fail !")
         }
     }
-
-    showLoader();
-    let res = await axios.post("/update-product",formData,config)
-    hideLoader();
-    console.log(res)
-
-    if(res.status===200){
-        successToast('Request completed');
-        document.getElementById("update-form").reset();
-        await getList();
-    }
-    else{
-        errorToast("Request fail !")
-    }
-}
 }
 
 

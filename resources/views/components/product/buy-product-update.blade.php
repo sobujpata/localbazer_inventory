@@ -36,7 +36,7 @@
 
             <div class="modal-footer">
                 <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                <button onclick="update()" id="update-btn" class="btn bg-gradient-success" >Update</button>
+                <button onclick="update()" type="submit" id="update-btn" class="btn bg-gradient-success" >Update</button>
             </div>
 
         </div>
@@ -47,14 +47,15 @@
 <script>
 
 
-
+    UpdateFillCategoryDropDown();
     async function UpdateFillCategoryDropDown(){
         let res = await axios.get("/list-category")
-        res.data.forEach(function (item,i) {
+        res.data.data.forEach(function (item,i) {
             let option=`<option value="${item['id']}">${item['name']}</option>`
             $("#productCategoryUpdate").append(option);
         })
     }
+
 
 
     async function FillUpUpdateForm(id,filePath){
@@ -65,70 +66,100 @@
 
 
         showLoader();
-        await UpdateFillCategoryDropDown();
+        // await UpdateFillCategoryDropDown();
 
         let res=await axios.post("/buying-details-by-id",{id:id})
         hideLoader();
+        // console.log(res);
 
+        document.getElementById('productCategoryUpdate').value=res.data['category_id'];
         document.getElementById('productCostUpdate').value=res.data['product_cost'];
         document.getElementById('carringCostUpdate').value=res.data['other_cost'];
-        document.getElementById('InvoiceImgUpdate').value=res.data['invoice_url'];
-        document.getElementById('productCategoryUpdate').value=res.data['category_id'];
 
-    }
-
-
-
-    async function update() {
-
-        let productCostUpdate=document.getElementById('productCostUpdate').value;
-        let carringCostUpdate = document.getElementById('carringCostUpdate').value;
-        let productCategoryUpdate = document.getElementById('productCategoryUpdate').value;
-        let productUnitUpdate = document.getElementById('productUnitUpdate').value;
-        let updateID=document.getElementById('updateID').value;
-        let filePath=document.getElementById('filePath').value;
-        let InvoiceImgUpdate = document.getElementById('InvoiceImgUpdate').files[0];
-
-
-        if (productCategoryUpdate.length === 0) {
-            errorToast("Product Category Required !")
         }
-        else if(productCostUpdate.length===0){
-            errorToast("Product Name Required !")
+
+
+        async function update() {
+    let productCostUpdate = document.getElementById('productCostUpdate').value;
+    let carringCostUpdate = document.getElementById('carringCostUpdate').value;
+    let productCategoryUpdate = document.getElementById('productCategoryUpdate').value;
+    let updateID = document.getElementById('updateID').value;
+    let filePath = document.getElementById('filePath').value;
+    let InvoiceImgUpdate = document.getElementById('InvoiceImgUpdate').files[0];
+
+    // Debug logs
+    // console.log("Category ID:", productCategoryUpdate);
+    // console.log("Product Cost:", productCostUpdate);
+    // console.log("Carring Cost:", carringCostUpdate);
+
+    // Validation
+    if (productCategoryUpdate.length === 0) {
+        errorToast("Product Category Required !");
+        return;
+    } else if (productCostUpdate.length === 0) {
+        errorToast("Product Cost Required !");
+        return;
+    } else if (carringCostUpdate.length === 0) {
+        errorToast("Carring Cost Required !");
+        return;
+    } else {
+        document.getElementById('update-modal-close').click(); // Close modal if form is valid
+
+        let formData = new FormData();
+        formData.append('category_id', parseInt(productCategoryUpdate));
+        formData.append('product_cost', productCostUpdate);
+        formData.append('other_cost', carringCostUpdate);
+
+        if (InvoiceImgUpdate) {
+            formData.append('invoice_url', InvoiceImgUpdate);
         }
-        else if(carringCostUpdate.length===0){
-            errorToast("Product Price Required !")
+
+        formData.append('id', updateID);
+        formData.append('file_path', filePath);
+
+        // Log FormData content for debugging
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
         }
-        else {
 
-            document.getElementById('update-modal-close').click();
-
-            let formData=new FormData();
-            formData.append('invoice_url',InvoiceImgUpdate)
-            formData.append('id',updateID)
-            formData.append('product_cost',productCostUpdate)
-            formData.append('other_cost',carringCostUpdate)
-            formData.append('category_id',productCategoryUpdate)
-            formData.append('file_path',filePath)
-
-            const config = {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
             }
+        };
 
+        try {
             showLoader();
-            let res = await axios.post("/buying-details-update",formData,config)
+            let res = await axios.post(`/buying-details-update/${updateID}`, formData, config);
             hideLoader();
 
-            if(res.status===200 && res.data===1){
+            if (res.status === 200) {
                 successToast('Request completed');
                 document.getElementById("update-form").reset();
                 await getList();
+            } else {
+                errorToast("Request failed!");
             }
-            else{
-                errorToast("Request fail !")
+        } catch (error) {
+            hideLoader();
+            if (error.response) {
+                console.error("Validation errors:", error.response.data.errors);
+                console.error("Full Response:", error.response.data); // Log full response for more details
+                if (error.response.status === 422) {
+                    let validationErrors = error.response.data.errors;
+                    for (const key in validationErrors) {
+                        if (validationErrors.hasOwnProperty(key)) {
+                            errorToast(validationErrors[key][0]);
+                        }
+                    }
+                } else {
+                    errorToast("An error occurred while processing the request.");
+                }
             }
         }
     }
+}
+
+
+
 </script>
