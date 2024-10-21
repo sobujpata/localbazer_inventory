@@ -36,8 +36,8 @@
                                 {{-- <input name="invoice_url"  type="file" class="form-control" id="productImgUpdate"> --}}
                                 <input name="invoice_url" oninput="oldImg.src=window.URL.createObjectURL(this.files[0])"  type="file" class="form-control" id="productImgUpdate">
 
-                                <input name="id" type="text" class="" id="updateID">
-                                <input name="filePath" type="text" class="" id="filePath">
+                                <input name="id" type="text" class="d-none" id="updateID">
+                                <input name="filePath" type="text" class="d-none" id="filePath">
 
 
                             </div>
@@ -49,7 +49,7 @@
                     <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                     <button onclick="update()" type="submit" id="update-btn" class="btn bg-gradient-success" >Update</button>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -134,6 +134,10 @@
             formData.append('buy_qty', productQtyUpdate);
             formData.append('category_id', productCategoryUpdate);
             formData.append('file_path', filePath);
+            // Adding the image file to FormData
+            if (productImgUpdate) {
+                    formData.append('img', productImgUpdate);
+                }
 
 
         const config = {
