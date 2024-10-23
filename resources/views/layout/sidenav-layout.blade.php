@@ -122,6 +122,10 @@
         <i class="bi bi-file-earmark-bar-graph"></i>
         <span class="side-bar-item-caption">Report</span>
     </a>
+    <a href="{{url('/partner-list')}}" class="side-bar-item">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span class="side-bar-item-caption">Partners</span>
+    </a>
 
 
 </div>

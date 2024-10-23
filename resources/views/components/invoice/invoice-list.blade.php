@@ -54,6 +54,7 @@ async function getList() {
                     <td>${item['customer']['name']} <br> ${item['customer']['mobile']}</td>
                     <td>${item['total']}</td>
                     <td>${item['payable']}</td>
+                    
                     <td>
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm fa-eye"></i></button>
                         <button class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0">
@@ -61,7 +62,7 @@ async function getList() {
                                 <i class="fa text-sm fa-pen"></i>
                             </a>
                         </button>
-                        
+
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="completeBtn btn btn-outline-primary text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-check"></i></button>
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${res.data.data['role'] === '1'?'':'d-none'}"><i class="fa text-sm  fa-trash-alt"></i></button>
                     </td>

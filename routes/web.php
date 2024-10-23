@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\buyProductController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CustomerContactController;
+use App\Http\Controllers\PartnerController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 
 
@@ -125,3 +126,11 @@ Route::post('/invoice-create-amount', [CollectionController::class, 'CollectionC
 
 //invoice product Route
 Route::get('/search-invoice', [InvoiceProductController::class, 'index'])->name('invoice.product.search')->middleware([TokenVerificationMiddleware::class]);
+
+
+//partners api
+Route::post('/partner-deposit', [PartnerController::class, "DepositAmount"]);
+Route::post('/partner-withdraw', [PartnerController::class, "WithdrawAmount"]);
+
+//partners Route
+Route::get('/partner-list', [PartnerController::class, 'index']);
