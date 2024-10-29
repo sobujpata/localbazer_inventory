@@ -124,14 +124,17 @@ Route::put('/collection-update', [CollectionController::class, 'update'])->name(
 Route::get('/collections', [CollectionController::class, 'CollectionList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/invoice-create-amount', [CollectionController::class, 'CollectionCreate'])->middleware([TokenVerificationMiddleware::class]);
 
+//Due Amount API
+Route::get('/due-amount', [CollectionController::class, 'DueList'])->name('due.index')->middleware([TokenVerificationMiddleware::class]);
+Route::put('/due-amount-update', [CollectionController::class, 'DueUpdate'])->name('update.due')->middleware([TokenVerificationMiddleware::class]);
 
 //invoice product Route
 Route::get('/search-invoice', [InvoiceProductController::class, 'index'])->name('invoice.product.search')->middleware([TokenVerificationMiddleware::class]);
 
 
 //partners api
-Route::post('/partner-deposit', [PartnerController::class, "DepositAmount"]);
-Route::post('/partner-withdraw', [PartnerController::class, "WithdrawAmount"]);
+Route::post('/partner-deposit', [PartnerController::class, "DepositAmount"])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/partner-withdraw', [PartnerController::class, "WithdrawAmount"])->middleware([TokenVerificationMiddleware::class]);
 
 //partners Route
-Route::get('/partner-list', [PartnerController::class, 'index']);
+Route::get('/partner-list', [PartnerController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);

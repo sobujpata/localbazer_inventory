@@ -106,8 +106,12 @@
         <span class="side-bar-item-caption">Buy Product</span>
     </a>
     <a href="{{url("/collection-list")}}" class="side-bar-item">
-        <i class="bi bi-people"></i>
+        <i class="bi bi-currency-dollar"></i>
         <span class="side-bar-item-caption">Daily Collection</span>
+    </a>
+    <a href="{{url("/due-amount")}}" class="side-bar-item">
+        <i class="bi bi-currency-dollar"></i>
+        <span class="side-bar-item-caption">Due Amount</span>
     </a>
     <a href="{{url("/search-invoice")}}" class="side-bar-item">
         <i class="bi bi-people"></i>

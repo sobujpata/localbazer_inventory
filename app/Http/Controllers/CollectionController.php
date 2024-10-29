@@ -104,5 +104,64 @@ class CollectionController extends Controller
         return redirect()->back()->with('message', 'Collection updated successfully.');
     }
 
+    public function DueList(Request $request){
+        // Fetch collections where due is not zero and order by descending
+            $query = Collection::with('invoice.customer')
+            ->where('due', '!=', 0)
+            ->orderBy('created_at', 'desc');
+
+        // Apply filter by search input for invoice_id if provided
+        if ($request->filled('invoice_id')) {
+        $query->where('invoice_id', $request->invoice_id);
+        }
+
+        // Get paginated and mapped data
+        $collections = $query->paginate(16)->through(function ($collection) {
+        return [
+            'collection_id' => $collection->id,
+            'amount' => $collection->amount,
+            'due' => $collection->due,
+            'invoice_id' => $collection->invoice_id,
+            'customer_name' => $collection->invoice->customer->shop_name ?? 'Unknown',
+            'updated_at' => $collection->updated_at,
+            ];
+        });
+
+        // Pass data to Blade view
+        return view('collection.due-amount', compact('collections'));
+    }
+
+    public function DueUpdate(Request $request){
+        // Validate the request data
+        $request->validate([
+            'invoice_id' => 'required|integer|exists:invoices,id',
+            'amount' => 'required|numeric|min:0',
+            'due' => 'required|numeric|min:0',
+        ]);
+
+        // Retrieve headers and input data
+        $user_id = $request->header('id');
+        $collection_id = $request->input('collection_id');
+
+        // Check if the collection exists
+        $collection = Collection::findOrFail($collection_id);
+
+        $old_amount = $request->input('amount');
+        $due_amount = $request->input('due');
+        $new_amount = $collection->amount + $due_amount;
+        $new_due = 0.00;
+
+        // Update the collection record
+        $collection->update([
+            'user_id' => $user_id,
+            'invoice_id' => $request->input('invoice_id'),
+            'amount' => $new_amount,
+            'due' => $new_due,
+        ]);
+
+        // Return a success response
+        return redirect()->back()->with('message', 'Collection updated successfully.');
+    }
+
 
 }
