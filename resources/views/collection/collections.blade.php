@@ -36,7 +36,7 @@
                                             <input type="text" name="amount" class="form-control" value="" id="amount" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="due">Invoice file</label>
+                                            <label for="due">Due Amount</label>
                                             <input type="text" name="due" class="form-control" value="" id="due">
                                         </div>
                                         <div class="modal-footer">
