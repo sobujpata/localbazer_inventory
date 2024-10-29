@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Collection extends Model
 {
     protected $fillable=[
-        'user_id','invoice_id', 'amount', 'invoice_url'
+        'user_id','invoice_id', 'amount','due', 'invoice_url'
     ];
     function invoice():BelongsTo{
         return $this->belongsTo(Invoice::class);

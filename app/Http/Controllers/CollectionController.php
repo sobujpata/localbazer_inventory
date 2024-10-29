@@ -9,33 +9,40 @@ use App\Models\Customer;
 
 class CollectionController extends Controller
 {
-    public function index(){
-        // Fetch collections and map the data as shown in the previous code
-        $collections = Collection::all()->map(function($collection) {
-            $invoice = Invoice::where('id', $collection->invoice_id)->first();
-            $customer_name = $invoice ? Customer::where('id', $invoice->customer_id)->first()->shop_name ?? 'Unknown' : 'Unknown';
+    public function index(Request $request)
+{
+    // Fetch collections with relationships
+    $query = Collection::with('invoice.customer')->orderBy('invoice_id', 'desc');
 
-            return [
-                'collection_id' => $collection->id,
-                'amount' => $collection->amount,
-                'invoice_id' => $collection->invoice_id,
-                'customer_name' => $customer_name,
-                'invoice_url' => $collection->invoice_url,
-                'created_at' => $collection->created_at,
-            ];
-        });
-
-        // Pass data to Blade view
-        // return view('collections', compact('collections'));
-        return view('collection.collections', compact('collections'));
+    // Apply filter by invoice_id if selected
+    if ($request->filled('invoice_id')) {
+        $query->where('invoice_id', $request->invoice_id);
     }
+
+    // Get paginated and mapped data
+    $collections = $query->paginate(12)->through(function ($collection) {
+        return [
+            'collection_id' => $collection->id,
+            'amount' => $collection->amount,
+            'due' => $collection->due,
+            'invoice_id' => $collection->invoice_id,
+            'customer_name' => $collection->invoice->customer->shop_name ?? 'Unknown',
+            'updated_at' => $collection->updated_at,
+        ];
+    });
+
+    // Pass data to Blade view
+    return view('collection.collections', compact('collections'));
+}
+
     public function CollectionCreate(Request $request)
     {
         // Validate the input
         $validatedData = $request->validate([
             'invoice_id' => 'required|exists:invoices,id',
             'amount' => 'required|numeric|min:0',
-            'invoice_url' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048'
+            'due' => 'nullable|numeric|min:0',
+            // 'invoice_url' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048'
         ]);
 
         // Retrieve user_id from the request header or session (make sure it's available)
@@ -47,6 +54,7 @@ class CollectionController extends Controller
 
         $invoice_id = $request->input('invoice_id');
         $amount = $request->input('amount');
+        $due = $request->input('due');
 
         // Check for duplicate invoice_id in the collections table
         $duplicate = Collection::where('invoice_id', $invoice_id)->exists();
@@ -55,33 +63,46 @@ class CollectionController extends Controller
             // If the invoice_id already exists, return back with an error message
             return redirect()->back()->withErrors(['invoice_id' => 'This invoice has already been processed.']);
         }
-
-        // Check if the file was uploaded
-        if ($request->hasFile('invoice_url')) {
-            $img = $request->file('invoice_url');
-
-            // Create a unique file name
-            $t = time();
-            $file_name = $img->getClientOriginalName();
-            $img_name = "{$user_id}-{$t}-{$file_name}";
-            $img_url = "collection-invoice/{$img_name}";
-
-            // Upload file to public/collection-invoice directory
-            $img->move(public_path('collection-invoice'), $img_name);
-        } else {
-            return redirect()->back()->withErrors(['invoice_url' => 'File upload failed. Please try again.']);
-        }
-
         // Create the collection entry in the database
         Collection::create([
             'user_id' => $user_id,
             'invoice_id' => $invoice_id,
             'amount' => $amount,
-            'invoice_url' => $img_url,
+            'due' => $due,
+            // 'invoice_url' => $img_url,
         ]);
 
         // Return a success response
         return redirect()->back()->with('message', 'Collection amount submitted successfully.');
     }
+
+    public function update(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'invoice_id' => 'required|integer|exists:invoices,id',
+            'amount' => 'required|numeric|min:0',
+            'due' => 'nullable|numeric|min:0',
+        ]);
+
+        // Retrieve headers and input data
+        $user_id = $request->header('id');
+        $collection_id = $request->input('collection_id');
+
+        // Check if the collection exists
+        $collection = Collection::findOrFail($collection_id);
+
+        // Update the collection record
+        $collection->update([
+            'user_id' => $user_id,
+            'invoice_id' => $request->input('invoice_id'),
+            'amount' => $request->input('amount'),
+            'due' => $request->input('due', 0),
+        ]);
+
+        // Return a success response
+        return redirect()->back()->with('message', 'Collection updated successfully.');
+    }
+
 
 }

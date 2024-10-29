@@ -119,7 +119,8 @@ Route::post('/buying-details-delete', [buyProductController::class, 'destroy'])-
 
 
 //Collection Route
-Route::get('/collection-list', [CollectionController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/collection-list', [CollectionController::class, 'index'])->name('collection.index')->middleware([TokenVerificationMiddleware::class]);
+Route::put('/collection-update', [CollectionController::class, 'update'])->name('update.collection')->middleware([TokenVerificationMiddleware::class]);
 Route::get('/collections', [CollectionController::class, 'CollectionList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/invoice-create-amount', [CollectionController::class, 'CollectionCreate'])->middleware([TokenVerificationMiddleware::class]);
 
