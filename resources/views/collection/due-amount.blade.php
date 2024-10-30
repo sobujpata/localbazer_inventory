@@ -41,7 +41,7 @@
                                 </ul>
                             </div>
                         @endif
-                        
+
                         @foreach($collections as $index => $collection)
                         <div class="col-md-3 col-6 my-2">
                             <div class="card justify-content-center px-1 py-1 shadow" >
@@ -54,7 +54,7 @@
                                     <button type="button" class="float-end btn m-0 bg-gradient-info" data-bs-toggle="modal" data-bs-target="#EditCollection{{ $collection['collection_id'] }}">
                                         Payment
                                     </button>
-        
+
                                       <!-- Modal -->
                                       <div class="modal fade" id="EditCollection{{ $collection['collection_id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -75,7 +75,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="due">Due Payment</label>
-                                                    <input type="text" name="due" class="form-control" value="{{ $collection['due'] ?? 0 }}" id="due">
+                                                    <input type="number" name="due" class="form-control" value="{{ $collection['due'] ?? 0 }}" id="due">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="due">If Due Amount !</label>
+                                                    <input type="number" name="if_due" class="form-control" value="" id="IfDue">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -83,7 +87,7 @@
                                                 </div>
                                               </form>
                                             </div>
-        
+
                                           </div>
                                         </div>
                                       </div>

@@ -137,6 +137,7 @@ class CollectionController extends Controller
             'invoice_id' => 'required|integer|exists:invoices,id',
             'amount' => 'required|numeric|min:0',
             'due' => 'required|numeric|min:0',
+            'if_due' => 'nullable|numeric|min:0',
         ]);
 
         // Retrieve headers and input data
@@ -148,8 +149,9 @@ class CollectionController extends Controller
 
         $old_amount = $request->input('amount');
         $due_amount = $request->input('due');
+        $if_due = $request->input('if_due');
         $new_amount = $collection->amount + $due_amount;
-        $new_due = 0.00;
+        $new_due = 0.00 + $if_due;
 
         // Update the collection record
         $collection->update([
