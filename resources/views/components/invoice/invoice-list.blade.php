@@ -50,11 +50,11 @@ async function getList() {
 
     res.data.data.forEach(function (item,index) {
         let row=`<tr>
-                    <td>${index+1}</td>
+                    <td>${item['id']}</td>
                     <td>${item['customer']['name']} <br> ${item['customer']['mobile']}</td>
                     <td>${item['total']}</td>
                     <td>${item['payable']}</td>
-                    
+
                     <td>
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm fa-eye"></i></button>
                         <button class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0">

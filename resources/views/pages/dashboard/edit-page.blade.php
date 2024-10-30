@@ -24,7 +24,7 @@
                                     <div class="modal-body">
                                       <form action="{{ url('/invoice-create-product') }}" method="post">
                                         @csrf
-                                        <input type="text" name="invoiceID" value="{{ $invoiceTotal->id }}">
+                                        <input type="text" class="d-none" name="invoiceID" value="{{ $invoiceTotal->id }}">
                                         <div class="form-group">
                                             <label for="productName">Product Name</label>
                                             <select type="text" class="form-control form-select" id="productName" name="productName" required>
@@ -63,12 +63,12 @@
                             <div class="col-md-3">Payable : <strong>{{ $invoiceTotal->payable }}</strong></div>
                     </div>
                     <div class="row">
-                       
-                        
+
+
                         @foreach ($invoiceProduct as $product)
                         <div class="col-md-3">
                             <div class="card justify-content-center">
-                                
+
                                 <div class="card-body">
                                     <div class="card-image">
                                         <img src="{{ asset($product->product->img_url) }}" alt="product image" style="width: 100%; height:110px;">
