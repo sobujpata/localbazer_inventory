@@ -46,9 +46,10 @@
                         <div class="col-md-3 col-6 my-2">
                             <div class="card justify-content-center px-1 py-1 shadow" >
                                 <div class="card-body">
-                                    <h6 class="card-title">Invoice No : {{ $collection['invoice_id'] }}</h6>
+                                    <h5 class="card-title">Invoice No : {{ $collection['invoice_id'] }}</h5>
                                     <p class="card-text">
-                                        {{ $collection['customer_name'] ?? 'Unknown' }}<br>
+                                        Name : {{ $collection['customer_name'] ?? 'Unknown' }}<br>
+                                        Address : {{ $collection['customer_address'] ?? 'Unknown' }}<br>
                                         Due : <strong>{{ $collection['due'] }} Tk</strong> <br>
                                     </p>
                                     <button type="button" class="float-end btn m-0 bg-gradient-info" data-bs-toggle="modal" data-bs-target="#EditCollection{{ $collection['collection_id'] }}">

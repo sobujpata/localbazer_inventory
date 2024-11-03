@@ -5,7 +5,7 @@
             <div class="col-md-12 col-sm-12 col-lg-12">
                 <div class="card px-1 py-4">
                     <div class="row justify-content-between ">
-                        
+
                         <div class="align-items-center col">
                             <h5>Daily Collection Amount</h5>
                         </div>
@@ -83,14 +83,16 @@
                                 </ul>
                             </div>
                         @endif
-                        
+
                         @foreach($collections as $index => $collection)
                         <div class="col-md-3 col-12 my-2">
                             <div class="card justify-content-center px-1 py-1 shadow" >
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $collection['customer_name'] ?? 'Unknown' }}</h5>
+                                    <h5 class="card-title">Invoice : <strong>{{ $collection['invoice_id'] }}</strong></h5>
+
                                     <p class="card-text">
-                                        Invoice : <strong>{{ $collection['invoice_id'] }}</strong><br>
+                                        Name : <strong class="card-title">{{ $collection['customer_name'] ?? 'Unknown' }}</strong><br>
+                                        Address : <strong>{{ $collection['customer_address'] }}</strong><br>
                                         Amount : <strong>{{ $collection['amount'] }}</strong><br>
                                         Due Amount : <strong>{{ $collection['due'] }}</strong> <br>
                                         Date : <strong>{{ $collection['updated_at'] }}</strong>
@@ -98,7 +100,7 @@
                                     <button type="button" class="float-end btn m-0 bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#EditCollection{{ $collection['collection_id'] }}">
                                         Update Collection
                                     </button>
-        
+
                                       <!-- Modal -->
                                       <div class="modal fade" id="EditCollection{{ $collection['collection_id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -130,7 +132,7 @@
                                                 </div>
                                               </form>
                                             </div>
-        
+
                                           </div>
                                         </div>
                                       </div>

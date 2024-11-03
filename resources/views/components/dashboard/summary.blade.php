@@ -88,6 +88,27 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                 Tk <span id="total_store_product_price"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Present Store Product Price</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -816,6 +837,7 @@
         document.getElementById('category').innerText=res.data['category']
         document.getElementById('customer').innerText=res.data['customer']
         document.getElementById('invoice').innerText=res.data['invoice']
+        document.getElementById('total_store_product_price').innerText=res.data['total_store_product_price']
         //total order details
         document.getElementById('total').innerText=res.data['total']
         document.getElementById('totalLastMont').innerText=res.data['total_last_month_earn']

@@ -26,7 +26,8 @@ class CollectionController extends Controller
             'amount' => $collection->amount,
             'due' => $collection->due,
             'invoice_id' => $collection->invoice_id,
-            'customer_name' => $collection->invoice->customer->shop_name ?? 'Unknown',
+            'customer_name' => $collection->invoice->customer->name ?? 'Unknown',
+            'customer_address' => $collection->invoice->customer->address ?? 'Unknown',
             'updated_at' => $collection->updated_at,
         ];
     });
@@ -122,7 +123,8 @@ class CollectionController extends Controller
             'amount' => $collection->amount,
             'due' => $collection->due,
             'invoice_id' => $collection->invoice_id,
-            'customer_name' => $collection->invoice->customer->shop_name ?? 'Unknown',
+            'customer_name' => $collection->invoice->customer->name ?? 'Unknown',
+            'customer_address' => $collection->invoice->customer->address ?? 'Unknown',
             'updated_at' => $collection->updated_at,
             ];
         });

@@ -32,6 +32,7 @@ class DashboardController extends Controller
         $collection =Collection::sum('amount');
         $due =Collection::sum('due');
         $buy_product =BuyProduct::sum('product_cost');
+        $total_store_product_price =Product::sum(DB::raw('buy_price * buy_qty'));
 
 
 
@@ -166,6 +167,7 @@ class DashboardController extends Controller
             'category'=> $Category,
             'customer'=> $Customer,
             'invoice'=> $Invoice,
+            'total_store_product_price'=> $total_store_product_price,
             'total'=> round($total,2),
             'total_last_month_earn'=> round($total_last_month_earn,2),
             'total_current_month_earn'=> round($total_current_month_earn,2),
