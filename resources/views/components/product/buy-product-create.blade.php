@@ -80,7 +80,6 @@
         else {
 
             document.getElementById('modal-close').click();
-
             let formData=new FormData();
             formData.append('invoice_url',InvoiceImg)
             formData.append('product_cost',productCost)
