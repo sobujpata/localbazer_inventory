@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InvoiceProductController;
+use App\Http\Controllers\miscellaneousController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -138,3 +139,9 @@ Route::post('/partner-withdraw', [PartnerController::class, "WithdrawAmount"])->
 
 //partners Route
 Route::get('/partner-list', [PartnerController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);
+
+//Other costing Route
+Route::get('/other-cost', [miscellaneousController::class, 'OtherCost'])->middleware([TokenVerificationMiddleware::class]);
+//Other Costing API
+Route::get('/list-costing', [miscellaneousController::class, 'CostingList'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/create-costing', [miscellaneousController::class, 'CostingCreate'])->middleware([TokenVerificationMiddleware::class]);

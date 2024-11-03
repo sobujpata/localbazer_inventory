@@ -130,6 +130,10 @@
         <i class="bi bi-file-earmark-bar-graph"></i>
         <span class="side-bar-item-caption">Partners</span>
     </a>
+    <a href="{{url('/other-cost')}}" class="side-bar-item">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span class="side-bar-item-caption">Other Cost</span>
+    </a>
 
 
 </div>
