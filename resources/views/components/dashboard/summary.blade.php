@@ -431,6 +431,348 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-12 col-sm-12 col-12 animated fadeIn p-2 ">
+            <div class="card card-plain h-100  bg-dark ">
+                <div class="p-3">
+                    <h4 class="mb-0 text-capitalize font-weight-bold text-white">
+                        Due Details :
+                      </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="due"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total due</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100 bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalLastMontdue"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total due Last Month</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalCurrentMonthdue"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total due Curren Month</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalLastWeekdue"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total due Last Week</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalCurrentWeekdue"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total due Curren Week</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalPreviosDaydue"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total due Previous Day</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalTodayDaydue"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total due Today</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-12 animated fadeIn p-2 ">
+            <div class="card card-plain h-100  bg-dark ">
+                <div class="p-3">
+                    <h4 class="mb-0 text-capitalize font-weight-bold text-white">
+                        Buy Product Details :
+                      </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="buy_product"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total buy product</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100 bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalLastMontbuy_product"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total buy product Last Month</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalCurrentMonthbuy_product"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total buy product Curren Month</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalLastWeekbuy_product"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total buy product Last Week</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalCurrentWeekbuy_product"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total buy product Curren Week</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalPreviosDaybuy_product"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total buy product Previous Day</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                    Tk <span id="totalTodayDaybuy_product"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Buy Product Today</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-success shadow float-end border-radius-md">
+                                <i class="fas fa-money-bill-alt fa-2x"></i>
+                                {{-- <img class="w-100 " src="{{asset('images/icon.svg')}}"/> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -491,6 +833,22 @@
         document.getElementById('totalCurrentWeekCollection').innerText=res.data['total_current_week_earn_collection']
         document.getElementById('totalPreviosDayCollection').innerText=res.data['total_previous_day_earn_collection']
         document.getElementById('totalTodayDayCollection').innerText=res.data['total_today_earn_collection']
+        //Due details
+        document.getElementById('due').innerText=res.data['due']
+        document.getElementById('totalLastMontdue').innerText=res.data['total_last_month_due']
+        document.getElementById('totalCurrentMonthdue').innerText=res.data['total_current_month_due']
+        document.getElementById('totalLastWeekdue').innerText=res.data['total_last_week_due']
+        document.getElementById('totalCurrentWeekdue').innerText=res.data['total_current_week_due']
+        document.getElementById('totalPreviosDaydue').innerText=res.data['total_previous_day_due']
+        document.getElementById('totalTodayDaydue').innerText=res.data['total_today_due']
+        //Buy products details
+        document.getElementById('buy_product').innerText=res.data['buy_product']
+        document.getElementById('totalLastMontbuy_product').innerText=res.data['total_last_month_buy_product']
+        document.getElementById('totalCurrentMonthbuy_product').innerText=res.data['total_current_month_buy_product']
+        document.getElementById('totalLastWeekbuy_product').innerText=res.data['total_last_week_buy_product']
+        document.getElementById('totalCurrentWeekbuy_product').innerText=res.data['total_current_week_buy_product']
+        document.getElementById('totalPreviosDaybuy_product').innerText=res.data['total_previous_day_buy_product']
+        document.getElementById('totalTodayDaybuy_product').innerText=res.data['total_today_buy_product']
 
         //Order chart
         let labels = res.data['labels'];

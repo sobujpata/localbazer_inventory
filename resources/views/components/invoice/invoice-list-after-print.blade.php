@@ -50,7 +50,7 @@ async function getList() {
 
     res.data.data.forEach(function (item,index) {
         let row=`<tr>
-                    <td>${index+1}</td>
+                    <td>${item['id']}</td>
                     <td>${item['customer']['name']} <br> ${item['customer']['mobile']}</td>
                     <td>${item['total']}</td>
                     <td>${item['payable']}</td>
@@ -61,7 +61,7 @@ async function getList() {
                                 <i class="fa text-sm fa-pen"></i>
                             </a>
                         </button>
-                        
+
                         <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${res.data.data['role'] === '1'?'':'d-none'}"><i class="fa text-sm  fa-trash-alt"></i></button>
                     </td>
                  </tr>`

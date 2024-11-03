@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Customer;
 use Illuminate\View\View;
+use App\Models\BuyProduct;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,8 @@ class DashboardController extends Controller
         $total=  Invoice::sum('total');
         $vat= Invoice::sum('vat');
         $collection =Collection::sum('amount');
+        $due =Collection::sum('due');
+        $buy_product =BuyProduct::sum('product_cost');
 
 
 
@@ -45,6 +48,10 @@ class DashboardController extends Controller
                                ->sum('total');
         $total_last_month_earn_collection = Collection::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])
                                ->sum('amount');
+        $total_last_month_due = Collection::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])
+                               ->sum('due');
+        $total_last_month_buy_product = BuyProduct::whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])
+                               ->sum('product_cost');
 
         // Get the start and end dates for the current month
         $startOfCurrentMonth = Carbon::now()->startOfMonth();
@@ -55,7 +62,11 @@ class DashboardController extends Controller
                                         ->sum('total');
         $total_current_month_earn_collection = Collection::whereBetween('created_at', [$startOfCurrentMonth, $endOfCurrentMonth])
                                         ->sum('amount');
-
+        $total_current_month_due = Collection::whereBetween('created_at', [$startOfCurrentMonth, $endOfCurrentMonth])
+                                        ->sum('due');
+        $total_current_month_buy_product = BuyProduct::whereBetween('created_at', [$startOfCurrentMonth, $endOfCurrentMonth])
+                                        ->sum('product_cost');
+                                        // dd($total_current_month_buy_product);
         // Get the start and end dates for the last week
         $startOfLastWeek = Carbon::now()->subWeek()->startOfWeek(Carbon::SUNDAY);  // Start of last week (Sunday)
         $endOfLastWeek = Carbon::now()->subWeek()->endOfWeek(Carbon::SATURDAY);    // End of last week (Saturday)
@@ -65,6 +76,10 @@ class DashboardController extends Controller
                               ->sum('total');
         $total_last_week_earn_collection = Collection::whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])
                               ->sum('amount');
+        $total_last_week_due = Collection::whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])
+                              ->sum('due');
+        $total_last_week_buy_product = BuyProduct::whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])
+                              ->sum('product_cost');
 
 
         // Get the start and end dates for the current week
@@ -76,6 +91,10 @@ class DashboardController extends Controller
                                  ->sum('total');
         $total_current_week_earn_collection = Collection::whereBetween('created_at', [$startOfCurrentWeek, $endOfCurrentWeek])
                                  ->sum('amount');
+        $total_current_week_due = Collection::whereBetween('created_at', [$startOfCurrentWeek, $endOfCurrentWeek])
+                                 ->sum('due');
+        $total_current_week_buy_product = BuyProduct::whereBetween('created_at', [$startOfCurrentWeek, $endOfCurrentWeek])
+                                 ->sum('product_cost');
 
 
                                  // Get the start and end of the previous day
@@ -87,6 +106,10 @@ class DashboardController extends Controller
                                  ->sum('total');
         $total_previous_day_earn_collection = Collection::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
                                  ->sum('amount');
+        $total_previous_day_due = Collection::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
+                                 ->sum('due');
+        $total_previous_day_buy_product = BuyProduct::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
+                                 ->sum('product_cost');
 
         // Get the start of today and the current time
         $startOfToday = Carbon::today()->startOfDay();  // Start of today (00:00:00)
@@ -97,6 +120,10 @@ class DashboardController extends Controller
                            ->sum('total');
         $total_today_earn_collection = Collection::whereBetween('created_at', [$startOfToday, $endOfToday])
                            ->sum('amount');
+        $total_today_due = Collection::whereBetween('created_at', [$startOfToday, $endOfToday])
+                           ->sum('due');
+        $total_today_buy_product = BuyProduct::whereBetween('created_at', [$startOfToday, $endOfToday])
+                           ->sum('product_cost');
 
 
         // Get the current month start and end dates
@@ -117,7 +144,7 @@ class DashboardController extends Controller
             'labels' => $daily_totals->pluck('date'),  // Extract dates
             'data' => $daily_totals->pluck('total'),   // Extract total sums
         ];
-        
+
         // Retrieve and group Collection by day, summing the total for each day
         $daily_totals_collection = Collection::select(
                             DB::raw('DATE(created_at) as date'), // Group by date
@@ -154,6 +181,22 @@ class DashboardController extends Controller
             'total_current_week_earn_collection'=> round($total_current_week_earn_collection,2),
             'total_previous_day_earn_collection'=> round($total_previous_day_earn_collection,2),
             'total_today_earn_collection'=> round($total_today_earn_collection,2),
+            //Due Amount
+            'due'=> round($due,2),
+            'total_last_month_due'=> round($total_last_month_due,2),
+            'total_current_month_due'=> round($total_current_month_due,2),
+            'total_last_week_due'=> round($total_last_week_due,2),
+            'total_current_week_due'=> round($total_current_week_due,2),
+            'total_previous_day_due'=> round($total_previous_day_due,2),
+            'total_today_due'=> round($total_today_due,2),
+            //Buy Product cost
+            'buy_product'=> round($buy_product,2),
+            'total_last_month_buy_product'=> round($total_last_month_buy_product,2),
+            'total_current_month_buy_product'=> round($total_current_month_buy_product,2),
+            'total_last_week_buy_product'=> round($total_last_week_buy_product,2),
+            'total_current_week_buy_product'=> round($total_current_week_buy_product,2),
+            'total_previous_day_buy_product'=> round($total_previous_day_buy_product,2),
+            'total_today_buy_product'=> round($total_today_buy_product,2),
 
             //Order details chart
             'chartData' =>$chartData,

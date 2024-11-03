@@ -9,7 +9,7 @@
                             <span class="text-bold text-dark">BILLED TO </span>
                             <p class="text-xs mx-0 my-1">Name:  <span id="CName"></span> </p>
                             <p class="text-xs mx-0 my-1">Name:  <span id="CMobile"></span> </p>
-                            <p class="text-xs mx-0 my-1">Email:  <span id="CEmail"></span></p>
+                            <p class="text-xs mx-0 my-1">Address:  <span id="CAddress"></span></p>
                             <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p>
                         </div>
                         <div class="col-4">
@@ -63,8 +63,9 @@
                     <table class="table  w-100" id="productTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
-                            <td>Product</td>
-                            <td>Sale</td>
+                            <td>Product <br>
+                                Buy & Sale Price
+                            </td>
                             <td>Pick</td>
                         </tr>
                         </thead>
@@ -80,7 +81,7 @@
                     <table class="table table-sm w-100" id="customerTable">
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
-                            <td>Shop Name & <br>Mobile</td>
+                            <td>Shop Name <br>Mobile & <br> Address</td>
                             <td>Pick</td>
                         </tr>
                         </thead>
@@ -253,8 +254,8 @@
 
             res.data.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
-                        <td><i class="bi bi-person"></i> ${item['shop_name']} <br> ${item['mobile']}</td>
-                        <td><a data-shop_name="${item['shop_name']}" data-mobile="${item['mobile']}" data-email="${item['email']}" data-id="${item['id']}" class="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
+                        <td><i class="bi bi-person"></i> ${item['shop_name']} <br> ${item['mobile']} <br>${item['address']} </td>
+                        <td><a data-shop_name="${item['shop_name']}" data-mobile="${item['mobile']}" data-id="${item['id']}" data-address="${item['address']}" class="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
                      </tr>`
                 customerList.append(row)
             })
@@ -264,12 +265,12 @@
 
                 let CName= $(this).data('shop_name');
                 let CMobile= $(this).data('mobile');
-                let CEmail= $(this).data('email');
+                let CAddress= $(this).data('address');
                 let CId= $(this).data('id');
 
                 $("#CName").text(CName)
                 $("#CMobile").text(CMobile)
-                $("#CEmail").text(CEmail)
+                $("#CAddress").text(CAddress)
                 $("#CId").text(CId)
 
             })
@@ -291,10 +292,13 @@
             productList.empty();
 
             res.data.data.forEach(function (item,index) {
-                let row=`<tr style="${item['buy_qty'] <= '0' ? 'background-color: red; color:white;' : ''}">
-                        <td>${item['name']} <br> (${item['buy_price']})</td>
-                        <td>  (${item['wholesale_price']})</td>
-                        <td><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-outline-dark text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
+                let row=`<tr class="${item['buy_qty'] <= '0' ? 'alert alert-danger text-white' : ''}">
+                        <td>
+                            ${item['name']} <br> ${item['eng_name']} <br>
+                            Buy Price : ${item['buy_price']} <br>
+                            <span class="text-bold">Sale Price : ${item['wholesale_price']}</span>
+                        </td>
+                        <td style="vertical-align: middle;"><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
                      </tr>`
                 productList.append(row)
             })
@@ -309,7 +313,7 @@
 
 
             new DataTable('#productTable',{
-                // order:[[0,'desc']],
+                // order:[[2,'desc']],
                 scrollCollapse: false,
                 info: false,
                 lengthChange: false
