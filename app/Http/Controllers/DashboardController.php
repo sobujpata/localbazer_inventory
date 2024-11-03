@@ -33,6 +33,11 @@ class DashboardController extends Controller
         $due =Collection::sum('due');
         $buy_product =BuyProduct::sum('product_cost');
         $total_store_product_price =Product::sum(DB::raw('buy_price * buy_qty'));
+        // Original sale price
+        $total_sale_buy_price = $buy_product - $total_store_product_price;
+        //Nite sale income
+        $total_sale_income = $collection - $total_sale_buy_price;
+
 
 
 
@@ -168,6 +173,7 @@ class DashboardController extends Controller
             'customer'=> $Customer,
             'invoice'=> $Invoice,
             'total_store_product_price'=> $total_store_product_price,
+            'total_sale_income'=>$total_sale_income,
             'total'=> round($total,2),
             'total_last_month_earn'=> round($total_last_month_earn,2),
             'total_current_month_earn'=> round($total_current_month_earn,2),
