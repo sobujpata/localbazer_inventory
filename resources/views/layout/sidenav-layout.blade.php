@@ -101,6 +101,10 @@
         <i class="bi bi-receipt"></i>
         <span class="side-bar-item-caption">Invoice</span>
     </a>
+    <a href="{{url('/other-cost')}}" class="side-bar-item">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span class="side-bar-item-caption">Balance Sheet</span>
+    </a>
     <a href="{{url("/buy-product")}}" class="side-bar-item">
         <i class="bi bi-people"></i>
         <span class="side-bar-item-caption">Buy Product</span>
@@ -130,10 +134,7 @@
         <i class="bi bi-file-earmark-bar-graph"></i>
         <span class="side-bar-item-caption">Partners</span>
     </a>
-    <a href="{{url('/other-cost')}}" class="side-bar-item">
-        <i class="bi bi-file-earmark-bar-graph"></i>
-        <span class="side-bar-item-caption">Other Cost</span>
-    </a>
+    
 
 
 </div>

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class MiscellaneousCost extends Model
 {
     protected $fillable = [
-        "user_id", "recipient", "reason", "amount", "remarks"
+        "user_id", "recipient", "reason", "amount", "remarks", "balance"
     ];
 
     public function user(): BelongsTo

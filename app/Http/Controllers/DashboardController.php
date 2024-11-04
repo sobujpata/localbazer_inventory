@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use carbon\Carbon;
 use App\Models\Invoice;
+use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Customer;
@@ -10,6 +11,7 @@ use Illuminate\View\View;
 use App\Models\BuyProduct;
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use App\Models\MiscellaneousCost;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -33,10 +35,20 @@ class DashboardController extends Controller
         $due =Collection::sum('due');
         $buy_product =BuyProduct::sum('product_cost');
         $total_store_product_price =Product::sum(DB::raw('buy_price * buy_qty'));
+
         // Original sale price
         $total_sale_buy_price = $buy_product - $total_store_product_price;
         //Nite sale income
         $total_sale_income = $collection - $total_sale_buy_price;
+
+        //total_cost
+        $total_cost = MiscellaneousCost::sum('amount');
+
+        //Total Deposit from partners
+        $total_deposit = Partner::sum('amount');
+
+        $total_deposit_with_collection = $total_deposit + $collection;
+
 
 
 
@@ -172,6 +184,8 @@ class DashboardController extends Controller
             'category'=> $Category,
             'customer'=> $Customer,
             'invoice'=> $Invoice,
+            'total_deposit_with_collection'=>round($total_deposit_with_collection, 2),
+            'total_cost'=> round($total_cost, 2),
             'total_store_product_price'=> round($total_store_product_price, 2),
             'total_sale_income'=>round($total_sale_income,2),
             'total'=> round($total,2),

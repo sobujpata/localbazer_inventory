@@ -48,9 +48,9 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn m-0 bg-gradient-success" data-bs-toggle="modal" data-bs-target="#withdraw{{$partner->id}}">
+                    {{-- <button type="button" class="btn m-0 bg-gradient-success" data-bs-toggle="modal" data-bs-target="#withdraw{{$partner->id}}">
                         Withdraw
-                    </button>
+                    </button> --}}
                     <div class="modal fade" id="withdraw{{$partner->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -68,7 +68,7 @@
                                     <label for="amount">Withdraw Amount</label>
                                     <input type="text" name="amount" class="form-control" value="" id="amount" required>
                                 </div>
-                                
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Save changes</button>
