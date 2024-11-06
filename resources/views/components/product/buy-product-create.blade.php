@@ -15,12 +15,11 @@
                                     <option value="">Select Category</option>
                                 </select>
 
+                                <label class="form-label mt-2">Shop Name</label>
+                                <input type="text" class="form-control" id="shopName">
+
                                 <label class="form-label mt-2">Product Cost</label>
                                 <input type="text" class="form-control" id="productCost">
-
-                                <label class="form-label mt-2">Carring Cost</label>
-                                <input type="text" class="form-control" id="carringCost">
-
                                 <br/>
                                 <img class="w-15" id="newImg" src="{{asset('images/default.jpg')}}"/>
                                 <br/>
@@ -61,7 +60,7 @@
 
         let productCategory=document.getElementById('productCategory').value;
         let productCost = document.getElementById('productCost').value;
-        let carringCost = document.getElementById('carringCost').value;
+        let shopName = document.getElementById('shopName').value;
         let InvoiceImg = document.getElementById('InvoiceImg').files[0];
 
         if (productCategory.length === 0) {
@@ -70,7 +69,7 @@
         else if(productCost.length===0){
             errorToast("Product Name Required !")
         }
-        else if(carringCost.length===0){
+        else if(shopName.length===0){
             errorToast("Product Price Required !")
         }
         else if(!InvoiceImg){
@@ -83,7 +82,7 @@
             let formData=new FormData();
             formData.append('invoice_url',InvoiceImg)
             formData.append('product_cost',productCost)
-            formData.append('other_cost',carringCost)
+            formData.append('shop_name',shopName)
             formData.append('category_id',productCategory)
 
             const config = {

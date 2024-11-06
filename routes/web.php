@@ -145,3 +145,5 @@ Route::get('/other-cost', [miscellaneousController::class, 'OtherCost'])->middle
 //Other Costing API
 Route::get('/list-costing', [miscellaneousController::class, 'CostingList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/create-costing', [miscellaneousController::class, 'CostingCreate'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/costing-by-id', [miscellaneousController::class, 'CostingById'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/update-costing', [miscellaneousController::class, 'CostingUpdate'])->middleware([TokenVerificationMiddleware::class]);

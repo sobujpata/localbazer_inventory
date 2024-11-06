@@ -15,7 +15,7 @@
                                 <label class="form-label">Reason *</label>
                                 <select name="reason" id="reason" class="form-control form-select" required>
                                     <option value="" disabled selected>Select Reason</option>
-                                    <option value="Buying">Buying Products</option>
+                                    {{-- <option value="Buying">Buying Products</option> --}}
                                     <option value="Salary">Salary</option>
                                     <option value="Withdraw">Withdraw</option>
                                 </select>

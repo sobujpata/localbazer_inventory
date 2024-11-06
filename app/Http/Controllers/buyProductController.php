@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Partner;
 use App\Models\BuyProduct;
+use App\Models\Collection;
 use Illuminate\Http\Request;
-use Symfony\Contracts\Service\Attribute\Required;
+use App\Models\MiscellaneousCost;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
+use Symfony\Contracts\Service\Attribute\Required;
 
 
 class buyProductController extends Controller
@@ -41,31 +47,71 @@ class buyProductController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate Request Data
+        $request->validate([
+            'category_id' => 'required|integer',
+            'product_cost' => 'required|numeric',
+            'shop_name' => 'required|string',
+            'invoice_url' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5000', // Adjust file types and max size as needed
+        ]);
+
+        // Calculate Collection, Total Deposit, Product Cost, and Balance
+        $collection = Collection::sum('amount');
+        $total_deposit = Partner::sum('amount');
+        $total_deposit_with_collection = $total_deposit + $collection;
+        $product_cost = $request->input('product_cost');
+        $total_miscellanious_cost = MiscellaneousCost::sum('amount') + $product_cost;
+        $balance = $total_deposit_with_collection - $total_miscellanious_cost;
+
+        // Get User ID from Request Header
         $user_id = $request->header('id');
 
-        // Prepare File Name & Path
-        $img=$request->file('invoice_url');
+        // Handle File Upload
+        if ($request->hasFile('invoice_url')) {
+            $img = $request->file('invoice_url');
+            $t = time();
+            $file_name = $img->getClientOriginalName();
+            $img_name = "{$user_id}-{$t}-{$file_name}";
+            $img_url = "buyingInvoice/{$img_name}";
 
-        $t=time();
-        $file_name=$img->getClientOriginalName();
-        $img_name="{$user_id}-{$t}-{$file_name}";
-        $img_url="buyingInvoice/{$img_name}";
+            // Upload File
+            $img->move(public_path('buyingInvoice'), $img_name);
+        } else {
+            return response()->json(['error' => 'Invoice file is required'], 400);
+        }
 
+        DB::beginTransaction();
+        try {
+            // Save to Database
+            BuyProduct::create([
+                'user_id' => $user_id,
+                'category_id' => $request->input('category_id'),
+                'product_cost' => $product_cost,
+                'other_cost' => 0,
+                'invoice_url' => $img_url,
+            ]);
 
-        // Upload File
-        $img->move(public_path('buyingInvoice'),$img_name);
+            // Create the costing entry
+            MiscellaneousCost::create([
+                'recipient' => $request->input('shop_name'),
+                'reason' => 'Buying',
+                'amount' => $product_cost,
+                'balance' => $balance,
+                'user_id' => $user_id,
+            ]);
 
-
-        // Save To Database
-        return BuyProduct::create([
-            'user_id'=>$user_id,
-            'category_id'=>$request->input('category_id'),
-            'product_cost'=>$request->input('product_cost'),
-            'other_cost'=>$request->input('other_cost'),
-            'invoice_url'=>$img_url,
-
-        ]);
+            DB::commit();
+            return response()->json(['success' => 'Product purchase recorded successfully'], 201);
+        } catch (Exception $e) {
+            DB::rollBack();
+            // Log the error for debugging
+            Log::error("Error in store function: " . $e->getMessage());
+            return response()->json(['error' => 'Failed to record product purchase'], 500);
+        }
     }
+
+
+
 
     /**
      * Display the specified resource.

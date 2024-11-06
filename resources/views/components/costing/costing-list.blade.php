@@ -21,6 +21,7 @@
                     <th>Amount</th>
                     <th>Balanch</th>
                     <th>Date</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody id="tableList">
@@ -65,6 +66,9 @@ async function getList() {
                     <td>${item['amount']}</td>
                     <td>${item['balance']}</td>
                     <td>${formattedDate}</td>
+                    <td>
+                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
+                    </td>
                  </tr>`
         tableList.append(row)
     })
@@ -83,7 +87,7 @@ async function getList() {
 
     new DataTable('#tableData',{
         order:[[0,'desc']],
-        lengthMenu:[5,10,15,20,30]
+        lengthMenu:[20,30,50,100,500]
     });
 
 }

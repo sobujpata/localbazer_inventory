@@ -13,12 +13,13 @@
                                 <select type="text" class="form-control form-select" id="productCategoryUpdate">
                                     <option value="">Select Category</option>
                                 </select>
+                                {{-- <label class="form-label mt-2">Shop Name</label>
+                                <input type="text" class="form-control" id="carringCostUpdate"> --}}
 
                                 <label class="form-label mt-2">Product Cost</label>
                                 <input type="text" class="form-control" id="productCostUpdate">
 
-                                <label class="form-label mt-2">Carring Cost</label>
-                                <input type="text" class="form-control" id="carringCostUpdate">
+
 
                                 <br/>
                                 <img class="w-15" id="oldImg" src="{{asset('images/default.jpg')}}"/>
@@ -74,14 +75,14 @@
 
         document.getElementById('productCategoryUpdate').value=res.data['category_id'];
         document.getElementById('productCostUpdate').value=res.data['product_cost'];
-        document.getElementById('carringCostUpdate').value=res.data['other_cost'];
+        // document.getElementById('carringCostUpdate').value=res.data['other_cost'];
 
         }
 
 
         async function update() {
     let productCostUpdate = document.getElementById('productCostUpdate').value;
-    let carringCostUpdate = document.getElementById('carringCostUpdate').value;
+    // let carringCostUpdate = document.getElementById('carringCostUpdate').value;
     let productCategoryUpdate = document.getElementById('productCategoryUpdate').value;
     let updateID = document.getElementById('updateID').value;
     let filePath = document.getElementById('filePath').value;
@@ -99,16 +100,13 @@
     } else if (productCostUpdate.length === 0) {
         errorToast("Product Cost Required !");
         return;
-    } else if (carringCostUpdate.length === 0) {
-        errorToast("Carring Cost Required !");
-        return;
-    } else {
+    }  else {
         document.getElementById('update-modal-close').click(); // Close modal if form is valid
 
         let formData = new FormData();
         formData.append('category_id', parseInt(productCategoryUpdate));
         formData.append('product_cost', productCostUpdate);
-        formData.append('other_cost', carringCostUpdate);
+        // formData.append('other_cost', carringCostUpdate);
 
         if (InvoiceImgUpdate) {
             formData.append('invoice_url', InvoiceImgUpdate);
