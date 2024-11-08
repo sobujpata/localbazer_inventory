@@ -12,7 +12,7 @@
                         <div class="col-12 text-center">
                             <div class="row">
                                 <div class="col-2 text-left">
-                                    ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold" style="font-size: 14px;"></span>
+                                    
                                  </div>
                                  <div class="col-8 text-center">
                                      <span class="text-center text-bold" style="font-size: 18px;">মেসার্স  আর এস আই ট্রেডার্স</span><br>
@@ -21,7 +21,9 @@
                                         {{-- ই-মেইল : localbazer24@gmail.com --}}
                                     </span>
                                  </div>
-                                 <div class="col-2 text-left"></div>
+                                 <div class="col-2 text-left">
+                                    ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold"></span>
+                                </div>
                             </div>
                             
                             
@@ -30,7 +32,7 @@
                         <div class="row" style="font-size: 10px;">
                             <div class="col-12"><span class="fw-bolder">ক্রেতার বিবরণ :-</span></div>
                             <div class="col-8">দোকানের নাম : <span id="CName" class="fw-bold"></div>
-                            <div class="col-4">মোবাইল নং :<span id="CMobile" class="fw-bold"></div>
+                            <div class="col-4">মোবাইল:<span id="CMobile" class="fw-bold"></div>
                             {{-- <div class="col-6">ই-মেইল : <span id="CEmail" class="fw-bold"></span></div> --}}
                             <div class="col-8">ঠিকানা : <span id="CAddress" class="fw-bold"></span></div>
                             {{-- <div class="col-6">ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold text-2xl"></span></div> --}}
