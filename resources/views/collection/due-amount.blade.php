@@ -48,8 +48,8 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Invoice No : {{ $collection['invoice_id'] }}</h5>
                                     <p class="card-text">
-                                        Name : {{ $collection['customer_name'] ?? 'Unknown' }}<br>
-                                        Address : {{ $collection['customer_address'] ?? 'Unknown' }}<br>
+                                        {{ $collection['customer_name'] ?? 'Unknown' }}<br>
+                                        {{ $collection['customer_address'] ?? 'Unknown' }}<br>
                                         Due : <strong>{{ $collection['due'] }} Tk</strong> <br>
                                     </p>
                                     <button type="button" class="float-end btn m-0 bg-gradient-info" data-bs-toggle="modal" data-bs-target="#EditCollection{{ $collection['collection_id'] }}">

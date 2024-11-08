@@ -91,8 +91,8 @@
                                     <h5 class="card-title">Invoice : <strong>{{ $collection['invoice_id'] }}</strong></h5>
 
                                     <p class="card-text">
-                                        Name : <strong class="card-title">{{ $collection['customer_name'] ?? 'Unknown' }}</strong><br>
-                                        Address : <strong>{{ $collection['customer_address'] }}</strong><br>
+                                        <strong class="card-title">{{ $collection['customer_name'] ?? 'Unknown' }}</strong><br>
+                                        <strong>{{ $collection['customer_address'] }}</strong><br>
                                         Amount : <strong>{{ $collection['amount'] }}</strong><br>
                                         Due Amount : <strong>{{ $collection['due'] }}</strong> <br>
                                         Date : <strong>{{ $collection['updated_at'] }}</strong>
