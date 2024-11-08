@@ -8,7 +8,7 @@
                         <div class="col-8">
                             <span class="text-bold text-dark">BILLED TO </span>
                             <p class="text-xs mx-0 my-1">Name:  <span id="CName"></span> </p>
-                            <p class="text-xs mx-0 my-1">Name:  <span id="CMobile"></span> </p>
+                            <p class="text-xs mx-0 my-1">Mobile:  <span id="CMobile"></span> </p>
                             <p class="text-xs mx-0 my-1">Address:  <span id="CAddress"></span></p>
                             <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p>
                         </div>
@@ -255,7 +255,14 @@
             res.data.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
                         <td><i class="bi bi-person"></i> ${item['shop_name']} <br> ${item['mobile']} <br>${item['address']} </td>
-                        <td><a data-shop_name="${item['shop_name']}" data-mobile="${item['mobile']}" data-id="${item['id']}" data-address="${item['address']}" class="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0">Add</a></td>
+                        <td>
+                            <a data-shop_name="${item['shop_name']}"
+                            data-mobile="${item['mobile']}" data-id="${item['id']}"
+                            data-address="${item['address']}"
+                            class="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0">
+                            Add
+                            </a>
+                        </td>
                      </tr>`
                 customerList.append(row)
             })

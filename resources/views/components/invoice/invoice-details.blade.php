@@ -6,24 +6,35 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Invoice</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div id="invoice" class="modal-body p-3">
+            <div id="invoice" class="modal-body p-2">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <h5 class="text-center">মেসার্স  আর এস আই ট্রেডার্স</h5>
-                            <span class="text-center fw-bold" style="font-size: 12px;">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
-                                মোবাইল নং-০১৭৪৫-৭৬০২৬৫, ০১৭৭১-৩৭৮২৫৮, ০১৭৩৯-৮৭১৭০৫
-                                {{-- ই-মেইল : localbazer24@gmail.com --}}
-                            </span>
+                            <div class="row">
+                                <div class="col-2 text-left">
+                                    ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold" style="font-size: 14px;"></span>
+                                 </div>
+                                 <div class="col-8 text-center">
+                                     <span class="text-center text-bold" style="font-size: 18px;">মেসার্স  আর এস আই ট্রেডার্স</span><br>
+                                     <span class="text-center fw-bold" style="font-size: 12px;">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
+                                        মোবাইল নং-০১৭৪৫-৭৬০২৬৫, ০১৭৭১-৩৭৮২৫৮, ০১৭৩৯-৮৭১৭০৫
+                                        {{-- ই-মেইল : localbazer24@gmail.com --}}
+                                    </span>
+                                 </div>
+                                 <div class="col-2 text-left"></div>
+                            </div>
+                            
+                            
+                           
                         </div>
                         <div class="row" style="font-size: 10px;">
                             <div class="col-12"><span class="fw-bolder">ক্রেতার বিবরণ :-</span></div>
-                            <div class="col-6">নাম : <span id="CName" class="fw-bold"></div>
-                            <div class="col-6">মোবাইল নং : <span id="CMobile" class="fw-bold"></div>
-                            <div class="col-6">ই-মেইল : <span id="CEmail" class="fw-bold"></span></div>
-                            <div class="col-6">ঠিকানা : <span id="CAddress" class="fw-bold"></span></div>
-                            <div class="col-6">ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold"></span></div>
-                            <div class="col-6">তারিখ : {{ date('Y-m-d') }}</div>
+                            <div class="col-8">দোকানের নাম : <span id="CName" class="fw-bold"></div>
+                            <div class="col-4">মোবাইল নং :<span id="CMobile" class="fw-bold"></div>
+                            {{-- <div class="col-6">ই-মেইল : <span id="CEmail" class="fw-bold"></span></div> --}}
+                            <div class="col-8">ঠিকানা : <span id="CAddress" class="fw-bold"></span></div>
+                            {{-- <div class="col-6">ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold text-2xl"></span></div> --}}
+                            <div class="col-4">তারিখ : {{ date('Y-m-d') }}</div>
                             <p class="text-xs mx-0 my-1 d-none">User ID:  <span id="CId"></span> </p>
                         </div>
                         <hr class="mx-0 my-2 p-0 bg-secondary"/>
@@ -88,9 +99,9 @@
         let res=await axios.post("/invoice-details",{cus_id:cus_id,inv_id:inv_id})
         hideLoader();
 
-        document.getElementById('CName').innerText=res.data['customer']['name']
+        document.getElementById('CName').innerText=res.data['customer']['shop_name']
         document.getElementById('CId').innerText=res.data['customer']['user_id']
-        document.getElementById('CEmail').innerText=res.data['customer']['email']
+        // document.getElementById('CEmail').innerText=res.data['customer']['email']
         document.getElementById('CMobile').innerText=res.data['customer']['mobile']
         document.getElementById('CAddress').innerText=res.data['customer']['address']
         document.getElementById('total').innerText=res.data['invoice']['total']

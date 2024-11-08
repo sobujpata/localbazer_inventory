@@ -51,7 +51,7 @@ async function getList() {
     res.data.data.forEach(function (item,index) {
         let row=`<tr>
                     <td>${item['id']}</td>
-                    <td>${item['customer']['name']} <br> ${item['customer']['mobile']}</td>
+                    <td>${item['customer']['shop_name']} <br> ${item['customer']['mobile']}</td>
                     <td>${item['total']}</td>
                     <td>${item['payable']}</td>
 
@@ -89,7 +89,7 @@ async function getList() {
 
     new DataTable('#tableData',{
         order:[[0,'desc']],
-        lengthMenu:[20,30,50,100,500]
+        lengthMenu:[30,50,100,500]
     });
 
 }
