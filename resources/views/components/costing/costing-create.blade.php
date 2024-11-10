@@ -18,6 +18,8 @@
                                     {{-- <option value="Buying">Buying Products</option> --}}
                                     <option value="Salary">Salary</option>
                                     <option value="Withdraw">Withdraw</option>
+                                    <option value="Buy Bag">Buy Bag</option>
+                                    <option value="Other Cost">Other Cost</option>
                                 </select>
                                 <label class="form-label">Total Collection</label>
                                 <input type="text" id="collection" value="" placeholder="Total Collection" class="form-control" readonly>
