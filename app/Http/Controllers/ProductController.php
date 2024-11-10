@@ -28,7 +28,7 @@ class ProductController extends Controller
         'buy_qty' => 'required|integer',
         'wholesale_price' => 'required|numeric',
         'category_id' => 'required|integer',
-        'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensures an image file is uploaded
+        'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:5000', // Ensures an image file is uploaded
     ]);
 
     try {
@@ -107,7 +107,7 @@ class ProductController extends Controller
             'buy_qty' => 'required|integer',
             'wholesale_price' => 'required|numeric',
             'category_id' => 'required|integer',
-            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensure image validation
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000', // Ensure image validation
         ]);
 
         $user_id = $request->header('id');
