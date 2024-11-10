@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mobile-view">
     <div class="row">
         @if(session('success'))
             <div class="alert alert-success">

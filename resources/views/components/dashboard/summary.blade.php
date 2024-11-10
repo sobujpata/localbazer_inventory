@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mobile-view">
     <div class="row">
 
         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">

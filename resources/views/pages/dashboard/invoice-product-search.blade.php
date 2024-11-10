@@ -1,6 +1,6 @@
 @extends('layout.sidenav-layout')
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid mobile-view">
     <div class="row" >
         <div class="col-md-12 col-sm-12 col-lg-12">
             <div class="card px-1 py-4">
@@ -16,7 +16,7 @@
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </div>
                                 </div>
-    
+
                             </form>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                     <p>No products found for this invoice.</p>
                     @endif
                 </div>
-                
+
                 <button onclick="PrintPage()" class="btn bg-gradient-success w-10">Print</button>
             </div>
         </div>

@@ -1,6 +1,6 @@
 @extends('layout.sidenav-layout')
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid mobile-view">
         <div class="row">
             <div class="col-md-4 col-lg-4 px-1 py-2">
                 <div class="shadow-sm h-100 bg-white rounded-3 px-1 py-3">

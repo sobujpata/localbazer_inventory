@@ -19,6 +19,13 @@
         padding-bottom: 72px ;
     }
 }
+/* mobile padding none */
+@media screen and (max-width: 480px) {
+    .mobile-view {
+      padding-right: 0px !important;
+      padding-left: 0px !important;
+    }
+  }
 .d-none{
   display: none;
 }

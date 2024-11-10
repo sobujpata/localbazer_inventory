@@ -1,4 +1,6 @@
-<div class="container-fluid">
+
+
+<div class="container-fluid mobile-view">
     <div class="row">
     <div class="col-md-12 col-sm-12 col-lg-12">
         <div class="card px-1 py-4">
@@ -47,7 +49,7 @@ async function getList() {
 
     res.data.data.forEach(function (item,index) {
         let row=`<tr>
-                    <td>${index+1}</td>
+                    <td class="text-center">${index+1}</td>
                     <td>${item['name']} <br> ${item['shop_name']}</td>
                     <td>${item['address']} <br> ${item['mobile']} <br> ${item['email']}</td>
                     <td>
