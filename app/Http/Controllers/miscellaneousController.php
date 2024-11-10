@@ -14,10 +14,16 @@ class miscellaneousController extends Controller
         return view('pages.dashboard.other-cost');
     }
 
-    public function CostingList(){
+    public function CostingList(Request $request){
+        $user_id=$request->header('id');
+        $user_role = $request->header('role');
+
         $costs = MiscellaneousCost::with('user')->get();
 
-        return response()->json($costs);
+        return response()->json([
+            'data'=>$costs,
+            'role'=>$user_role,
+        ]);
 
     }
 

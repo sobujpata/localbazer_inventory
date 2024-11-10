@@ -21,7 +21,7 @@
                     <th>Amount</th>
                     <th>Balanch</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    <th class="${res.data['role'] === '1'?'':'d-none'}">Action</th>
                 </tr>
                 </thead>
                 <tbody id="tableList">
@@ -42,7 +42,7 @@ async function getList() {
     showLoader();
     let res=await axios.get("/list-costing");
     hideLoader();
-    // console.log(res);
+    // console.log(res.data['role']);
 
     let tableList=$("#tableList");
     let tableData=$("#tableData");
@@ -50,7 +50,7 @@ async function getList() {
     tableData.DataTable().destroy();
     tableList.empty();
 
-    res.data.forEach(function (item,index) {
+    res.data.data.forEach(function (item,index) {
         const createdAt = new Date(item.created_at);
         const formattedDate = createdAt.toLocaleString('en-GB', {
                 timeZone: 'Asia/Dhaka',
@@ -67,7 +67,7 @@ async function getList() {
                     <td>${item['balance']}</td>
                     <td>${formattedDate}</td>
                     <td>
-                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
+                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success ${res.data['role'] === '1'?'':'d-none'}">Edit</button>
                     </td>
                  </tr>`
         tableList.append(row)

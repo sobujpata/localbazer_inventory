@@ -3,7 +3,7 @@
     <div class="container-fluid mobile-view">
         <div class="row">
             <div class="col-md-4 col-lg-4 px-1 py-2">
-                <div class="shadow-sm h-100 bg-white rounded-3 px-1 py-3">
+                <div class="shadow-sm h-100 bg-white rounded-3 px-3 py-3">
                     <div class="row">
                         <div class="col-8">
                             <span class="text-bold text-dark">BILLED TO </span>
