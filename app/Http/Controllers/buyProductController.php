@@ -139,7 +139,7 @@ class buyProductController extends Controller
     $validatedData = $request->validate([
         'category_id' => 'required|integer',
         'product_cost' => 'required|string|max:255',
-        'other_cost' => 'required|string|max:255',
+        // 'other_cost' => 'required|string|max:255',
         'invoice_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
     $product_id = $id; // Assuming $id is validated as a string
@@ -166,7 +166,7 @@ class buyProductController extends Controller
         // Update product with new image
         $updated = BuyProduct::where('id', $product_id)->update([
             'product_cost' => $request->input('product_cost'),
-            'other_cost' => $request->input('other_cost'),
+            // 'other_cost' => $request->input('other_cost'),
             'invoice_url' => $img_url,
             'category_id' => $request->input('category_id'),
         ]);

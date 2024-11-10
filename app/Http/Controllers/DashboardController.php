@@ -49,6 +49,9 @@ class DashboardController extends Controller
 
         $total_deposit_with_collection = $total_deposit + $collection;
 
+        //live balance
+        $live_balance =$total_deposit_with_collection - $total_cost;
+
 
 
 
@@ -188,6 +191,7 @@ class DashboardController extends Controller
             'total_cost'=> round($total_cost, 2),
             'total_store_product_price'=> round($total_store_product_price, 2),
             'total_sale_income'=>round($total_sale_income,2),
+            'live_balance'=>round($live_balance,2),
             'total'=> round($total,2),
             'total_last_month_earn'=> round($total_last_month_earn,2),
             'total_current_month_earn'=> round($total_current_month_earn,2),
