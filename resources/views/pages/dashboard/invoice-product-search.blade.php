@@ -3,22 +3,25 @@
 <div class="container-fluid mobile-view">
     <div class="row" >
         <div class="col-md-12 col-sm-12 col-lg-12">
-            <div class="card px-1 py-4">
+
+            
+            <div class="card py-4">
                 <div class="card-header">
                     <div class="row justify-content-between ">
-                        <div class="align-items-center col">
-                            <form action="{{ route('invoice.product.search') }}" method="get">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" name="invoice" placeholder="Search by Invoice IDs (use space to separate)" value="{{ request('invoice') }}">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary">Search</button>
-                                    </div>
+                        <form action="{{ route('invoice.product.search') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="invoice" placeholder="Search by Invoice IDs (use space to separate)" value="{{ request('invoice') }}">
                                 </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button onclick="PrintPage()" class="btn btn-success">Print</button>
+                                </div>
+                            </div>
 
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="card-body" id="invoice">
@@ -58,7 +61,7 @@
                     @endif
                 </div>
 
-                <button onclick="PrintPage()" class="btn bg-gradient-success w-10">Print</button>
+                
             </div>
         </div>
     </div>
