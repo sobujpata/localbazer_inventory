@@ -286,7 +286,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    Tk <span id="totalPreviosDay"></span>
+                                    Tk <span id="totalPreviosDay"></span> (Ttl Inv: <span id="total_previos_invoice"></span>)
                                 </h5>
                                 <p class="mb-0 text-sm">Total Order Previous Day</p>
                             </div>
@@ -308,7 +308,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    Tk <span id="totalTodayDay"></span>
+                                    Tk <span id="totalTodayDay"></span> (Ttl Inv: <span id="total_today_invoice"></span>)
                                 </h5>
                                 <p class="mb-0 text-sm">Total Order Today</p>
                             </div>
@@ -455,7 +455,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    Tk <span id="totalPreviosDayCollection"></span>
+                                    Tk <span id="totalPreviosDayCollection"></span> (Ttl Inv: <span id="collection_previous_day_invoice"></span>)
                                 </h5>
                                 <p class="mb-0 text-sm">Total Collection Previous Day</p>
                             </div>
@@ -477,7 +477,7 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
-                                    Tk <span id="totalTodayDayCollection"></span>
+                                    Tk <span id="totalTodayDayCollection"></span> (Ttl Inv: <span id="collection_today_invoice"></span>)
                                 </h5>
                                 <p class="mb-0 text-sm">Total Collection Today</p>
                             </div>
@@ -836,7 +836,7 @@
 
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h5>Daily Order Chart :</h5>
@@ -847,9 +847,7 @@
             </div>
 
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h5>Daily Collection Chart :</h5>
@@ -858,9 +856,9 @@
                     <canvas id="myChartCollection" style="width:100%;"></canvas>
                 </div>
             </div>
-
         </div>
     </div>
+    
 </div>
 
 
@@ -890,6 +888,8 @@
         document.getElementById('totalCurrentWeek').innerText=res.data['total_current_week_earn']
         document.getElementById('totalPreviosDay').innerText=res.data['total_previous_day_earn']
         document.getElementById('totalTodayDay').innerText=res.data['total_today_earn']
+        document.getElementById('total_today_invoice').innerText=res.data['total_today_invoice']
+        document.getElementById('total_previos_invoice').innerText=res.data['total_previos_invoice']
 
         //collection details
         document.getElementById('collection').innerText=res.data['collection']
@@ -899,6 +899,8 @@
         document.getElementById('totalCurrentWeekCollection').innerText=res.data['total_current_week_earn_collection']
         document.getElementById('totalPreviosDayCollection').innerText=res.data['total_previous_day_earn_collection']
         document.getElementById('totalTodayDayCollection').innerText=res.data['total_today_earn_collection']
+        document.getElementById('collection_today_invoice').innerText=res.data['collection_today_invoice']
+        document.getElementById('collection_previous_day_invoice').innerText=res.data['collection_previous_day_invoice']
         //Due details
         document.getElementById('due').innerText=res.data['due']
         document.getElementById('totalLastMontdue').innerText=res.data['total_last_month_due']

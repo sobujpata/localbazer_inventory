@@ -125,8 +125,12 @@ class DashboardController extends Controller
         // Sum the total for rentals from the previous day
         $total_previous_day_earn = Invoice::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
                                  ->sum('total');
+        $total_previos_invoice = Invoice::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
+                                 ->count();
         $total_previous_day_earn_collection = Collection::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
                                  ->sum('amount');
+        $collection_previous_day_invoice = Collection::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
+                                 ->count();
         $total_previous_day_due = Collection::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
                                  ->sum('due');
         $total_previous_day_buy_product = BuyProduct::whereBetween('created_at', [$startOfPreviousDay, $endOfPreviousDay])
@@ -139,8 +143,12 @@ class DashboardController extends Controller
         // Sum the total for rentals created today
         $total_today_earn = Invoice::whereBetween('created_at', [$startOfToday, $endOfToday])
                            ->sum('total');
+        $total_today_invoice = Invoice::whereBetween('created_at', [$startOfToday, $endOfToday])
+                           ->count();
         $total_today_earn_collection = Collection::whereBetween('created_at', [$startOfToday, $endOfToday])
                            ->sum('amount');
+        $collection_today_invoice = Collection::whereBetween('created_at', [$startOfToday, $endOfToday])
+                           ->count();
         $total_today_due = Collection::whereBetween('created_at', [$startOfToday, $endOfToday])
                            ->sum('due');
         $total_today_buy_product = BuyProduct::whereBetween('created_at', [$startOfToday, $endOfToday])
@@ -199,6 +207,8 @@ class DashboardController extends Controller
             'total_current_week_earn'=> round($total_current_week_earn,2),
             'total_previous_day_earn'=> round($total_previous_day_earn,2),
             'total_today_earn'=> round($total_today_earn,2),
+            'total_today_invoice' => $total_today_invoice,
+            'total_previos_invoice' => $total_previos_invoice,
             //Collection Details
             'collection'=> round($collection,2),
             'total_last_month_earn_collection'=> round($total_last_month_earn_collection,2),
@@ -207,6 +217,8 @@ class DashboardController extends Controller
             'total_current_week_earn_collection'=> round($total_current_week_earn_collection,2),
             'total_previous_day_earn_collection'=> round($total_previous_day_earn_collection,2),
             'total_today_earn_collection'=> round($total_today_earn_collection,2),
+            'collection_today_invoice'=> round($collection_today_invoice,2),
+            'collection_previous_day_invoice'=> round($collection_previous_day_invoice,2),
             //Due Amount
             'due'=> round($due,2),
             'total_last_month_due'=> round($total_last_month_due,2),
