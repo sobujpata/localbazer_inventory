@@ -96,6 +96,9 @@ Route::post("/invoice-delete",[InvoiceController::class,'invoiceDelete'])->middl
 Route::post("/invoice-complete",[InvoiceController::class,'invoiceComplete'])->middleware([TokenVerificationMiddleware::class]);
 Route::get("/invoice-printed",[InvoiceController::class,'invoicePrinted'])->middleware([TokenVerificationMiddleware::class]);
 
+//Due amount show previous day
+Route::get("/due-amount/{customer_id}", [InvoiceController::class, 'DueAmounts']);
+
 //Invoice details edit Route
 Route::get("/invoice-edit-page/{id}",[InvoiceController::class,'invoiceEditPage'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/invoice-delete-product",[InvoiceController::class,'invoiceDeleteProduct'])->middleware([TokenVerificationMiddleware::class]);

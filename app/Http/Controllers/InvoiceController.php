@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Collection;
 use App\Models\Customer;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -106,10 +108,14 @@ class InvoiceController extends Controller
         $invoiceTotal=Invoice::where('id',$request->input('inv_id'))->first();
         $invoiceProduct=InvoiceProduct::where('invoice_id',$request->input('inv_id'))->with('product')
             ->get();
+        $due_amount = Collection::where('customer_id', $request->input('cus_id'))->sum('due');
+        $due_invoice = Collection::where('customer_id', $request->input('cus_id'))->get();
         return array(
             'customer'=>$customerDetails,
             'invoice'=>$invoiceTotal,
             'product'=>$invoiceProduct,
+            'due_amount'=>$due_amount,
+            'due_invoice'=>$due_invoice
         );
     }
 
@@ -128,13 +134,13 @@ class InvoiceController extends Controller
         }
     }
     function invoiceComplete(Request $request){
-        
+
             $user_id=$request->header('id');
             Invoice::where('id',$request->input('inv_id'))->update([
                 'complete' => 1
             ]);
             return 1;
-       
+
     }
 
     function invoiceEditPage(Request $request)
@@ -242,17 +248,17 @@ class InvoiceController extends Controller
             $new_total_price = $total_price + $total_sale_price;
             $new_payable_price = $payable_price + $total_sale_price;
 
-            
+
             //update two table
             $invoice = Invoice::where('id', $invoice_id)->update([
                 'total' => $new_total_price,
                 'payable' => $new_payable_price,
                 ]);
 
-            
+
             //invoiceProduct table update
             $invoice_products = InvoiceProduct::create([
-                'user_id' =>$user_id,    
+                'user_id' =>$user_id,
                 'invoice_id' => $invoice_id,
                 'product_id' => $product_id,
                 'qty' => $product_qty,
@@ -265,9 +271,16 @@ class InvoiceController extends Controller
             return redirect()->back()->with('success', 'Product added successfully.');
         }
         catch (Exception $e) {
-            DB::rollBack(); 
+            DB::rollBack();
             return 0;
 
         }
+    }
+
+
+    public function DueAmounts($customer_id){
+        $due_amount = Collection::where('customer_id', $customer_id)->sum('due');
+
+
     }
 }

@@ -17,7 +17,6 @@
                     <th>Ser No</th>
                     <th>Products Category</th>
                     <th>Product Cost</th>
-                    <th>Carring Cost</th>
                     <th>Date</th>
                     <th>Action</th>
                 </tr>
@@ -70,7 +69,7 @@ async function getList() {
                     <td>${index+1}</td>
                     <td>${item['category']['name']}</td>
                     <td>${item['product_cost']}</td>
-                    <td>${item['other_cost']}</td>
+
                     <td>${formattedDate}</td>
                     <td>
                         <button data-path="${item['invoice_url']}" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>

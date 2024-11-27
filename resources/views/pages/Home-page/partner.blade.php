@@ -13,23 +13,23 @@
         <div class="row justify-content-center ">
             <div class="col-12 col-md-6 col-lg-3 p-3">
                 <div class="card px-0 text-center">
-                    <img class=" card-img-top mb-3 w-100 h-100" src="{{asset('/images/salim.jpg')}}" alt="">
-                    <h5>Md Salim Reza</h5>
-                    <p class="text-muted mb-4">CO &amp; Founder</p>
+                    <img class=" card-img-top mb-3 w-100 h-100" src="{{asset('/images/muntaha-rayyan-edit.jpg')}}" alt="">
+                    <h5>Mst Bilkis Khatun</h5>
+                    <p class="text-muted mb-4">CO-Founder</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 p-3">
                 <div class="card px-0 text-center">
                     <img class=" card-img-top mb-3 w-100 h-100" src="{{asset('/images/ibrahim.jpg')}}" alt="">
                     <h5>Md Ibrahim Hossain</h5>
-                    <p class="text-muted mb-4">CO &amp; Founder</p>
+                    <p class="text-muted mb-4">CO-Founder</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 p-3">
                 <div class="card px-0 text-center">
                     <img class=" card-img-top mb-3 w-100 h-100" src="{{asset('/images/rubel.jpg')}}" alt="">
                     <h5>Md Rubel Rana</h5>
-                    <p class="text-muted mb-4">CO &amp; Founder</p>
+                    <p class="text-muted mb-4">CO-Founder</p>
                 </div>
             </div>
             {{-- <div class="col-12 col-md-6 col-lg-3 p-3">

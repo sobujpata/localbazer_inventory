@@ -64,12 +64,14 @@ class CollectionController extends Controller
             // If the invoice_id already exists, return back with an error message
             return redirect()->back()->withErrors(['invoice_id' => 'This invoice has already been processed.']);
         }
+        $customer_id = Invoice::where('id', $invoice_id)->select('customer_id')->first();
         // Create the collection entry in the database
         Collection::create([
             'user_id' => $user_id,
             'invoice_id' => $invoice_id,
             'amount' => $amount,
             'due' => $due,
+            'customer_id' => $customer_id,
             // 'invoice_url' => $img_url,
         ]);
 
@@ -78,32 +80,40 @@ class CollectionController extends Controller
     }
 
     public function update(Request $request)
-    {
-        // Validate the request data
-        $request->validate([
-            'invoice_id' => 'required|integer|exists:invoices,id',
-            'amount' => 'required|numeric|min:0',
-            'due' => 'nullable|numeric|min:0',
-        ]);
+{
+    // Validate the request data
+    $request->validate([
+        'invoice_id' => 'required|integer|exists:invoices,id',
+        'collection_id' => 'required|integer|exists:collections,id',
+        'amount' => 'required|numeric|min:0',
+        'due' => 'nullable|numeric|min:0',
+    ]);
 
-        // Retrieve headers and input data
-        $user_id = $request->header('id');
-        $collection_id = $request->input('collection_id');
+    // Retrieve headers and input data
+    $user_id = $request->header('id');
+    $collection_id = $request->input('collection_id');
 
-        // Check if the collection exists
-        $collection = Collection::findOrFail($collection_id);
-
-        // Update the collection record
-        $collection->update([
-            'user_id' => $user_id,
-            'invoice_id' => $request->input('invoice_id'),
-            'amount' => $request->input('amount'),
-            'due' => $request->input('due', 0),
-        ]);
-
-        // Return a success response
-        return redirect()->back()->with('message', 'Collection updated successfully.');
+    // Fetch the customer ID from the invoice
+    $invoice = Invoice::find($request->input('invoice_id'));
+    if (!$invoice) {
+        return response()->json(['error' => 'Invoice not found'], 404);
     }
+    $customer_id = $invoice->customer_id;
+
+    // Find the collection and update its data
+    $collection = Collection::findOrFail($collection_id);
+    $collection->update([
+        'user_id' => $user_id,
+        'invoice_id' => $request->input('invoice_id'),
+        'amount' => $request->input('amount'),
+        'due' => $request->input('due', 0),
+        'customer_id' => $customer_id,
+    ]);
+
+    // Return a JSON response with the updated collection
+    return redirect()->back()->with('message', "Collaction Update Successfully.");
+}
+
 
     public function DueList(Request $request){
         // Fetch collections where due is not zero and order by descending

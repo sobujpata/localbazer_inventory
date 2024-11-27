@@ -6,28 +6,28 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Invoice</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div id="invoice" class="modal-body p-2">
+            <div id="invoice" class="modal-body px-2 bg-white">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="row">
-                                <div class="col-2 text-left">
-                                    
-                                 </div>
-                                 <div class="col-8 text-center">
-                                     <span class="text-center text-bold" style="font-size: 18px;">মেসার্স  আর এস আই ট্রেডার্স</span><br>
-                                     <span class="text-center fw-bold" style="font-size: 12px;">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
-                                        মোবাইল নং-০১৭৪৫-৭৬০২৬৫, ০১৭৭১-৩৭৮২৫৮, ০১৭৩৯-৮৭১৭০৫
+                                {{-- <div class="col-2 text-left">
+
+                                 </div> --}}
+                                 <div class="col-10 text-center">
+                                     <span class="text-center text-bold" style="font-size: 18px; margin-left:30px;">মেসার্স  আর এস আই ট্রেডার্স</span><br>
+                                     <span class="text-center fw-bold" style="font-size: 12px; margin-left:30px;">বন্যাকান্দি বাজার, উল্লাপাড়া, সিরাজগঞ্জ <br>
+                                        মোবা নং-০১৭৪৫৭৬০২৬৫, ০১৭৭১৩৭৮২৫৮, ০১৭৩৯৮৭১৭০৫
                                         {{-- ই-মেইল : localbazer24@gmail.com --}}
                                     </span>
                                  </div>
                                  <div class="col-2 text-left">
-                                    ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold"></span>
+                                    ইন নং : <span id="InvoiceId" class="fw-bold"></span>
                                 </div>
                             </div>
-                            
-                            
-                           
+
+
+
                         </div>
                         <div class="row" style="font-size: 10px;">
                             <div class="col-12"><span class="fw-bolder">ক্রেতার বিবরণ :-</span></div>
@@ -60,11 +60,15 @@
                         </table>
                     </div>
                 </div>
+
+
                 <hr class="mx-0 my-2 p-0 bg-secondary"/>
                 <div class="row">
                     <div class="col-11">
                         <p class="text-bold text-xs my-1 text-dark text-end"> মোট টাকা : </i> <span id="total"></span>/= </p>
-                        <p class="text-bold text-xs my-2 text-dark d-none"> PAYABLE:</i>  <span id="payable"></span> Tk</p>
+                        <p class="text-bold text-xs my-1 text-dark text-end">(Due Inv-<span id="dueInvoice" class="text-red"></span>) বাকি টাকা : </i> <span id="dueAmount"></span>/= </p>
+                        <hr class="mx-0 my-2 p-0 bg-secondary"/>
+                        <p class="text-bold text-xs my-2 text-dark text-end"> PAYABLE :</i>  <span id="payable"></span>/=</p>
                         <p class="text-bold text-xs my-1 text-dark d-none"> VAT(5%):</i>  <span id="vat"></span> Tk</p>
                         <p class="text-bold text-xs my-1 text-dark d-none"> Discount:</i>  <span id="discount"></span> Tk</p>
                     </div>
@@ -106,11 +110,30 @@
         // document.getElementById('CEmail').innerText=res.data['customer']['email']
         document.getElementById('CMobile').innerText=res.data['customer']['mobile']
         document.getElementById('CAddress').innerText=res.data['customer']['address']
-        document.getElementById('total').innerText=res.data['invoice']['total']
-        document.getElementById('payable').innerText=res.data['invoice']['payable']
+        document.getElementById('total').innerText =parseFloat(res.data['invoice']['total']).toFixed(2);
+
         document.getElementById('vat').innerText=res.data['invoice']['vat']
         document.getElementById('discount').innerText=res.data['invoice']['discount']
         document.getElementById('InvoiceId').innerText=res.data['invoice']['id']
+
+        document.getElementById('dueAmount').innerText=res.data['due_amount']
+
+        let total = parseFloat(document.getElementById('total').innerText) || 0;
+        let dueAmount = parseFloat(document.getElementById('dueAmount').innerText) || 0;
+        document.getElementById('payable').innerText = (total + dueAmount).toFixed(2);
+
+
+        let dueInvoice = document.getElementById('dueInvoice');
+        dueInvoice.textContent = ''; // Clear any existing content
+
+        res.data['due_invoice'].forEach(item => {
+            let id = item['invoice_id']; // Get each invoice ID
+            dueInvoice.textContent += id + ', '; // Append each ID, separated by a comma
+        });
+
+        // Optionally, remove the trailing comma and space
+        dueInvoice.textContent = dueInvoice.textContent.replace(/, $/, '');
+
 
 
         let invoiceList=$('#invoiceList');
