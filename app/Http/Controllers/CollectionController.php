@@ -64,7 +64,9 @@ class CollectionController extends Controller
             // If the invoice_id already exists, return back with an error message
             return redirect()->back()->withErrors(['invoice_id' => 'This invoice has already been processed.']);
         }
-        $customer_id = Invoice::where('id', $invoice_id)->select('customer_id')->first();
+        $customer = Invoice::where('id', $invoice_id)->select('customer_id')->first();
+
+        $customer_id = $customer->customer_id;
         // Create the collection entry in the database
         Collection::create([
             'user_id' => $user_id,
