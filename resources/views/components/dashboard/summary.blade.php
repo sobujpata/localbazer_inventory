@@ -137,6 +137,48 @@
                         <div class="col-9 col-lg-8 col-md-8 col-sm-9">
                             <div>
                                 <h5 class="mb-0 text-capitalize font-weight-bold">
+                                 Tk <span id="total_earn_last_month"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Income Last Month</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
+                                 Tk <span id="total_earn_current_month"></span>
+                                </h5>
+                                <p class="mb-0 text-sm">Total Income Current Month</p>
+                            </div>
+                        </div>
+                        <div class="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                <img class="w-100 " src="{{asset('images/icon.svg')}}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
+            <div class="card card-plain h-100  bg-white">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-9 col-lg-8 col-md-8 col-sm-9">
+                            <div>
+                                <h5 class="mb-0 text-capitalize font-weight-bold">
                                  Tk <span id="live_balance"></span>
                                 </h5>
                                 <p class="mb-0 text-sm">Live Balance</p>
@@ -857,6 +899,27 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6 mt-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Month Wise Invoice Chart :</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="earningsChart" width="100%"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Month Wise Invoice Chart :</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="netEarningsChart" width="100%"></canvas>
+
+                </div>
+            </div>
+        </div>
     </div>
     
 </div>
@@ -872,13 +935,16 @@
         showLoader();
         let res=await axios.get("/summary");
         hideLoader();
+        // console.log(res);
         //General Info
         document.getElementById('product').innerText=res.data['product']
         document.getElementById('category').innerText=res.data['category']
         document.getElementById('customer').innerText=res.data['customer']
         document.getElementById('invoice').innerText=res.data['invoice']
         document.getElementById('total_store_product_price').innerText=res.data['total_store_product_price']
-        document.getElementById('total_sale_income').innerText=res.data['total_sale_income']
+        document.getElementById('total_sale_income').innerText=res.data['total_earn']
+        document.getElementById('total_earn_last_month').innerText=res.data['total_earn_last_month']
+        document.getElementById('total_earn_current_month').innerText=res.data['total_earn_current_month']
         document.getElementById('live_balance').innerText=res.data['live_balance']
         //total order details
         document.getElementById('total').innerText=res.data['total']
@@ -921,7 +987,7 @@
         //Order chart
         let labels = res.data['labels'];
         let data = res.data['data'];
-        console.log(labels);
+        // console.log(labels);
         let ctx = document.getElementById('myChart').getContext('2d');
         var barColors = ["red", "green","blue","orange","brown"];
         let myChart = new Chart(ctx, {
@@ -976,6 +1042,95 @@
                 }
             }
         });
+
+        let earningsData = res.data['month_wise_invoice'];
+
+    // Process the data
+    let labels11 = earningsData.map(item => `${item.month}-${item.year}`);
+        let earnings = earningsData.map(item => item.total_earnings);
+
+        // Create the chart
+        let ctx1 = document.getElementById('earningsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar', // You can change this to 'line', 'pie', etc.
+            data: {
+                labels: labels11,
+                datasets: [{
+                    label: 'Monthly Earnings',
+                    data: earnings,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: (value) => value.toFixed(2),
+                        font: {
+                            weight: 'bold',
+                            size: 12
+                        },
+                        color: '#000',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // let data1 = res.data['month_wise_net_eanr'];
+        // console.log(data1)
+        // // Process the data for Chart.js
+        // let labels22 = data1.map(item => `${item.month}-${item.year}`);
+        // let netEarnings = data1.map(item => item.net_earnings);
+
+        // // Create the chart
+        // let ctx2 = document.getElementById('netEarningsChart').getContext('2d');
+        // new Chart(ctx2, {
+        //     type: 'line', // Use 'bar' for a bar chart
+        //     data: {
+        //         labels: labels22,
+        //         datasets: [{
+        //             label: 'Net Earnings',
+        //             data: netEarnings,
+        //             backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        //             borderColor: 'rgba(75, 192, 192, 1)',
+        //             borderWidth: 2,
+        //             tension: 0.4, // Smooth curves
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: {
+        //                 display: true,
+        //                 position: 'top',
+        //             },
+        //         },
+        //         scales: {
+        //             y: {
+        //                 beginAtZero: true,
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Net Earnings',
+        //                 }
+        //             },
+        //             x: {
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Month-Year',
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
 
     }
 </script>

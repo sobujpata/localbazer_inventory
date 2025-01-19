@@ -16,8 +16,8 @@
                         <tr class="bg-light">
                             <th>No</th>
                             <th>Name & Phone</th>
-                            <th>Total</th>
                             <th>Payable</th>
+                            <th>Earn</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -36,39 +36,55 @@ getList();
 
 
 async function getList() {
-
-
     showLoader();
-    let res=await axios.get("/invoice-select");
-    hideLoader();
 
-    let tableList=$("#tableList");
-    let tableData=$("#tableData");
+    try {
+        let res = await axios.get("/invoice-select");
+        hideLoader();
 
-    tableData.DataTable().destroy();
-    tableList.empty();
+        console.log(res);
 
-    res.data.data.forEach(function (item,index) {
-        let row=`<tr>
-                    <td>${item['id']}</td>
-                    <td>${item['customer']['shop_name']} <br> ${item['customer']['mobile']}</td>
-                    <td>${item['total']}</td>
-                    <td>${item['payable']}</td>
+        let role = res.data.role; // Access the role directly
+        let tableList = $("#tableList");
+        let tableData = $("#tableData");
+
+        // Reset DataTable
+        tableData.DataTable().destroy();
+        tableList.empty();
+
+        // Populate the table
+        res.data.data.forEach(function (item) {
+            let row = `
+                <tr>
+                    <td>${item['invoice'].id}</td>
+                    <td>${item['invoice'].customer.shop_name} <br> ${item['invoice'].customer.mobile}</td>
+                    <td>${item['invoice'].payable}</td>
+                    <td>${((item['invoice'].payable || 0) - (item['totalBuyPrice'] || 0)).toFixed(2)}</td>
 
                     <td>
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm fa-eye"></i></button>
-                        <button class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0">
-                            <a href="/invoice-edit-page/${item['id']}">
-                                <i class="fa text-sm fa-pen"></i>
-                            </a>
+                        <button data-id="${item['invoice'].id}" data-cus="${item['invoice'].customer.id}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0">
+                            <i class="fa text-sm fa-eye"></i>
                         </button>
-
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="completeBtn btn btn-outline-primary text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-check"></i></button>
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${res.data.data['role'] === '1'?'':'d-none'}"><i class="fa text-sm  fa-trash-alt"></i></button>
+                        <a href="/invoice-edit-page/${item['invoice'].id}" class="btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0">
+                            <i class="fa text-sm fa-pen"></i>
+                        </a>
+                        <button data-id="${item['invoice'].id}" data-cus="${item['invoice'].customer.id}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${role === '1' ? '' : 'd-none'}">
+                            <i class="fa text-sm fa-trash-alt"></i>
+                        </button>
                     </td>
-                 </tr>`
-        tableList.append(row)
-    })
+                </tr>`;
+            tableList.append(row);
+        });
+
+        
+
+    } catch (error) {
+        hideLoader();
+        console.error(error);
+        alert("An error occurred while fetching data. Please try again later.");
+    }
+
+
 
     $('.viewBtn').on('click', async function () {
         let id= $(this).data('id');
@@ -89,7 +105,7 @@ async function getList() {
 
     new DataTable('#tableData',{
         order:[[0,'desc']],
-        lengthMenu:[30,50,100,500]
+        lengthMenu:[20,30,50,100,500]
     });
 
 }

@@ -87,49 +87,69 @@ class InvoiceController extends Controller
 
     function invoiceSelect(Request $request){
         $user_role=$request->header('role');
-        $invoice = Invoice::where('complete', '0')->with('customer')->get();
+        $invoices = Invoice::where('complete', '0')->with('customer')->get();
+        // Prepare a response structure
+        $responseData = $invoices->map(function ($invoice) {
+            $invoice_id = $invoice->id;
 
+            // Fetch invoice products for the current invoice
+            $invoiceProducts = InvoiceProduct::where('invoice_id', $invoice_id)
+                ->with('product')
+                ->get();
+
+            // Calculate total buy price for this invoice
+            $totalBuyPrice = InvoiceProduct::where('invoice_id', $invoice_id)
+                ->join('products', 'invoice_products.product_id', '=', 'products.id')
+                ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
+                ->value('total_buy_price');
+
+            return [
+                'invoice' => $invoice,
+                'invoiceProducts' => $invoiceProducts,
+                'totalBuyPrice' => $totalBuyPrice,
+            ];
+        });
         return response()->json([
-            'data' => $invoice,
-            'role' => $user_role
+            'data' => $responseData,
+            'role' => $user_role,
         ]);
     }
     function invoicePrinted(Request $request)
-{
-    $user_role = $request->header('role');
+    {
+        $user_role = $request->header('role');
 
-    // Fetch all completed invoices with customers
-    $invoices = Invoice::where('complete', '1')
-        ->with('customer')
-        ->get();
-
-    // Prepare a response structure
-    $responseData = $invoices->map(function ($invoice) {
-        $invoice_id = $invoice->id;
-
-        // Fetch invoice products for the current invoice
-        $invoiceProducts = InvoiceProduct::where('invoice_id', $invoice_id)
-            ->with('product')
+        // Fetch all completed invoices with customers
+        $invoices = Invoice::where('complete', '1')
+            ->with('customer')
             ->get();
 
-        // Calculate total buy price for this invoice
-        $totalBuyPrice = InvoiceProduct::where('invoice_id', $invoice_id)
-            ->join('products', 'invoice_products.product_id', '=', 'products.id')
-            ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
-            ->value('total_buy_price');
+        // Prepare a response structure
+        $responseData = $invoices->map(function ($invoice) {
+            $invoice_id = $invoice->id;
 
-        return [
-            'invoice' => $invoice,
-            'invoiceProducts' => $invoiceProducts,
-            'totalBuyPrice' => $totalBuyPrice,
-        ];
-    });
+            // Fetch invoice products for the current invoice
+            $invoiceProducts = InvoiceProduct::where('invoice_id', $invoice_id)
+                ->with('product')
+                ->get();
 
-    return response()->json([
-        'data' => $responseData,
-        'role' => $user_role,
-    ]);
-}
+            // Calculate total buy price for this invoice
+            $totalBuyPrice = InvoiceProduct::where('invoice_id', $invoice_id)
+                ->join('products', 'invoice_products.product_id', '=', 'products.id')
+                ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
+                ->value('total_buy_price');
+
+            return [
+                'invoice' => $invoice,
+                'invoiceProducts' => $invoiceProducts,
+                'totalBuyPrice' => $totalBuyPrice,
+            ];
+        });
+
+        return response()->json([
+            'data' => $responseData,
+            'role' => $user_role,
+        ]);
+    }
 
     function InvoiceDetails(Request $request){
         

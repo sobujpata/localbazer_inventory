@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use App\Models\BuyProduct;
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use App\Models\InvoiceProduct;
 use App\Models\MiscellaneousCost;
 use Illuminate\Support\Facades\DB;
 
@@ -189,6 +190,63 @@ class DashboardController extends Controller
             'data_collection' => $daily_totals_collection->pluck('amount'),   // Extract total sums
         ];
 
+        //month wise chart
+        $month_wise_invoice = DB::table('invoices')
+        ->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(payable) as total_earnings')
+        )
+        ->groupBy('year', 'month')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
+
+        // // Fetch month-wise total earnings and total costs
+        //     $monthlyData = DB::table('invoices')
+        //     ->select(
+        //         DB::raw('YEAR(created_at) as year'),
+        //         DB::raw('MONTH(created_at) as month'),
+        //         DB::raw('SUM(payable) as total_earnings')
+        //     )
+        //     ->where('complete', 1) // Adjust this condition based on your data
+        //     ->groupBy('year', 'month');
+
+        // // Add total costs from products (join invoice_products and products)
+        // $monthlyData = $monthlyData->leftJoin('invoice_products', 'invoices.id', '=', 'invoice_products.invoice_id')
+        //     ->leftJoin('products', 'invoice_products.product_id', '=', 'products.id')
+        //     ->addSelect(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_cost'))
+        //     ->get();
+
+        // // Calculate net earnings for each month
+        // $formattedData = $monthlyData->map(function ($data) {
+        //     return [
+        //         'year' => $data->year,
+        //         'month' => $data->month,
+        //         'net_earnings' => $data->total_earnings - $data->total_cost,
+        //     ];
+        // });
+
+
+        $alltotalBuyPrice = InvoiceProduct::join('products', 'invoice_products.product_id', '=', 'products.id') // Join the product table
+            ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price')) // Calculate the sum
+            ->value('total_buy_price'); // Retrieve the aggregated value
+
+        // Get the start and end dates for last month
+        $startOfLastMonth = Carbon::now()->subMonth()->startOfMonth()->toDateString();
+        $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth()->toDateString();
+
+        // Calculate the total for last month
+        $totalBuyPriceLastMonth = InvoiceProduct::whereBetween('invoice_products.created_at', [$startOfLastMonth, $endOfLastMonth])
+            ->join('products', 'invoice_products.product_id', '=', 'products.id')
+            ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
+            ->value('total_buy_price');
+        // Calculate the total for current month
+        $totalBuyPriceCurrentMonth = InvoiceProduct::whereBetween('invoice_products.created_at', [$startOfCurrentMonth, $endOfCurrentMonth])
+            ->join('products', 'invoice_products.product_id', '=', 'products.id')
+            ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
+            ->value('total_buy_price');
+
         return[
             'role'=>$user_role,
             'product'=> $product,
@@ -244,6 +302,18 @@ class DashboardController extends Controller
             'chartData_collection' =>$chartDataCollection,
             'labels_collection' => $daily_totals_collection->pluck('date'),  // Extract dates
             'data_collection' => $daily_totals_collection->pluck('total'),   // Extract total sums
+
+            //month wise chart
+            'month_wise_invoice'=>$month_wise_invoice,
+
+            //Month wise net earn
+            // 'month_wise_net_eanr'=>$formattedData,
+            
+
+            //Total Earn
+            'total_earn'=>round($total - $alltotalBuyPrice, 2),
+            'total_earn_last_month'=>round($total_last_month_earn - $totalBuyPriceLastMonth, 2),
+            'total_earn_current_month'=>round($total_current_month_earn - $totalBuyPriceCurrentMonth, 2),
         ];
 
 
