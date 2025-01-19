@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use Carbon\Carbon;
-use App\Models\Invoice;
-use App\Models\Product;
-use App\Models\Customer;
-use Illuminate\View\View;
 use App\Models\Collection;
-use Illuminate\Http\Request;
-use App\Models\InvoiceProduct;
+use App\Models\Customer;
+use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Models\Invoice;
+use App\Models\InvoiceProduct;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 
 class InvoiceController extends Controller
@@ -94,82 +93,27 @@ class InvoiceController extends Controller
             'role' => $user_role
         ]);
     }
-    function invoicePrinted(Request $request)
-{
-    $user_role = $request->header('role');
+    function invoicePrinted(Request $request){
+        $user_role=$request->header('role');
+        $invoice = Invoice::where('complete', '1')->with('customer')->get();
 
-    // Fetch all completed invoices with customers
-    $invoices = Invoice::where('complete', '1')
-        ->with('customer')
-        ->get();
-
-    // Prepare a response structure
-    $responseData = $invoices->map(function ($invoice) {
-        $invoice_id = $invoice->id;
-
-        // Fetch invoice products for the current invoice
-        $invoiceProducts = InvoiceProduct::where('invoice_id', $invoice_id)
-            ->with('product')
-            ->get();
-
-        // Calculate total buy price for this invoice
-        $totalBuyPrice = InvoiceProduct::where('invoice_id', $invoice_id)
-            ->join('products', 'invoice_products.product_id', '=', 'products.id')
-            ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
-            ->value('total_buy_price');
-
-        return [
-            'invoice' => $invoice,
-            'invoiceProducts' => $invoiceProducts,
-            'totalBuyPrice' => $totalBuyPrice,
-        ];
-    });
-
-    return response()->json([
-        'data' => $responseData,
-        'role' => $user_role,
-    ]);
-}
+        return response()->json([
+            'data' => $invoice,
+            'role' => $user_role
+        ]);
+    }
 
     function InvoiceDetails(Request $request){
-        
         $customerDetails=Customer::where('id',$request->input('cus_id'))->first();
         $invoiceTotal=Invoice::where('id',$request->input('inv_id'))->first();
-        // Fetch detailed invoice products with related products
-$invoiceProducts = InvoiceProduct::where('invoice_id', $request->input('inv_id'))
-->with('product')
-->get();
-
-// Calculate total buy price using database query
-$totalBuyPrice = InvoiceProduct::where('invoice_products.invoice_id', $request->input('inv_id'))
-->join('products', 'invoice_products.product_id', '=', 'products.id') // Adjust table/column names
-->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
-->value('total_buy_price');
-
-$alltotalBuyPrice = InvoiceProduct::join('products', 'invoice_products.product_id', '=', 'products.id') // Join the product table
-    ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price')) // Calculate the sum
-    ->value('total_buy_price'); // Retrieve the aggregated value
-
-    // Get the start and end dates for last month
-$startOfLastMonth = Carbon::now()->subMonth()->startOfMonth()->toDateString();
-$endOfLastMonth = Carbon::now()->subMonth()->endOfMonth()->toDateString();
-
-// Calculate the total for last month
-$totalBuyPriceLastMonth = InvoiceProduct::whereBetween('invoice_products.created_at', [$startOfLastMonth, $endOfLastMonth])
-    ->join('products', 'invoice_products.product_id', '=', 'products.id')
-    ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
-    ->value('total_buy_price');
-
+        $invoiceProduct=InvoiceProduct::where('invoice_id',$request->input('inv_id'))->with('product')
+            ->get();
         $due_amount = Collection::where('customer_id', $request->input('cus_id'))->sum('due');
         $due_invoice = Collection::where('customer_id', $request->input('cus_id'))->get();
-
         return array(
             'customer'=>$customerDetails,
             'invoice'=>$invoiceTotal,
-            'product'=>$invoiceProducts,
-            'buyingPrice'=>$totalBuyPrice,
-            'allbuyingPrice'=>$alltotalBuyPrice,
-            'totalBuyPriceLastMonth'=>$totalBuyPriceLastMonth,
+            'product'=>$invoiceProduct,
             'due_amount'=>$due_amount,
             'due_invoice'=>$due_invoice
         );
