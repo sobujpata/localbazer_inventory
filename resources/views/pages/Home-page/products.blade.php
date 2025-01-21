@@ -35,7 +35,7 @@
             @else
             <div class="row">
                 @foreach ($products as $product)
-                <div class="col-md-3 col-lg-2 col-6 my-2 mread">
+                <div class="col-md-3 col-lg-2 col-6 my-1 mread px-1">
                     <div class="card">
                         <div class="card-body">
                             <img src="{{ $product->img_url }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="w-100" style="border-radius: 10px; height:155px;">
@@ -56,16 +56,5 @@
             </div>
         </div>
     </div>
-    <style>
-        @media screen and (max-width: 600px) {
-           .mread{
-                margin: 0px !important;
-                padding:2px !important;
-            }
-            .card-body{
-                margin: 3px 1px 3px 1px;
-                padding: 3px !important;
-            }
-        }
-    </style>
+    
 @endsection
