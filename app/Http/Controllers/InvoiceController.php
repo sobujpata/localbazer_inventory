@@ -156,33 +156,40 @@ class InvoiceController extends Controller
         $customerDetails=Customer::where('id',$request->input('cus_id'))->first();
         $invoiceTotal=Invoice::where('id',$request->input('inv_id'))->first();
         // Fetch detailed invoice products with related products
-$invoiceProducts = InvoiceProduct::where('invoice_id', $request->input('inv_id'))
-->with('product')
-->get();
+        $invoiceProducts = InvoiceProduct::where('invoice_id', $request->input('inv_id'))
+        ->with('product')
+        ->get();
 
-// Calculate total buy price using database query
-$totalBuyPrice = InvoiceProduct::where('invoice_products.invoice_id', $request->input('inv_id'))
-->join('products', 'invoice_products.product_id', '=', 'products.id') // Adjust table/column names
-->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
-->value('total_buy_price');
+        // Calculate total buy price using database query
+        $totalBuyPrice = InvoiceProduct::where('invoice_products.invoice_id', $request->input('inv_id'))
+        ->join('products', 'invoice_products.product_id', '=', 'products.id') // Adjust table/column names
+        ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
+        ->value('total_buy_price');
 
-$alltotalBuyPrice = InvoiceProduct::join('products', 'invoice_products.product_id', '=', 'products.id') // Join the product table
-    ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price')) // Calculate the sum
-    ->value('total_buy_price'); // Retrieve the aggregated value
+        $alltotalBuyPrice = InvoiceProduct::join('products', 'invoice_products.product_id', '=', 'products.id') // Join the product table
+            ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price')) // Calculate the sum
+            ->value('total_buy_price'); // Retrieve the aggregated value
 
-    // Get the start and end dates for last month
-$startOfLastMonth = Carbon::now()->subMonth()->startOfMonth()->toDateString();
-$endOfLastMonth = Carbon::now()->subMonth()->endOfMonth()->toDateString();
+            // Get the start and end dates for last month
+        $startOfLastMonth = Carbon::now()->subMonth()->startOfMonth()->toDateString();
+        $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth()->toDateString();
 
-// Calculate the total for last month
-$totalBuyPriceLastMonth = InvoiceProduct::whereBetween('invoice_products.created_at', [$startOfLastMonth, $endOfLastMonth])
-    ->join('products', 'invoice_products.product_id', '=', 'products.id')
-    ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
-    ->value('total_buy_price');
+        // Calculate the total for last month
+        $totalBuyPriceLastMonth = InvoiceProduct::whereBetween('invoice_products.created_at', [$startOfLastMonth, $endOfLastMonth])
+            ->join('products', 'invoice_products.product_id', '=', 'products.id')
+            ->select(DB::raw('SUM(products.buy_price * invoice_products.qty) as total_buy_price'))
+            ->value('total_buy_price');
 
         $due_amount = Collection::where('customer_id', $request->input('cus_id'))->sum('due');
-        $due_invoice = Collection::where('customer_id', $request->input('cus_id'))->get();
+// Initialize $due_invoice as an empty collection
+$due_invoice = collect(); 
 
+// Retrieve invoices only if the due amount is greater than 0
+if ($due_amount > 0) {
+    $due_invoice = Collection::where('customer_id', $request->input('cus_id'))
+        ->where('due', '>', 0) // Exclude invoices where due is 0
+        ->get();
+}
         return array(
             'customer'=>$customerDetails,
             'invoice'=>$invoiceTotal,

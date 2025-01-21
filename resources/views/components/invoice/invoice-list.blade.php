@@ -68,6 +68,8 @@ async function getList() {
                         <a href="/invoice-edit-page/${item['invoice'].id}" class="btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0">
                             <i class="fa text-sm fa-pen"></i>
                         </a>
+                        <button data-id="${item['invoice'].id}" data-cus="${item['invoice'].customer.id}" class="completeBtn btn btn-outline-primary text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-check"></i></button>
+
                         <button data-id="${item['invoice'].id}" data-cus="${item['invoice'].customer.id}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 ${role === '1' ? '' : 'd-none'}">
                             <i class="fa text-sm fa-trash-alt"></i>
                         </button>
