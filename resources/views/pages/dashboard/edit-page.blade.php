@@ -147,7 +147,7 @@
                         <td>Product <br>
                             Buy & Sale Price
                         </td>
-                        <td>Pick</td>
+                        <td class="text-center">Pick</td>
                     </tr>
                     </thead>
                     <tbody  class="w-100" id="productList">
@@ -222,7 +222,7 @@
                             Buy Price : ${item['buy_price']} <br>
                             <span class="text-bold">Sale Price : ${item['wholesale_price']}</span>
                         </td>
-                        <td style="vertical-align: middle;"><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
+                        <td style="vertical-align: middle; text-align:center;"><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
                      </tr>`
                 productList.append(row)
             })

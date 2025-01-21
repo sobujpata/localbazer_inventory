@@ -66,7 +66,7 @@
                             <td>Product <br>
                                 Buy & Sale Price
                             </td>
-                            <td>Pick</td>
+                            <td class="text-center">Pick</td>
                         </tr>
                         </thead>
                         <tbody  class="w-100" id="productList">
@@ -82,7 +82,7 @@
                         <thead class="w-100">
                         <tr class="text-xs text-bold">
                             <td>Shop Name <br>Mobile & <br> Address</td>
-                            <td>Pick</td>
+                            <td class="text-center">Pick</td>
                         </tr>
                         </thead>
                         <tbody  class="w-100" id="customerList">
@@ -255,7 +255,7 @@
             res.data.data.forEach(function (item,index) {
                 let row=`<tr class="text-xs">
                         <td><i class="bi bi-person"></i> ${item['shop_name']} <br> ${item['mobile']} <br>${item['address']} </td>
-                        <td>
+                        <td class="text-center">
                             <a data-shop_name="${item['shop_name']}"
                             data-mobile="${item['mobile']}" data-id="${item['id']}"
                             data-address="${item['address']}"
@@ -305,7 +305,7 @@
                             Buy Price : ${item['buy_price']} <br>
                             <span class="text-bold">Sale Price : ${item['wholesale_price']}</span>
                         </td>
-                        <td style="vertical-align: middle;"><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
+                        <td style="vertical-align: middle; text-align:center;"><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
                      </tr>`
                 productList.append(row)
             })
