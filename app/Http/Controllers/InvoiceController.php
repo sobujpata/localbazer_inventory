@@ -315,6 +315,7 @@ if ($due_amount > 0) {
     //edit create product
     public function invoiceCreateProduct(Request $request)
     {
+        // dd($request);
         DB::beginTransaction();
         try {
             $user_id = $request->header('id');
