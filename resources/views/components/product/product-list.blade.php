@@ -48,15 +48,15 @@ async function getList() {
     tableList.empty();
 
     res.data.data.forEach(function (item,index) {
-        let row = `<tr style="${item['buy_qty'] <= '0' ? 'background-color: red; color:white;' : ''}">
+        let row = `<tr style="${item['buy_qty'] <= '0' ? 'background-color: #780731; color:white;' : ''}">
                     <td><img style="width: 70px; height: 80px;" alt="" src="${item['img_url']}"></td>
                     <td>${item['name']} <br> ${item['eng_name']}</td>
                     <td>${item['buy_price']}</td>
                     <td>${item['wholesale_price']}</td>
                     <td>${item['buy_qty']}</td>
                     <td>
-                        <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
-                        <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger ${res.data['role'] === '1'?'':'d-none'}">Delete</button>
+                        <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success"><i class="fa text-sm  fa-pen"></i></button>
+                        <button data-path="${item['img_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger ${res.data['role'] === '1'?'':'d-none'}"><i class="fa text-sm  fa-trash-alt"></i></button>
                     </td>
                  </tr>`
         tableList.append(row)

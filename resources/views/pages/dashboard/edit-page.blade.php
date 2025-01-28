@@ -1,10 +1,34 @@
 @extends('layout.sidenav-layout')
 @section('content')
     <div class="container-fluid mobile-view">
+      <div class="col-12 text-center">
+        <h4>Invoice Product Edit</h4>
+      </div>
+      <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+    
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
+    
+    <script>
+        // Auto-dismiss alerts after 5 seconds
+        setTimeout(() => {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.remove();
+            }
+        }, 5000);
+    </script>
+    
       <div class="row">
-        <div class="col-12">
-          <h4>Invoice Product Edit</h4>
-        </div>
         <div class="col-md-6 col-lg-6 px-1 py-2">
             <div class="shadow-sm h-100 bg-white rounded-3 px-3 py-3">
                 <div class="row">
@@ -56,23 +80,27 @@
                                         <div class="modal-body">
                                           <form action="{{ url('/invoice-update-product') }}" method="post">
                                             @csrf
+                                            {{-- @dd($product->rate) --}}
                                             <input type="text" class="d-none" name="productID" value="{{ $product->id }}">
                                             <input type="text" class="d-none" name="invoiceID" value="{{ $invoiceTotal->id }}">
+                                            <input type="text" class="d-none" name="invoiceOldQty" value="{{ $product->qty }}">
+                                            <input type="text" class="d-none" name="product_id" value="{{ $product->product['id'] }}">
                                             <div class="form-group">
                                                 <label for="productName">Product Name</label>
                                                 <input type="text" name="productName" class="form-control" value="{{ $product->product->name }}" readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label for="qty">Product Qty</label>
-                                                <input type="text" name="qty" class="form-control" value="{{ $product->qty }}">
+                                                <input type="text" name="qty" class="form-control" id="updateQty" oninput="calculateTotalPrice()" value="{{ $product->qty }}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="productRate">Product Rate</label>
-                                                <input type="text" name="productRate" class="form-control" value="{{ $product->rate }}">
+                                                <input type="text" name="productRate" class="form-control" id="updateRate" oninput="calculateTotalPrice()" value="{{ $product->rate }}">
+                                                <input type="text" name="buy_price" class="form-control d-none" value="{{ $product->product['buy_price'] }}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="salePrice">Total price</label>
-                                                <input type="text" name="salePrice" class="form-control" value="{{ $product->sale_price }} " readonly>
+                                                <input type="text" name="salePrice" class="form-control" id="updateSalePrice" oninput="calculateTotalPrice()" value="{{ $product->sale_price }} " readonly>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -102,6 +130,8 @@
                                                 <p class="mb-3">Once delete, you can't get it back.</p>
                                                 <input class="form-control d-none" id="productID" name="productID" value="{{$product->id}}"/>
                                                 <input class="form-control d-none" id="invoiceID" name="invoiceID" value="{{ $invoiceTotal->id }}"/>
+                                                <input class="form-control d-none" id="ProductQtyDelete" name="ProductQtyDelete" value="{{ $product->qty }}"/>
+                                                <input class="form-control d-none" id="product_id" name="product_id" value="{{ $product->product['id']}}"/>
                                             </div>
                                             <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -182,10 +212,12 @@
                                 <div class="form-group">
                                     <label for="productRate">Product Rate</label>
                                     <input type="text" name="productRate" class="form-control" value="" id="PPrice" oninput="calculateTotalPrice()" required>
-                                </div>
-                                <div class="form-group">
+                                  </div>
+                                  <div class="form-group">
                                     <label for="salePrice">Total price</label>
                                     <input type="text" name="salePrice" class="form-control" value="" id="salePrice" readonly>
+                                    <input type="text" name="buyPrice" class="form-control d-none" value="" id="BPrice" oninput="calculateTotalPrice()" required>
+                                    <input type="text" name="total_buy_price" class="form-control d-none" value="" id="buy_price" required>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -201,10 +233,11 @@
   </div>
     <script>
       
-      function addModal(id,name,wholesale_price) {
+      function addModal(id,name,wholesale_price,buy_price) {
             document.getElementById('PId').value=id
             document.getElementById('PName').value=name
             document.getElementById('PPrice').value=wholesale_price
+            document.getElementById('BPrice').value=buy_price
             $('#create-modal').modal('show')
         }
       ProductList()
@@ -222,15 +255,21 @@
                             Buy Price : ${item['buy_price']} <br>
                             <span class="text-bold">Sale Price : ${item['wholesale_price']}</span>
                         </td>
-                        <td style="vertical-align: middle; text-align:center;"><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
+                        <td style="vertical-align: middle; text-align:center;">
+                          <a data-name="${item['name']}" 
+                          data-wholesale_price="${item['wholesale_price']}" 
+                          data-buy_price="${item['buy_price']}" 
+                          data-id="${item['id']}" 
+                          class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
                      </tr>`
                 productList.append(row)
             })
             $('.addProduct').on('click', async function () {
                 let PName= $(this).data('name');
                 let PPrice = $(this).data('wholesale_price')
+                let BPrice = $(this).data('buy_price')
                 let PId= $(this).data('id');
-                addModal(PId,PName,PPrice)
+                addModal(PId,PName,PPrice,BPrice)
             })
             new DataTable('#productTable',{
                 // order:[[2,'desc']],
@@ -242,9 +281,17 @@
         function calculateTotalPrice() {
             let qty = parseFloat(document.getElementById("qty").value) || 0;
             let PPrice = parseFloat(document.getElementById("PPrice").value) || 0;
+            let BPrice = parseFloat(document.getElementById("BPrice").value) || 0;
+            let updateQty = parseFloat(document.getElementById("updateQty").value) || 0;
+            let updateRate = parseFloat(document.getElementById("updateRate").value) || 0;
 
             let totalSalePrice = qty * PPrice;
+            let totalBuyPrice = qty * BPrice;
+            let updateSalePrice = updateQty * updateRate;
+            console.log(updateSalePrice)
             document.getElementById('salePrice').value = totalSalePrice.toFixed(2); // Set the value in the input field
+            document.getElementById('buy_price').value = totalBuyPrice; // Set the value in the input field
+            document.getElementById('updateSalePrice').value = updateSalePrice; // Set the value in the input field
         }
     </script>
 @endsection

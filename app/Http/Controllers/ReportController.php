@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Models\Invoice;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class ReportController extends Controller
 {
 
@@ -48,6 +50,31 @@ class ReportController extends Controller
 
         return $pdf->download('invoice.pdf');
 
+    }
+
+    function CategoryWiseProduct(Request $request){
+        $category_id = $request->categoryId;
+
+        if($category_id == "all"){
+            $products = Product::orderBy('eng_name', 'ASC')->get();
+
+            $data = [
+                'products'=>$products,
+            ];
+            $pdf = Pdf::loadView('report.categoryProducts', $data);
+    
+            return $pdf->download('products.pdf');
+        }else{
+            $products = Product::where('category_id', $category_id)->orderBy('eng_name', "ASC")->get();
+
+            $data = [
+                'products'=>$products,
+            ];
+            $pdf = Pdf::loadView('report.categoryProducts', $data);
+    
+            return $pdf->download('products.pdf');
+        }
+        
     }
 
 }

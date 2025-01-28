@@ -12,6 +12,7 @@ use App\Models\Collection;
 use Illuminate\Http\Request;
 use App\Models\InvoiceProduct;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class InvoiceController extends Controller
@@ -52,19 +53,34 @@ class InvoiceController extends Controller
         ]);
 
 
-       $invoiceID=$invoice->id;
-
-       $products= $request->input('products');
-
-       foreach ($products as $EachProduct) {
+        $invoiceID = $invoice->id; // Invoice ID
+        $products = $request->input('products'); // Retrieve products from request
+        
+        foreach ($products as $EachProduct) {
+            $product_id = $EachProduct['product_id'];
+            $qty = $EachProduct['qty'];
+            $sale_price = $EachProduct['sale_price'];
+        
+           
+        
+            // Ensure valid values for calculations
+            $qty = is_numeric($qty) ? $qty : 0;
+            $sale_price = is_numeric($sale_price) ? $sale_price : 0;
+        
+            // Calculate total buy price
+            $total_buy_price = $qty * $EachProduct['total_buy_price'];
+        
+            // Create InvoiceProduct record
             InvoiceProduct::create([
                 'invoice_id' => $invoiceID,
-                'user_id'=>$user_id,
-                'product_id' => $EachProduct['product_id'],
-                'qty' =>  $EachProduct['qty'],
-                'sale_price'=>  $EachProduct['sale_price'],
-                'rate' => $EachProduct['sale_price'] / $EachProduct['qty'],
+                'user_id' => $user_id,
+                'product_id' => $product_id,
+                'qty' => $qty,
+                'sale_price' => $sale_price,
+                'rate' => $qty > 0 ? $sale_price / $qty : 0, // Avoid division by zero
+                'total_buy_price' => $total_buy_price,
             ]);
+        
             // Update the product quantity in the Product table
             $product = Product::find($EachProduct['product_id']); // Find the product by its ID
             if ($product) {
@@ -236,81 +252,135 @@ if ($due_amount > 0) {
         $invoiceProduct=InvoiceProduct::where('invoice_id',$invoice_id)
         ->with('product')
         ->get();
+        // $buy_price = $invoiceProduct->total_buy_price/$invoiceProduct->qty;
         // dd($invoiceProduct);
         return view('pages.dashboard.edit-page',  compact('invoiceTotal','customerDetails', 'invoiceProduct'));
     }
-    function invoiceDeleteProduct(Request $request)
+    public function invoiceDeleteProduct(Request $request)
     {
-        $product_id = $request->input('productID');
-        $invoice_product = InvoiceProduct::where('id', $product_id)->first();
-        $sale_price = $invoice_product->sale_price;
-
+        $invoice_product_id = $request->input('productID');
+        $product_id = $request->input('product_id');
+        $ProductQtyDelete = $request->input('ProductQtyDelete');
         $invoice_id = $request->input('invoiceID');
-        $invoice = Invoice::where('id', $invoice_id)->first();
-        $total_price = $invoice->total;
-        $payable_price = $invoice->payable;
 
-        $total_price_after = $total_price - $sale_price;
-        $payable_price_after = $payable_price - $sale_price;
-        //update two table
-        Invoice::where('id', $invoice_id)->update([
-            'total' => $total_price_after,
-            'payable' => $payable_price_after,
-            ]);
-        // dd($payable_price_after);
-        // Perform the deletion logic
-    InvoiceProduct::where('id', $product_id)->where('invoice_id', $invoice_id)->delete();
-
-    // Redirect back to the previous page
-    return redirect()->back()->with('success', 'Product deleted successfully.');
-    }
-
-    function invoiceUpdateProduct(Request $request)
-    {
-        DB::beginTransaction();
         try {
-        $invoice_id = $request->input('invoiceID');
-        $product_id = $request->input('productID');
+            // Fetch product and update quantity
+            $product = Product::find($product_id);
 
-        $quantity = $request->input('qty');
-        $product_rate = $request->input('productRate');
+            if (!$product) {
+                return redirect()->back()->with('error', 'Product not found.');
+            }
 
-        $new_sale_price = $quantity * $product_rate; //update to invoice product
+            $product->buy_qty += $ProductQtyDelete; // Update the product quantity
+            $product->save();
 
-        $old_sale_price = $request->input('salePrice');
+            // Fetch invoice product and adjust prices
+            $invoice_product = InvoiceProduct::where('id', $invoice_product_id)->where('invoice_id', $invoice_id)->first();
 
-        $invoice = Invoice::where('id', $invoice_id)->first();
-        $total_price = $invoice->total;
-        $payable_price = $invoice->payable;
+            if (!$invoice_product) {
+                return redirect()->back()->with('error', 'Invoice product not found.');
+            }
 
-        $total_price_after = $total_price - $old_sale_price + $new_sale_price; //update to invoice
+            $sale_price = $invoice_product->sale_price;
 
-        // dd($total_price_after);
+            // Fetch invoice and update totals
+            $invoice = Invoice::find($invoice_id);
 
-        $payable_price_after = $payable_price - $old_sale_price + $new_sale_price;
-        //update two table
-        Invoice::where('id', $invoice_id)->update([
-            'total' => $total_price_after,
-            'payable' => $payable_price_after,
-            ]);
-        //update invoice product
-        InvoiceProduct::where('id', $product_id)->where('invoice_id', $invoice_id)->update([
-            'qty' =>$quantity,
-            'rate' =>$product_rate,
-            'sale_price' =>$new_sale_price,
-        ]);
+            if (!$invoice) {
+                return redirect()->back()->with('error', 'Invoice not found.');
+            }
 
-        DB::commit();
+            $invoice->total -= $sale_price;
+            $invoice->payable -= $sale_price;
+            $invoice->save();
 
-        return redirect()->back()->with('success', 'Invoice updated successfully.');
+            // Delete the product from the invoice
+            $invoice_product->delete();
 
+            return redirect()->back()->with('success', 'Product deleted successfully.');
+
+        } catch (\Exception $e) {
+            // Handle unexpected errors
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
-        catch (Exception $e) {
-            DB::rollBack();
-            return 0;
-        }
-
     }
+
+
+    public function invoiceUpdateProduct(Request $request)
+    {
+        DB::beginTransaction(); // Start a transaction
+
+        try {
+            // Extract request data
+            $invoice_id = $request->input('invoiceID');
+            $product_id = $request->input('productID');
+            $main_product_id = $request->input('product_id');
+            $quantity = $request->input('qty');
+            $oldQty = $request->input('invoiceOldQty');
+            if($quantity==$oldQty){
+                return redirect()->back()->with('error', 'Quantity No change.');
+            }
+            $newQty = $quantity - $oldQty;
+            $product_rate = $request->input('productRate');
+            $buy_price = $request->input('buy_price');
+            $old_sale_price = $request->input('salePrice');
+
+            // Calculate new values
+            $new_sale_price = $quantity * $product_rate; // New sale price for the invoice product
+            $total_buy_price = $buy_price * $quantity;   // New total buy price
+
+            // Fetch and validate the invoice
+            $invoice = Invoice::find($invoice_id);
+            if (!$invoice) {
+                return redirect()->back()->with('error', 'Invoice not found.');
+            }
+
+            // Update invoice totals
+            $invoice->total = $invoice->total - $old_sale_price + $new_sale_price;
+            $invoice->payable = $invoice->payable - $old_sale_price + $new_sale_price;
+            $invoice->save();
+
+            // Fetch and validate the invoice product
+            $invoiceProduct = InvoiceProduct::where('id', $product_id)
+                ->where('invoice_id', $invoice_id)
+                ->first();
+
+            if (!$invoiceProduct) {
+                return redirect()->back()->with('error', 'Invoice product not found.');
+            }
+
+            // Update the invoice product
+            $invoiceProduct->update([
+                'qty' => $quantity,
+                'rate' => $product_rate,
+                'sale_price' => $new_sale_price,
+                'total_buy_price' => $total_buy_price,
+            ]);
+
+            // Fetch and validate the product in inventory
+            $product = Product::find($main_product_id);
+            if (!$product) {
+                return redirect()->back()->with('error', 'Product not found.');
+            }
+
+            // Update the product's buy quantity in inventory
+            $product->buy_qty -= $newQty;
+            $product->save();
+
+            DB::commit(); // Commit transaction
+
+            return redirect()->back()->with('success', 'Invoice updated successfully.');
+
+        } catch (\Exception $e) {
+            DB::rollBack(); // Rollback transaction in case of an error
+
+            // Log the error for debugging purposes
+            Log::error('Error updating invoice: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'An error occurred while updating the invoice: ' . $e->getMessage());
+        }
+    }
+
 
     //edit create product
     public function invoiceCreateProduct(Request $request)
@@ -323,6 +393,7 @@ if ($due_amount > 0) {
             $product_id = $request->input('productName');
             $product_qty = $request->input('qty');
             $product_rate = $request->input('productRate');
+            $total_buy_price = $request->input('total_buy_price');
 
             $total_sale_price = $product_qty * $product_rate;
 
@@ -348,7 +419,18 @@ if ($due_amount > 0) {
                 'qty' => $product_qty,
                 'rate' => $product_rate,
                 'sale_price' => $total_sale_price,
+                'total_buy_price' => $total_buy_price,
                 ]);
+
+            // Fetch product and update quantity
+            $product = Product::find($product_id);
+
+            if (!$product) {
+                return redirect()->back()->with('error', 'Product not found.');
+            }
+
+            $product->buy_qty -= $product_qty; // Update the product quantity
+            $product->save();
 
             // dd($invoice_products);
             DB::commit();

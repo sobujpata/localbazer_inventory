@@ -36,7 +36,7 @@
                             {{-- <div class="col-6">ই-মেইল : <span id="CEmail" class="fw-bold"></span></div> --}}
                             <div class="col-8">ঠিকানা : <span id="CAddress" class="fw-bold"></span></div>
                             {{-- <div class="col-6">ইনভয়েচ নং : <span id="InvoiceId" class="fw-bold text-2xl"></span></div> --}}
-                            <div class="col-4">তারিখ : {{ date('Y-m-d') }}</div>
+                            <div class="col-4">তারিখ : <span id="invCreateDt"></span></div>
                             <p class="text-xs mx-0 my-1 d-none">User ID:  <span id="CId"></span> </p>
                         </div>
                         <hr class="mx-0 my-2 p-0 bg-secondary"/>
@@ -104,6 +104,17 @@
         showLoader()
         let res=await axios.post("/invoice-details",{cus_id:cus_id,inv_id:inv_id})
         hideLoader();
+
+        const createdAt = res.data['invoice']['created_at'];
+
+        const formattedDate = new Date(createdAt).toLocaleString('en-GB', {
+            timeZone: 'Asia/Dhaka',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }); // '2024-10-10'
+
+        document.getElementById('invCreateDt').innerText = formattedDate;
 
         document.getElementById('CName').innerText=res.data['customer']['shop_name']
         document.getElementById('CId').innerText=res.data['customer']['user_id']

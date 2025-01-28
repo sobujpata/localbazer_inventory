@@ -53,7 +53,7 @@
                                         Due : <strong>{{ $collection['due'] }} Tk</strong> <br>
                                     </p>
                                     <button type="button" class="float-end btn m-0 bg-gradient-info" data-bs-toggle="modal" data-bs-target="#EditCollection{{ $collection['collection_id'] }}">
-                                        Payment
+                                        <i class="fa fa-pen text-sm"></i>
                                     </button>
 
                                       <!-- Modal -->

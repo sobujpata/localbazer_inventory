@@ -112,6 +112,7 @@
                                     <input type="text" class="form-control" id="PName" readonly>
                                     <label class="form-label mt-2">Product Price *</label>
                                     <input type="text" class="form-control" id="PPrice">
+                                    <input type="text" class="form-control" id="BuyPrice">
                                     <label class="form-label mt-2">Product Qty *</label>
                                     <input type="text" class="form-control" id="PQty">
                                 </div>
@@ -153,6 +154,7 @@
                         <td>${item['product_name']}</td>
                         <td>${item['qty']}</td>
                         <td>${item['sale_price']}</td>
+                        <td style="display:none;">${item['total_buy_price']}</td>
                         <td><a data-index="${index}" class="btn remove text-xxs px-2 py-1  btn-sm m-0">Remove</a></td>
                      </tr>`
                 invoiceList.append(row)
@@ -211,8 +213,10 @@
            let PId= document.getElementById('PId').value;
            let PName= document.getElementById('PName').value;
            let PPrice=document.getElementById('PPrice').value;
+           let buy_price=document.getElementById('BuyPrice').value;
            let PQty= document.getElementById('PQty').value;
            let PTotalPrice=(parseFloat(PPrice)*parseFloat(PQty)).toFixed(2);
+           let PTotalBuyPrice=(parseFloat(buy_price)*parseFloat(PQty)).toFixed(2);
            if(PId.length===0){
                errorToast("Product ID Required");
            }
@@ -226,9 +230,8 @@
                errorToast("Product Quantity Required");
            }
            else{
-               let item={product_name:PName,product_id:PId,qty:PQty,sale_price:PTotalPrice};
+               let item={product_name:PName,product_id:PId,qty:PQty,sale_price:PTotalPrice,total_buy_price:PTotalBuyPrice};
                InvoiceItemList.push(item);
-               console.log(InvoiceItemList);
                $('#create-modal').modal('hide')
                ShowInvoiceItem();
            }
@@ -237,10 +240,12 @@
 
 
 
-        function addModal(id,name,wholesale_price) {
+        function addModal(id,name,wholesale_price,buy_price) {
             document.getElementById('PId').value=id
             document.getElementById('PName').value=name
             document.getElementById('PPrice').value=wholesale_price
+            document.getElementById('BuyPrice').value=buy_price
+            
             $('#create-modal').modal('show')
         }
 
@@ -302,10 +307,16 @@
                 let row=`<tr class="${item['buy_qty'] <= '0' ? 'alert alert-danger text-white' : ''}">
                         <td>
                             ${item['name']} <br> ${item['eng_name']} <br>
-                            Buy Price : ${item['buy_price']} <br>
+                            Buy Price : ${item['buy_price']}<br>
                             <span class="text-bold">Sale Price : ${item['wholesale_price']}</span>
                         </td>
-                        <td style="vertical-align: middle; text-align:center;"><a data-name="${item['name']}" data-wholesale_price="${item['wholesale_price']}" data-id="${item['id']}" class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
+                        <td style="vertical-align: middle; text-align:center;">
+                            <a 
+                            data-name="${item['name']}" 
+                            data-wholesale_price="${item['wholesale_price']}" 
+                            data-buy_price="${item['buy_price']}" 
+                            data-id="${item['id']}"
+                            class="btn btn-success text-xxs px-2 py-1 addProduct  btn-sm m-0">Add</a></td>
                      </tr>`
                 productList.append(row)
             })
@@ -314,8 +325,9 @@
             $('.addProduct').on('click', async function () {
                 let PName= $(this).data('name');
                 let PPrice = $(this).data('wholesale_price')
+                let buy_price = $(this).data('buy_price')
                 let PId= $(this).data('id');
-                addModal(PId,PName,PPrice)
+                addModal(PId,PName,PPrice,buy_price)
             })
 
 

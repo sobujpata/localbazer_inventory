@@ -72,10 +72,10 @@ async function getList() {
 
                     <td>${formattedDate}</td>
                     <td>
-                        <button data-path="${item['invoice_url']}" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
+                        <button data-path="${item['invoice_url']}" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success"><i class="fa text-sm  fa-pen"></i></button>
 
-                        <button class="btn btn-sm btn-outline-primary"><a href="${item['invoice_url']}" target="_blank">View</a> </button>
-                        <button data-path="${item['invoice_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger ${res.data['role'] === '1'?'':'d-none'}">Delete</button>
+                        <button class="btn btn-sm btn-outline-primary"><a href="${item['invoice_url']}" target="_blank"><i class="fa text-sm  fa-eye"></i></a> </button>
+                        <button data-path="${item['invoice_url']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger ${res.data['role'] === '1'?'':'d-none'}"><i class="fa text-sm  fa-trash"></i></button>
                     </td>
                  </tr>`
         tableList.append(row)

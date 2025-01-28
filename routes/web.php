@@ -110,6 +110,7 @@ Route::get("/invoice-page-after-print",[InvoiceController::class,'invoicePageAft
 // SUMMARY & Report
 Route::get("/summary",[DashboardController::class,'Summary'])->middleware([TokenVerificationMiddleware::class]);
 Route::get("/sales-report/{FormDate}/{ToDate}",[ReportController::class,'SalesReport'])->middleware([TokenVerificationMiddleware::class]);
+Route::get("/category-product/{categoryId}",[ReportController::class,'CategoryWiseProduct'])->middleware([TokenVerificationMiddleware::class]);
 
 //buy product Route
 Route::get('/buy-product', [buyProductController::class, 'index'])->middleware([TokenVerificationMiddleware::class]);

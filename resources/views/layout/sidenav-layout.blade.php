@@ -25,7 +25,24 @@
     <script src="{{asset('js/config.js')}}"></script>
     <script src="{{asset('js/bootstrap.bundle.js')}}"></script>
 
-
+    <style>
+        @media only screen and (max-width: 600px) {
+            thead, tbody, th, td {
+                font-size: 10px !important;
+            }
+            button{
+                padding: 10px !important;
+                margin-bottom: 2px !important;
+            }
+            .card-body{
+                padding: 5px !important;
+            }
+            .col-6{
+                padding: 5px !important;
+            }
+        }
+    </style>
+    
 
 
 </head>

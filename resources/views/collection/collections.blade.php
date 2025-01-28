@@ -85,7 +85,7 @@
                         @endif
 
                         @foreach($collections as $index => $collection)
-                        <div class="col-md-3 col-12 my-2">
+                        <div class="col-md-3 col-6 my-2">
                             <div class="card justify-content-center px-1 py-1 shadow" >
                                 <div class="card-body">
                                     <h5 class="card-title">Invoice : <strong>{{ $collection['invoice_id'] }}</strong></h5>
@@ -97,8 +97,8 @@
                                         Due Amount : <strong>{{ $collection['due'] }}</strong> <br>
                                         Date : <strong>{{ $collection['updated_at'] }}</strong>
                                     </p>
-                                    <button type="button" class="float-end btn m-0 bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#EditCollection{{ $collection['collection_id'] }}">
-                                        Update Collection
+                                    <button type="button" class="float-end btn m-0 bg-gradient-secondary" data-bs-toggle="modal" data-bs-target="#EditCollection{{ $collection['collection_id'] }}">
+                                        <i class="fa fa-pen text-sm"></i>
                                     </button>
 
                                       <!-- Modal -->
@@ -141,8 +141,9 @@
                         </div>
                         @endforeach
                         <div class="pagination">
-                            {{ $collections->links() }}
+                            {{ $collections->onEachSide(0)->links() }}
                         </div>
+                        
                     </div>
                 </div>
 

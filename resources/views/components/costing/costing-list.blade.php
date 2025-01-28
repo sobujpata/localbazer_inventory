@@ -67,7 +67,7 @@ async function getList() {
                     <td>${item['balance']}</td>
                     <td>${formattedDate}</td>
                     <td>
-                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success ${res.data['role'] === '1'?'':'d-none'}">Edit</button>
+                        <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success ${res.data['role'] === '1'?'':'d-none'}"><i class="fa text-sm  fa-pen"></i></button>
                     </td>
                  </tr>`
         tableList.append(row)
