@@ -35,10 +35,10 @@ Route::post('/customer-message',[CustomerContactController::class,'CustomerConta
 Route::get('/logout',[UserController::class,'UserLogout']);
 
 // Page Routes
-Route::get('/',[HomeController::class,'HomePage']);
+Route::get('/about',[HomeController::class,'HomePage']);
 Route::get('/testmonials',[HomeController::class,'Testmonial']);
 Route::get('/contact',[HomeController::class,'Contact']);
-Route::get('/products-list',[HomeController::class,'HomeProduct'])->name('product.list');
+Route::get('/',[HomeController::class,'HomeProduct'])->name('product.list');
 
 Route::get('/userLogin',[UserController::class,'LoginPage']);
 Route::get('/userRegistration',[UserController::class,'RegistrationPage'])->middleware([TokenVerificationMiddleware::class]);

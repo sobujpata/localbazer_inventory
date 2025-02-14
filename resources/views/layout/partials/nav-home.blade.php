@@ -8,10 +8,10 @@
         </button>
         <div class="collapse navbar-collapse" id="header01">
             <ul class="navbar-nav ms-auto mt-3 mt-lg-0 mb-3 mb-lg-0 me-4">
-                <li class="nav-item me-4"><a class="nav-link" href="{{url('/')}}">About</a></li>
+                <li class="nav-item me-4"><a class="nav-link" href="{{url('/')}}">Products</a></li>
+                <li class="nav-item me-4"><a class="nav-link" href="{{url('/about')}}">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{url('/testmonials')}}">Testimonials</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{url('/contact')}}">Contact</a></li>
-                <li class="nav-item me-4"><a class="nav-link" href="{{url('/products-list')}}">Products</a></li>
             </ul>
             <div><a class="btn mt-3 bg-gradient-primary" href="{{url('/userLogin')}}">Start Sale</a></div>
         </div>
