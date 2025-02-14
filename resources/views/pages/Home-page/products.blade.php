@@ -1,5 +1,21 @@
 @extends('layout.app')
 @section('content')
+<style>
+    .zoom-img {
+    width: 300px;
+    height:auto;
+    overflow: hidden;
+    }
+
+    .zoom-img  img {
+    width: 100%;
+    transition: all .3s ease-in-out;
+    }
+
+    .zoom-img img:hover   {
+    transform: scale(1.2);
+    }
+</style>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-12 col-lg-5 mb-5 mb-lg-0">
@@ -37,9 +53,9 @@
                 @foreach ($products as $product)
                 <div class="col-md-3 col-lg-2 col-6 my-1 mread px-1">
                     <div class="card">
-                        <div class="card-body">
-                            <img src="{{ $product->img_url }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="w-100" style="border-radius: 10px; height:155px;">
-                            <p>
+                        <div class="card-body p-2">
+                            <img src="{{ $product->img_url }}" alt="{{ $product->name }}" title="{{ $product->name }}" class="w-100 zoom-img" style="border-radius: 10px; height:155px;">
+                            <p class="pt-2">
                                 <span><strong>{{ $product->name }}</strong></span><br>
                                 <span><strong>{{ $product->eng_name }}</strong></span><br>
                                 <span><strong>Price : {{ $product->wholesale_price }}</strong></span>
