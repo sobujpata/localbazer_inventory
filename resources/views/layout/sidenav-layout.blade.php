@@ -151,6 +151,14 @@
         <i class="bi bi-file-earmark-bar-graph"></i>
         <span class="side-bar-item-caption">Partners</span>
     </a>
+    <a href="{{url('/bank-list')}}" class="side-bar-item">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span class="side-bar-item-caption">Banks</span>
+    </a>
+    <a href="{{url('/loan-repay-balance-list')}}" class="side-bar-item">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span class="side-bar-item-caption">Bank Cash Credit</span>
+    </a>
     
 
 

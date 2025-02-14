@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BankLoanController;
 use App\Http\Controllers\InvoiceProductController;
 use App\Http\Controllers\miscellaneousController;
 use Illuminate\Support\Facades\Route;
@@ -151,3 +152,20 @@ Route::get('/list-costing', [miscellaneousController::class, 'CostingList'])->mi
 Route::post('/create-costing', [miscellaneousController::class, 'CostingCreate'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/costing-by-id', [miscellaneousController::class, 'CostingById'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/update-costing', [miscellaneousController::class, 'CostingUpdate'])->middleware([TokenVerificationMiddleware::class]);
+
+//bank Route
+Route::get('/bank-list', [BankLoanController::class, 'Banks'])->middleware([TokenVerificationMiddleware::class]);
+//bank API
+Route::get('/list-bank', [BankLoanController::class, 'BankList'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/create-bank', [BankLoanController::class, 'BankCreate'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/bank-by-id', [BankLoanController::class, 'BankById'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/get-bank-loan-by-id/{id}', [BankLoanController::class, 'BankLoanById'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/update-bank', [BankLoanController::class, 'BankUpdate'])->middleware([TokenVerificationMiddleware::class]);
+
+//loan repay balance Route
+Route::get('/loan-repay-balance-list', [BankLoanController::class, 'LoanRepayPage'])->middleware([TokenVerificationMiddleware::class]);
+//loan-repay-balance API
+Route::get('/list-loan-repay-balance', [BankLoanController::class, 'LoanRepayList'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/create-loan-repay-balance', [BankLoanController::class, 'LoanRepayCreate'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/loan-repay-balance-by-id', [BankLoanController::class, 'LoanRepayById'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/update-loan-repay-balance', [BankLoanController::class, 'LoanRepayUpdate'])->middleware([TokenVerificationMiddleware::class]);
