@@ -24,11 +24,17 @@ class PartnerController extends Controller
     }
     public function WithdrawAmount(Request $request){
         $id = $request->input('id');
+        $partner = Partner::find($id);
+        $amount = $partner->amount;
         $old_amount = $request->input('old_amount');
-        $deposit_amount = $request->input('amount');
+        $withdraw_amount = $request->input('amount');
 
-        $update_amount = $old_amount + $deposit_amount;
-        Partner::where('id', $id)->update(['withdraw_amount'=>$update_amount]);
+        $update_amount = $old_amount + $withdraw_amount;
+        $newPartnerAmount = $amount-$withdraw_amount;
+        Partner::where('id', $id)->update([
+            'withdraw_amount'=>$update_amount,
+            'amount'=>$newPartnerAmount,
+        ]);
         return redirect()->back()->with('success', 'Withdraw amount submitted successfully');
     }
 }

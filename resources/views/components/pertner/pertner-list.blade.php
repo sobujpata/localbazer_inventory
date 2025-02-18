@@ -48,9 +48,9 @@
                         </div>
                     </div>
 
-                    {{-- <button type="button" class="btn m-0 bg-gradient-success" data-bs-toggle="modal" data-bs-target="#withdraw{{$partner->id}}">
+                    <button type="button" class="btn m-0 bg-gradient-success" data-bs-toggle="modal" data-bs-target="#withdraw{{$partner->id}}">
                         Withdraw
-                    </button> --}}
+                    </button>
                     <div class="modal fade" id="withdraw{{$partner->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">

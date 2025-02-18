@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use carbon\Carbon;
+use App\Models\Bank;
 use App\Models\Invoice;
 use App\Models\Partner;
 use App\Models\Product;
@@ -12,6 +13,7 @@ use App\Models\BuyProduct;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use App\Models\InvoiceProduct;
+use App\Models\LoanRepayBalance;
 use App\Models\MiscellaneousCost;
 use Illuminate\Support\Facades\DB;
 
@@ -48,10 +50,13 @@ class DashboardController extends Controller
         //Total Deposit from partners
         $total_deposit = Partner::sum('amount');
 
-        $total_deposit_with_collection = $total_deposit + $collection;
+        $bank_loan = Bank::sum('loan_amount');
+        $bank_loan_repay = LoanRepayBalance::sum('pay_amount');
+
+        $total_deposit_with_collection = $total_deposit + $collection + $bank_loan;
 
         //live balance
-        $live_balance =$total_deposit_with_collection - $total_cost;
+        $live_balance =$total_deposit_with_collection - $total_cost - $bank_loan_repay;
 
 
 
